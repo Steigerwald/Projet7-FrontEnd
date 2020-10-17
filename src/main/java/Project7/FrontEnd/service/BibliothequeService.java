@@ -22,7 +22,7 @@ public class BibliothequeService {
     public List<BibliothequeDTO> getAllBibliotheques() throws IOException {
 
         ObjectMapper mapper =new ObjectMapper();
-        List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(new URL("http://localhost:5500/my-notes"), List.class);
+        List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(new URL("http://localhost:9090/bibliotheque/"), List.class);
         if(toutesBibliotheques.size() > 0) {
             logger.info(" retour liste toutesBibliotheques car la taille de laliste >0 ");
             return toutesBibliotheques;
