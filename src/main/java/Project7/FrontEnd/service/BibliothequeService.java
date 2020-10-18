@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,9 +18,10 @@ public class BibliothequeService {
     Logger logger = (Logger) LoggerFactory.getLogger(BibliothequeService.class);
 
     /*Methode pour obtenir tous les sites de la base de données*/
-    public List getAllBibliotheques() throws IOException {
+    public List<BibliothequeDTO> getAllBibliotheques() throws IOException {
         ObjectMapper mapper =new ObjectMapper();
-        List toutesBibliotheques = mapper.readValue(new URL("http://localhost:9090/bibliotheque/"),List.class);
+        List<BibliothequeDTO> toutesBibliotheques = Collections.EMPTY_LIST;
+        toutesBibliotheques = mapper.readValue(new URL("http://localhost:9090/bibliotheque/"),List.class);
         if(toutesBibliotheques.size() > 0) {
             logger.info(" retour liste toutesBibliotheques car la taille de laliste >0 ");
             return toutesBibliotheques;
