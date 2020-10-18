@@ -20,7 +20,7 @@ public class BibliothequeService {
 
     Logger logger = (Logger) LoggerFactory.getLogger(BibliothequeService.class);
 
-    /*Methode pour obtenir tous les sites de la base de données*/
+    /*Methode pour obtenir toutes les bibliotheques de la base de données de l'API rest*/
     public List<BibliothequeDTO> getAllBibliotheques() throws IOException {
 
         ObjectMapper mapper =new ObjectMapper();

@@ -28,4 +28,10 @@ public class BibliothequeController {
         model.addAttribute("bibliotheques",bibliotheques);
         return "bibliotheque/ListeBibliotheques";
     }
+
+
+
+
+
+
 }

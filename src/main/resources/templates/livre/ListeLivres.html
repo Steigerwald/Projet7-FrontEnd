@@ -33,17 +33,31 @@
                                             <thead>
                                             <tr>
                                                 <th>N°</th>
-                                                <th>Nom Bibliotheque</th>
-                                                <th>Adresse</th>
-                                                <th>Lieu</th>
+                                                <th>Titre</th>
+                                                <th>Auteur</th>
+                                                <th>Date publication</th>
+                                                <th>Resumé</th>
+                                                <th>nbre de Pages</th>
+                                                <th>Catégorie</th>
+                                                <th>Date achat</th>
+                                                <th>Prix Location</th>
+                                                <th>Etat Livre</th>
+                                                <th>Disponibilté</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="bibliotheque : ${bibliotheques}">
-                                                <td th:text="${bibliotheque.idBibliotheque}"></td>
-                                                <td th:text="${bibliotheque.nomBibliotheque}"></td>
-                                                <td th:text="${bibliotheque.adresse}"></td>
-                                                <td th:text="${bibliotheque.lieu}"></td>
+                                            <tr th:each="livre : ${livres}">
+                                                <td th:text="${livre.idLivre}"></td>
+                                                <td th:text="${livre.titre}"></td>
+                                                <td th:text="${livre.auteur}"></td>
+                                                <td th:text="${livre.publication}"></td>
+                                                <td th:text="${livre.resume}"></td>
+                                                <td th:text="${livre.nombrePages}"></td>
+                                                <td th:text="${livre.nomCategorie"></td>
+                                                <td th:text="${livre.dateAchat}"></td>
+                                                <td th:text="${livre.prixLocation}"></td>
+                                                <td th:text="${livre.etatLivre}"></td>
+                                                <td th:text="${livre.disponibilite}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
