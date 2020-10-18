@@ -23,13 +23,12 @@ public class BibliothequeController {
 
     /* controller pour avoir toutes les bibliotheques*/
     @RequestMapping(value="/",method = RequestMethod.GET)
-    public String getAllBibliotheques(Model model) throws IOException {
+    public String getAllBibliotheques(Model model,Principal principal) throws IOException {
         //Recupérer les données json via la méthode getAllNotes(), les convertir en objets java et les stocker dans une liste
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         //Liste stockée à son tour dans un ModelMap renvoyée dans la réponse.
         ModelMap mp = new ModelMap("bibliotheques", bibliotheques);
         model.addAttribute("bibliotheques",mp);
-        return "ListeBibliotheques";
+        return "bibliotheque/ListeBibliotheques";
     }
-
 }
