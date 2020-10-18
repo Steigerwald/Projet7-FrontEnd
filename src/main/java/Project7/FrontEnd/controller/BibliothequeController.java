@@ -25,8 +25,7 @@ public class BibliothequeController {
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllBibliotheques(Model model,Principal principal) throws IOException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
-        ModelMap mp = new ModelMap("bibliotheques", bibliotheques);
-        model.addAttribute("bibliotheques",mp);
+        model.addAttribute("bibliotheques",bibliotheques);
         return "bibliotheque/ListeBibliotheques";
     }
 }
