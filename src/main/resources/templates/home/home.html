@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta charset="UTF-8">
+        <title>home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" th:href="@{/css/main.css}" />
+        <link rel="stylesheet" th:href="@{/css/barre.css}" />
+        <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.4.1/css/all.css}" />
+    </head>
+    <body>
+    <!--<div th:insert="~{baniere :: fragment }"></div>-->
+        <main role="main" class="container">
+            <div>
+                <!--<p>Welcome (<span sec:authentication="principal.username"></span>) est bien connecté </p>-->
+            </div>
+            <div class="container">
+                <div class="starter-template">
+                    <h1>Bienvenue dans votre Bibliothèque !!! </h1>
+                    <h1>
+                        <img th:src="@{/pictures/bibliothequeImage.jpg}" alt="imagePres"/>
+                    </h1>
+                    <h2>
+                        <span>Site pour les amateurs de livres/span><br>
+                        <span></span><br>
+                        <span> Vous cherchez un un livre, par titre, par catégorie ? </span>
+                        <span></span><br>
+                        <span> Vous êtes sur le bon site internet, vous n'avez plus qu'à vous inscrire ou vous connecter !! </span>
+                    </h2>
+                </div>
+            </div>
+        </main>
+    </body>
+    <div th:insert="~{bootstrap :: fragment }"></div>
+</html>
