@@ -1,9 +1,7 @@
 package Project7.FrontEnd.controller;
 
-import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.service.LivreService;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,7 @@ public class LivreController {
         List<LivreDTO> livres = livreService.getAllLivres();
         logger.info(" retour valeutr des livres du controller "+livres.get(0));
         model.addAttribute("livres",livres);
-        return "livre/ListeLivres";
+        return "listeLivres";
     }
 
 }

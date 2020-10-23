@@ -5,7 +5,6 @@ import Project7.FrontEnd.service.BibliothequeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,7 +25,7 @@ public class BibliothequeController {
     public String getAllBibliotheques(Model model,Principal principal) throws IOException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         model.addAttribute("bibliotheques",bibliotheques);
-        return "bibliotheque/ListeBibliotheques";
+        return "listeBibliotheques";
     }
 
 
