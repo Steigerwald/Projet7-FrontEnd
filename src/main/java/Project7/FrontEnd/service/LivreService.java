@@ -26,14 +26,8 @@ public class LivreService {
 
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivres() throws IOException, ParseException {
-
         ObjectMapper mapper =new ObjectMapper();
-        /*
-        DateFormat df =new SimpleDateFormat("dd-MM-yyyy");
-        mapper.setDateFormat(df);
-*/
         List<LivreDTO> tousLivres = mapper.readValue(new URL("http://localhost:9090/livre/"),List.class);
-
         if(tousLivres.size() > 0) {
             logger.info(" retour liste tousLivres car la taille de laliste >0 "+tousLivres);
             logger.info(" valeur livre "+tousLivres.get(0));
@@ -44,7 +38,19 @@ public class LivreService {
         }
     }
 
-
+    /*Methode pour obtenir tous les livres disponibles de la base de données de l'API rest*/
+    public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException {
+        ObjectMapper mapper =new ObjectMapper();
+        List<LivreDTO> tousLivresDisponibles = mapper.readValue(new URL("http://localhost:9090/livre/disponibles"),List.class);
+        if(tousLivresDisponibles.size() > 0) {
+            logger.info(" retour liste tousLivres car la taille de laliste >0 "+tousLivresDisponibles);
+            logger.info(" valeur livre "+tousLivresDisponibles.get(0));
+            return tousLivresDisponibles;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousLivres ");
+            return new ArrayList<LivreDTO>();
+        }
+    }
 
 
 

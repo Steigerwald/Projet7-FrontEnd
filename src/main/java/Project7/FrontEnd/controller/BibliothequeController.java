@@ -25,7 +25,7 @@ public class BibliothequeController {
     public String getAllBibliotheques(Model model,Principal principal) throws IOException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         model.addAttribute("bibliotheques",bibliotheques);
-        return "listeBibliotheques";
+        return "bibliotheque/listeBibliotheques";
     }
 
 

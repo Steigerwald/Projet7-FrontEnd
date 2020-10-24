@@ -30,7 +30,21 @@ public class LivreController {
         List<LivreDTO> livres = livreService.getAllLivres();
         logger.info(" retour valeutr des livres du controller "+livres.get(0));
         model.addAttribute("livres",livres);
-        return "listeLivres";
+        return "livre/listeLivres";
     }
+
+    /* controller pour avoir tous les livres*/
+    @RequestMapping(value="/all/disponibles",method = RequestMethod.GET)
+    public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException {
+        List<LivreDTO> livres = livreService.getAllLivresDisponibles();
+        logger.info(" retour valeutr des livres du controller "+livres.get(0));
+        model.addAttribute("livresDisponibles",livres);
+        return "livre/listeLivresDisponibles";
+    }
+
+
+
+
+
 
 }
