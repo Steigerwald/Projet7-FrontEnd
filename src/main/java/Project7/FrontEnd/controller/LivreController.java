@@ -1,6 +1,7 @@
 package Project7.FrontEnd.controller;
 
 import Project7.FrontEnd.dto.LivreDTO;
+import Project7.FrontEnd.dto.SearchDTO;
 import Project7.FrontEnd.service.LivreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +43,30 @@ public class LivreController {
         return "livre/listeLivresDisponibles";
     }
 
+    /* controller pour afficher la page recherche de livres par catégorie*/
+    @RequestMapping(value="/search",method = RequestMethod.GET)
+    public String RechercherLivres(Model model, Principal principal) throws IOException, ParseException {
+        SearchDTO rechercheCriteres=new SearchDTO();
+        model.addAttribute("search",rechercheCriteres);
+        return "/livre/rechercheLivre";
+    }
 
+    /* controller pour recevoir une recherche d'un livre*/
+    @RequestMapping(value="/search/mycriteres",method = RequestMethod.POST)
+    public String getSearchLivre(SearchDTO search, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
+        livreService.sendSearchLivre(search);
+        logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
+        return "redirect:/livre/all/recherches";
+    }
 
-
+    /* controller pour avoir le resultat de la recherche Livre*/
+    @RequestMapping(value="/all/recherches",method = RequestMethod.GET)
+    public String getAllLivresRecherches(Model model, Principal principal) throws IOException, ParseException {
+        List<LivreDTO> livresRecherches = livreService.getAllLivresRecherches();
+        logger.info(" retour valeur des livres du controller "+livresRecherches.get(0));
+        model.addAttribute("livresRecherches",livresRecherches);
+        return "livre/listeLivresRecherches";
+    }
 
 
 }
