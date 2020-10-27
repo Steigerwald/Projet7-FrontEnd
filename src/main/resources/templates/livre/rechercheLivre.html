@@ -36,16 +36,16 @@
                             <div class="form-group col-md-6">
                                 <label for="nomCategorie" class="col-form-label">Catégorie du livre</label>
                                 <select type="text" th:field="*{nomCategorie}" class="form-control" id="nomCategorie">
-                                    <option value="" disabled selected hidden>Nom catégorie</option>
+                                    <option value="" disabled selected hidden th:text="'Nom catégorie'">Nom catégorie</option>
                                     <option th:value=null></option>
-                                    <option th:value=1 th:text="'Policier'"></option>
-                                    <option th:value=2 th:text="'Roman'"></option>
-                                    <option th:value=3 th:text="'Nouvelles'"></option>
-                                    <option th:value=4 th:text="'Comtes'"></option>
-                                    <option th:value=5 th:text="'Science Fiction'"></option>
-                                    <option th:value=6 th:text="'Scolaire'"></option>
-                                    <option th:value=7 th:text="'Medecine'"></option>
-                                    <option th:value=8 th:text="'Informatique'"></option>
+                                    <option th:value="'Policier'" th:text="'Policier'"></option>
+                                    <option th:value="'Roman'" th:text="'Roman'"></option>
+                                    <option th:value="'Nouvelles'" th:text="'Nouvelles'"></option>
+                                    <option th:value="'Comtes'" th:text="'Comtes'"></option>
+                                    <option th:value="'Science Fiction'" th:text="'Science Fiction'"></option>
+                                    <option th:value="'Scolaire'" th:text="'Scolaire'"></option>
+                                    <option th:value="'Medecine'" th:text="'Medecine'"></option>
+                                    <option th:value="'Informatique'" th:text="'Informatique'"></option>
                                 </select>
                             </div>
                         </div>

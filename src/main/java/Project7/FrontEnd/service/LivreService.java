@@ -61,9 +61,9 @@ public class LivreService {
         ObjectMapper mapper =new ObjectMapper();
         List<LivreDTO> tousLivresDisponibles = mapper.readValue(new URL("http://localhost:9090/livre/disponibles"),new TypeReference<List<LivreDTO>>(){});
         if(tousLivresDisponibles.size() > 0) {
-            logger.info(" retour liste tousLivres car la taille de laliste >0 "+tousLivresDisponibles);
-            logger.info(" valeur livre "+tousLivresDisponibles.get(0));
-            logger.info(" valeur livre "+tousLivresDisponibles.get(0).getAuteur());
+            logger.info(" retour liste tousLivresDisponibles car la taille de laliste >0 "+tousLivresDisponibles);
+            logger.info(" valeur du premier livre disponible "+tousLivresDisponibles.get(0));
+            logger.info(" valeur de l'auteur du premier livre "+tousLivresDisponibles.get(0).getAuteur());
             return tousLivresDisponibles;
         } else {
             logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousLivres ");
@@ -72,26 +72,34 @@ public class LivreService {
     }
 
     /*Methode pour envoyer une recherche de livre à l'API rest*/
-    public void sendSearchLivre(SearchDTO newSearch) throws IOException, InterruptedException {
+    public List<LivreDTO> sendSearchLivre(SearchDTO newSearch) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 /*
         var values = new HashMap<String, String>() {{
             put("nomCategorie", "Policier");
         }};
-
- */
+*/
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(newSearch);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body "+response.body());
         System.out.println(response.body());
-    }
 
+        ObjectMapper mapper = new ObjectMapper();
+        List<LivreDTO> listM = mapper.readValue(response.body(), List.class);
+        for (Iterator iterator = listM.iterator(); iterator.hasNext();) {
+            LinkedHashMap linkedMap = (LinkedHashMap) iterator.next();
+            System.out.println(linkedMap);
+        }
+        return listM;
+    }
     /*Methode pour récupérer tous les livres recherchés de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresRecherches() throws IOException, ParseException {
         ObjectMapper mapper =new ObjectMapper();
