@@ -78,11 +78,7 @@ public class LivreService {
         System.out.println(response.body());
 
         ObjectMapper mapper = new ObjectMapper();
-        List<LivreDTO> listM = mapper.readValue(response.body(), List.class);
-        for (Iterator iterator = listM.iterator(); iterator.hasNext();) {
-            LinkedHashMap linkedMap = (LinkedHashMap) iterator.next();
-            System.out.println(linkedMap);
-        }
+        List<LivreDTO> listM = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>(){});
         return listM;
     }
     /*Methode pour récupérer tous les livres recherchés de la base de données de l'API rest*/

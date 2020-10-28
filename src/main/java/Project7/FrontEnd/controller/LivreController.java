@@ -55,19 +55,10 @@ public class LivreController {
     @RequestMapping(value="/search/mycriteres",method = RequestMethod.POST)
     public String getSearchLivre(SearchDTO search, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> listeLivresRecherches =livreService.sendSearchLivre(search);
+        logger.info(" retour valeur date publication du premier livre "+listeLivresRecherches.get(0).getPublication());
         logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
         model.addAttribute("livresRecherches", listeLivresRecherches);
         return "livre/listeLivresRecherches";
     }
-
-    /* controller pour avoir le resultat de la recherche Livre
-    @RequestMapping(value="/all/recherches",method = RequestMethod.GET)
-    public String getAllLivresRecherches(Model model, Principal principal) throws IOException, ParseException {
-        List<LivreDTO> livresRecherches = livreService.getAllLivresRecherches();
-        logger.info(" retour valeur du premier livre des livresRecherches du controller "+livresRecherches.get(0));
-        model.addAttribute("livresRecherches",livresRecherches);
-        return "livre/listeLivresRecherches";
-    }
-*/
 
 }
