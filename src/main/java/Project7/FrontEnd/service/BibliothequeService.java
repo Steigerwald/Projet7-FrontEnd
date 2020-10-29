@@ -1,6 +1,8 @@
 package Project7.FrontEnd.service;
 
 import Project7.FrontEnd.dto.BibliothequeDTO;
+import Project7.FrontEnd.dto.LivreDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +20,8 @@ public class BibliothequeService {
 
     /*Methode pour obtenir toutes les bibliotheques de la base de données de l'API rest*/
     public List<BibliothequeDTO> getAllBibliotheques() throws IOException {
-
         ObjectMapper mapper =new ObjectMapper();
-        List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(new URL("http://localhost:9090/bibliotheque/"),List.class);
+        List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(new URL("http://localhost:9090/bibliotheque/"),new TypeReference<List<BibliothequeDTO>>(){});
         if(toutesBibliotheques.size() > 0) {
             logger.info(" retour liste toutesBibliotheques car la taille de laliste >0 "+toutesBibliotheques);
             return toutesBibliotheques;
