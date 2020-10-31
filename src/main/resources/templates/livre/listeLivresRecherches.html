@@ -32,31 +32,17 @@
                                         <table class="table table-striped" >
                                             <thead>
                                             <tr>
-                                                <th>N°</th>
                                                 <th>Titre</th>
                                                 <th>Auteur</th>
                                                 <th>Date publication</th>
-                                                <th>Resumé</th>
-                                                <th>nbre de Pages</th>
-                                                <th>Catégorie</th>
-                                                <th>Date achat</th>
-                                                <th>Prix Location</th>
-                                                <th>Etat Livre</th>
                                                 <th>Disponible</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="livre : ${livresRecherches}">
-                                                <td th:text="${livre.idLivre}"></td>
-                                                <td th:text="${livre.titre}"></td>
+                                                <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.publication}"></td>
-                                                <td th:text="${livre.resume}"></td>
-                                                <td th:text="${livre.nombrePages}"></td>
-                                                <td th:text="${livre.nomCategorie}"></td>
-                                                <td th:text="${livre.dateAchat}"></td>
-                                                <td th:text="${livre.prixLocation}"></td>
-                                                <td th:text="${livre.etatLivre}"></td>
                                                 <td th:text="${livre.disponibilite}"></td>
                                             </tr>
                                             </tbody>
