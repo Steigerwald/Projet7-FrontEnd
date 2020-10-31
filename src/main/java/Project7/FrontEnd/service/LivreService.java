@@ -67,7 +67,6 @@ public class LivreService {
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(newSearch);
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
                 .header("Content-Type", "application/json")
@@ -95,5 +94,19 @@ public class LivreService {
             return new ArrayList<LivreDTO>();
         }
     }
+
+    /*Methode pour obtenir un livre disponible de la base de données de l'API rest*/
+    public LivreDTO getLivreById(int id) throws IOException, ParseException {
+        ObjectMapper mapper =new ObjectMapper();
+        LivreDTO livreById = mapper.readValue(new URL("http://localhost:9090/livre/"+id),new TypeReference<LivreDTO>(){});
+        if(livreById!=null) {
+            logger.info(" l'id du livre trouvé est :  "+livreById.getIdLivre());
+            return livreById;
+        } else {
+            logger.info(" retour de nul car pas d'élément et de livre trouvé ");
+            return null;
+        }
+    }
+
 
 }

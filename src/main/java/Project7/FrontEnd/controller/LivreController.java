@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -59,6 +60,16 @@ public class LivreController {
         logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
         model.addAttribute("livresRecherches", listeLivresRecherches);
         return "livre/listeLivresRecherches";
+    }
+
+    /* controller pour avoir le détail du livre */
+    @RequestMapping(path="/details/{id}",method = RequestMethod.GET)
+    public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
+        //User userConnecte = userService.getUserByMail(principal.getName());
+        LivreDTO livreDetail = livreService.getLivreById(id);
+        model.addAttribute("livre", livreDetail);
+        //model.addAttribute("user", userConnecte);
+        return "livre/livreDetails"; //view
     }
 
 }
