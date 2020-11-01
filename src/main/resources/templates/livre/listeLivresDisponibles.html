@@ -43,7 +43,14 @@
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.publication}"></td>
-                                                <td> Reserver </td>
+                                                <td>
+                                                    <div th:switch="${livre.disponibilite}">
+                                                        <form th:action="@{/reservation/reserver/livre/{id}(id=${livre.idLivre})}" method="post">
+                                                            <button class="btn btn-success my-2 my-sm-0" type="submit" th:case="'oui'" >Réserver</button>
+                                                            <p th:case="'non'" >Réservé</p>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
