@@ -75,7 +75,9 @@ public class LivreController {
     /* controller pour ajouter un livre dans la bibliotheque*/
     @RequestMapping(value="/add",method = RequestMethod.GET)
     public String addLivre(Model model, Principal principal) throws IOException, ParseException {
-        model.addAttribute("livre",new LivreDTO());
+        LivreDTO newLivre = new LivreDTO();
+        logger.info(" retour valeur de newLivre "+newLivre.toString());
+        model.addAttribute("livre",newLivre);
         model.addAttribute("titreFormLivre","ajouter un livre dans la bibliothèque");
         return "livre/addLivre";//view
     }
