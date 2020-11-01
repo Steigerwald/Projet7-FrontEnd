@@ -14,14 +14,14 @@ public class LivreDTO {
     private String titre;
     private String auteur;
 
-    @DateTimeFormat (pattern="MM-yyyy")
+    @DateTimeFormat (pattern="MM/yyyy")
     private Date publication;
 
     private String resume;
     private String nombrePages;
     private String nomCategorie;
 
-    @DateTimeFormat(pattern="dd-MM-yy")
+    @DateTimeFormat(pattern="dd/MM/yy")
     private Date dateAchat;
 
     private int prixLocation;
