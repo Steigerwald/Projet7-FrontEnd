@@ -34,10 +34,11 @@
                             <input type="text" th:field="*{auteur}" class="form-control"
                                    id="auteur" placeholder="nom auteur"/>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                            <label for="publication">Date de publication</label>
+                        <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                            <label for="publication" class="col-form-label">Date de publication</label>
                             <div class="input-group date">
-                                <input type="date" class="form-control" id="publication" autocomplete="off" th:field="*{auteur}"/>
+                                <input type="date" th:field="*{publication}" class="form-control"
+                                       id="publication" placeholder="date de publication" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
@@ -78,7 +79,7 @@
                         <div class="form-group col-xs-12 col-sm-3 col-md-3">
                             <label for="dateAchat" class="col-form-label">Date achat</label>
                             <div class="input-group date">
-                                <input type="date" th:field="*{auteur}" class="form-control"
+                                <input type="date" th:field="*{dateAchat}" class="form-control"
                                        id="dateAchat" placeholder="date" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>

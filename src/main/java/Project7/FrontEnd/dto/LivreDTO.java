@@ -14,22 +14,22 @@ public class LivreDTO {
     private String titre;
     private String auteur;
 
-    @DateTimeFormat (pattern="MM/yyyy")
-    private Date publication;
+    @DateTimeFormat (pattern="dd/MM/yyyy")
+    private String publication;
 
     private String resume;
     private String nombrePages;
     private String nomCategorie;
 
-    @DateTimeFormat(pattern="dd/MM/yy")
-    private Date dateAchat;
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    private String dateAchat;
 
     private int prixLocation;
     private String etatLivre;
     private Boolean disponibilite;
     private ReservationDTO reservation;
 
-
+/*
     public LivreDTO() throws ParseException {
         SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM/yyyy");
         String date1 = "10/2020";
@@ -61,7 +61,8 @@ public class LivreDTO {
             return null;
         }
     }
-
+*/
+/*
     public String getDisponibilite() {
         if (disponibilite){
             return "oui";
@@ -69,5 +70,5 @@ public class LivreDTO {
             return "non";
         }
     }
-
+*/
 }
