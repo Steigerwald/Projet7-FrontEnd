@@ -1,11 +1,15 @@
 package Project7.FrontEnd.service;
 
 import Project7.FrontEnd.dto.LivreDTO;
+import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.SearchDTO;
+import Project7.FrontEnd.form.LivreForm;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +20,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -108,5 +113,83 @@ public class LivreService {
         }
     }
 
+    /*Methode pour transformer un livreDTO en livreForm*/
+    public LivreForm transformerLivreDTOEnLivreForm(LivreDTO livreDTO){
+        LivreForm livreForm = new LivreForm ();
+        livreForm.setIdLivre(livreDTO.getIdLivre());
+        livreForm.setTitre(livreDTO.getTitre());
+        livreForm.setAuteur(livreDTO.getAuteur());
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
+        livreForm.setPublication(simpleDateFormat01.format(livreDTO.getPublication()));
+        livreForm.setResume(livreDTO.getResume());
+        livreForm.setNombrePages(livreDTO.getNombrePages());
+        livreForm.setNomCategorie(livreDTO.getNomCategorie());
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+        livreForm.setDateAchat(simpleDateFormat02.format(livreDTO.getDateAchat()));
+        livreForm.setPrixLocation(livreDTO.getPrixLocation());
+        livreForm.setEtatLivre(livreDTO.getEtatLivre());
+        livreForm.setDisponibilite(livreDTO.getDisponibilite());
+        livreForm.setReservation(livreDTO.getReservation());
+        return livreForm;
+    }
 
+    /*Methode pour transformer une liste de livreDTO en liste de livreForm*/
+    public List<LivreForm> transformerListeLivreDTOEnListeLivreForm(List<LivreDTO> livres){
+        List<LivreForm> listeLivresForm =new ArrayList<>();
+        for (LivreDTO livre:livres) {
+            listeLivresForm.add(transformerLivreDTOEnLivreForm(livre));
+        }
+        return listeLivresForm;
+    }
+
+    /*Methode pour transformer un livreForm en livreDTO*/
+    public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException {
+        LivreDTO livreDTO = new LivreDTO ();
+        livreDTO.setIdLivre(livreForm.getIdLivre());
+        livreDTO.setTitre(livreForm.getTitre());
+        livreDTO.setAuteur(livreForm.getAuteur());
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("dd-MM-yyyy HH:MM");
+        livreDTO.setPublication(simpleDateFormat01.parse(livreForm.getPublication()));
+        livreDTO.setResume(livreForm.getResume());
+        livreDTO.setNombrePages(livreForm.getNombrePages());
+        livreDTO.setNomCategorie(livreForm.getNomCategorie());
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+        livreDTO.setDateAchat(simpleDateFormat02.parse(livreForm.getDateAchat()));
+        livreDTO.setPrixLocation(livreForm.getPrixLocation());
+        livreDTO.setEtatLivre(livreForm.getEtatLivre());
+        livreDTO.setDisponibilite(livreForm.getDisponibilite());
+        livreDTO.setReservation(livreForm.getReservation());
+        return livreDTO;
+    }
+
+    /*Methode pour transformer une liste de livreForm en liste de livreDTO*/
+    public List<LivreDTO> transformerListeLivreFormEnListeLivreDTO(List<LivreForm> livres) throws ParseException {
+        List<LivreDTO> listeLivresDTO =new ArrayList<>();
+        for (LivreForm livre:livres) {
+            listeLivresDTO.add(transformerLivreFormEnLivreDTO(livre));
+        }
+        return listeLivresDTO;
+    }
+
+
+
+    /*Methode pour envoyer un livre à l'API pour enregistrement*/
+    public LivreDTO enregistrerUnLivre(LivreDTO livre) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(livre);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/addLivre"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body "+response.body());
+        System.out.println(response.body());
+
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<LivreDTO>(){});
+
+    }
 }

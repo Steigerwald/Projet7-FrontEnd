@@ -1,7 +1,6 @@
 package Project7.FrontEnd.dto;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,33 +12,26 @@ public class LivreDTO {
     private int idLivre;
     private String titre;
     private String auteur;
-
-    @DateTimeFormat (pattern="dd/MM/yyyy")
-    private String publication;
-
+    private Date publication;
     private String resume;
     private String nombrePages;
     private String nomCategorie;
-
-    @DateTimeFormat(pattern="dd/MM/yyyy")
-    private String dateAchat;
-
+    private Date dateAchat;
     private int prixLocation;
     private String etatLivre;
     private Boolean disponibilite;
     private ReservationDTO reservation;
 
-/*
     public LivreDTO() throws ParseException {
-        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM/yyyy");
-        String date1 = "10/2020";
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
+        String date1 = "10-2020";
         publication=simpleDateFormat01.parse(date1);
-        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String date2 = "30/10/2020 12:30";
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String date2 = "30-10-2020 12:30";
         dateAchat=simpleDateFormat02.parse(date2);
         setDisponibilite(true);
     }
-
+/*
     public String getPublication() {
         SimpleDateFormat dateFormat
                 = new SimpleDateFormat("MM/yyyy");

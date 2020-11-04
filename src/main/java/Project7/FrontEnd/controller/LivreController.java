@@ -2,6 +2,7 @@ package Project7.FrontEnd.controller;
 
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.SearchDTO;
+import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.service.LivreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,7 +33,7 @@ public class LivreController {
     public String getAllLivres(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivres();
         logger.info(" retour valeutr des livres du controller "+livres.get(0));
-        model.addAttribute("livres",livres);
+        model.addAttribute("livres",livreService.transformerListeLivreDTOEnListeLivreForm(livres));
         return "livre/listeLivres";
     }
 
@@ -40,7 +42,7 @@ public class LivreController {
     public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivresDisponibles();
         logger.info(" retour valeur de la liste livres du controller "+livres.get(0));
-        model.addAttribute("livresDisponibles",livres);
+        model.addAttribute("livresDisponibles",livreService.transformerListeLivreDTOEnListeLivreForm(livres));
         return "livre/listeLivresDisponibles";
     }
 
@@ -58,7 +60,7 @@ public class LivreController {
         List<LivreDTO> listeLivresRecherches =livreService.sendSearchLivre(search);
         logger.info(" retour valeur date publication du premier livre "+listeLivresRecherches.get(0).getPublication());
         logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
-        model.addAttribute("livresRecherches", listeLivresRecherches);
+        model.addAttribute("livresRecherches", livreService.transformerListeLivreDTOEnListeLivreForm(listeLivresRecherches));
         return "livre/listeLivresRecherches";
     }
 
@@ -67,7 +69,7 @@ public class LivreController {
     public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
         //User userConnecte = userService.getUserByMail(principal.getName());
         LivreDTO livreDetail = livreService.getLivreById(id);
-        model.addAttribute("livre", livreDetail);
+        model.addAttribute("livre", livreService.transformerLivreDTOEnLivreForm(livreDetail));
         //model.addAttribute("user", userConnecte);
         return "livre/livreDetails"; //view
     }
@@ -77,12 +79,16 @@ public class LivreController {
     public String addLivre(Model model, Principal principal) throws IOException, ParseException {
         LivreDTO newLivre = new LivreDTO();
         logger.info(" retour valeur de newLivre "+newLivre.toString());
-        model.addAttribute("livre",newLivre);
+        model.addAttribute("livre",livreService.transformerLivreDTOEnLivreForm(newLivre));
         model.addAttribute("titreFormLivre","ajouter un livre dans la bibliothèque");
         return "livre/addLivre";//view
     }
 
-
-
-
+    /* controller pour envoyer un ajout d'un livre pour l'API*/
+    @RequestMapping(value="/createLivreOrUpdateLivre",method = RequestMethod.POST)
+    public String createLivreOrUpdateLivre(LivreForm livre,Model model) throws IOException, InterruptedException, ParseException {
+        LivreDTO livreEnregistre =livreService.enregistrerUnLivre(livreService.transformerLivreFormEnLivreDTO(livre));
+        logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
+        return "redirect:/livre/all";
+    }
 }
