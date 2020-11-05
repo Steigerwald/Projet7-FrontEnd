@@ -4,12 +4,11 @@ import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.SearchDTO;
 import Project7.FrontEnd.form.LivreForm;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -148,13 +147,19 @@ public class LivreService {
         livreDTO.setIdLivre(livreForm.getIdLivre());
         livreDTO.setTitre(livreForm.getTitre());
         livreDTO.setAuteur(livreForm.getAuteur());
-        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("dd-MM-yyyy HH:MM");
-        livreDTO.setPublication(simpleDateFormat01.parse(livreForm.getPublication()));
+        //SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+        //livreDTO.setPublication(simpleDateFormat01.parse(livreForm.getPublication()));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1= format.parse ( livreForm.getPublication());
+        livreDTO.setPublication(date1);
         livreDTO.setResume(livreForm.getResume());
         livreDTO.setNombrePages(livreForm.getNombrePages());
         livreDTO.setNomCategorie(livreForm.getNomCategorie());
-        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
-        livreDTO.setDateAchat(simpleDateFormat02.parse(livreForm.getDateAchat()));
+        //SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+        //livreDTO.setDateAchat(simpleDateFormat02.parse(livreForm.getDateAchat()));
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date2= format1.parse (livreForm.getDateAchat());
+        livreDTO.setDateAchat(date2);
         livreDTO.setPrixLocation(livreForm.getPrixLocation());
         livreDTO.setEtatLivre(livreForm.getEtatLivre());
         livreDTO.setDisponibilite(livreForm.getDisponibilite());

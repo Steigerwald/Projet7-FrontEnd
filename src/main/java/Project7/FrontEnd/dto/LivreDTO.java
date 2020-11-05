@@ -23,11 +23,11 @@ public class LivreDTO {
     private ReservationDTO reservation;
 
     public LivreDTO() throws ParseException {
-        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
-        String date1 = "10-2020";
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy-dd HH:mm:ss");
+        String date1 = "2005-04-28 02:45:30";
         publication=simpleDateFormat01.parse(date1);
-        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        String date2 = "30-10-2020 12:30";
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("MM-yyyy-dd HH:mm:ss");
+        String date2 = "2005-04-28 02:45:30";
         dateAchat=simpleDateFormat02.parse(date2);
         setDisponibilite(true);
     }

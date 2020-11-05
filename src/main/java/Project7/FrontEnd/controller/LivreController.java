@@ -87,6 +87,7 @@ public class LivreController {
     /* controller pour envoyer un ajout d'un livre pour l'API*/
     @RequestMapping(value="/createLivreOrUpdateLivre",method = RequestMethod.POST)
     public String createLivreOrUpdateLivre(LivreForm livre,Model model) throws IOException, InterruptedException, ParseException {
+        logger.info(" retour valeur de publication de livre du controller "+livre.getPublication());
         LivreDTO livreEnregistre =livreService.enregistrerUnLivre(livreService.transformerLivreFormEnLivreDTO(livre));
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
         return "redirect:/livre/all";
