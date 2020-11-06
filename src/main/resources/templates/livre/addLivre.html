@@ -101,11 +101,22 @@
                                 <option th:value="'vieux'" th:text="'vieux'"></option>
                             </select>
                         </div>
+                        <div class="form-group col-xs-12 col-sm-3 col-md-3">
+                            <label for="bibliotheque" class="col-form-label">Bibliotheque</label>
+                            <select type="text" th:field="*{bibliotheque}" class="form-control" id="bibliotheque">
+                                <option value="" disabled selected hidden th:text="'Nom bibliotheque'">Bibliotheque</option>
+                                <option th:value=null></option>
+                                <option th:value=1 th:text="'ESPACE DE BRUGES'"></option>
+                                <option th:value=2 th:text="'ESPACE CULTUREL DE BORDEAUX'"></option>
+                                <option th:value=3 th:text="'TECHNOSPACE CULTUREL'"></option>
+                            </select>
+                        </div>
                     </div>
+                    <Br>
                     <Br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
-                            <input type="submit" class="btn btn-primary" value=" Enregistrer ">
+                            <input type="submit" class="btn btn-success" value=" Enregistrer ">
                         </div>
                         <input type="hidden" id="id" th:field="*{idLivre}">
                     </div>

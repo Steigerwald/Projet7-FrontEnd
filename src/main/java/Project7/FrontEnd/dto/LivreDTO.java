@@ -21,6 +21,7 @@ public class LivreDTO {
     private String etatLivre;
     private Boolean disponibilite;
     private ReservationDTO reservation;
+    private BibliothequeDTO bibliotheque;
 
     public LivreDTO() throws ParseException {
         SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy-dd HH:mm:ss");

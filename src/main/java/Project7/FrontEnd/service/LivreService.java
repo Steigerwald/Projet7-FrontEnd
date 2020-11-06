@@ -129,6 +129,7 @@ public class LivreService {
         livreForm.setEtatLivre(livreDTO.getEtatLivre());
         livreForm.setDisponibilite(livreDTO.getDisponibilite());
         livreForm.setReservation(livreDTO.getReservation());
+        livreForm.setBibliotheque(livreDTO.getBibliotheque());
         return livreForm;
     }
 
@@ -164,6 +165,7 @@ public class LivreService {
         livreDTO.setEtatLivre(livreForm.getEtatLivre());
         livreDTO.setDisponibilite(livreForm.getDisponibilite());
         livreDTO.setReservation(livreForm.getReservation());
+        livreDTO.setBibliotheque(livreForm.getBibliotheque());
         return livreDTO;
     }
 

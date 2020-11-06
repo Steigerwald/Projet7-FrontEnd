@@ -1,5 +1,6 @@
 package Project7.FrontEnd.form;
 
+import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class LivreForm {
     private String etatLivre;
     private Boolean disponibilite;
     private ReservationDTO reservation;
+    private BibliothequeDTO bibliotheque;
 
     }
 
