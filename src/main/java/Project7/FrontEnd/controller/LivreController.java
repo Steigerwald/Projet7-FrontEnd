@@ -1,8 +1,10 @@
 package Project7.FrontEnd.controller;
 
+import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.SearchDTO;
 import Project7.FrontEnd.form.LivreForm;
+import Project7.FrontEnd.service.BibliothequeService;
 import Project7.FrontEnd.service.LivreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +28,16 @@ public class LivreController {
     @Autowired
     public LivreService livreService;
 
+    @Autowired
+    public BibliothequeService bibliothequeService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(LivreController.class);
 
     /* controller pour avoir tous les livres*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllLivres(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivres();
-        logger.info(" retour valeutr des livres du controller "+livres.get(0));
+        logger.info(" retour valeur des livres du controller "+livres.get(0));
         model.addAttribute("livres",livreService.transformerListeLivreDTOEnListeLivreForm(livres));
         return "livre/listeLivres";
     }
@@ -80,14 +85,17 @@ public class LivreController {
         LivreDTO newLivre = new LivreDTO();
         logger.info(" retour valeur de newLivre "+newLivre.toString());
         model.addAttribute("livre",livreService.transformerLivreDTOEnLivreForm(newLivre));
+        logger.info(" retour valeur de bibliotheque de newLivre "+newLivre.getBibliotheque());
         model.addAttribute("titreFormLivre","ajouter un livre dans la bibliothèque");
+        List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
+        model.addAttribute("bibliotheques",bibliotheques);
         return "livre/addLivre";//view
     }
 
     /* controller pour envoyer un ajout d'un livre pour l'API*/
     @RequestMapping(value="/createLivreOrUpdateLivre",method = RequestMethod.POST)
     public String createLivreOrUpdateLivre(LivreForm livre,Model model) throws IOException, InterruptedException, ParseException {
-        logger.info(" retour valeur de publication de livre du controller "+livre.getPublication());
+        logger.info(" retour valeur de bibliotheque de livre du controller create "+livre.getBibliotheque());
         LivreDTO livreEnregistre =livreService.enregistrerUnLivre(livreService.transformerLivreFormEnLivreDTO(livre));
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
         return "redirect:/livre/all";

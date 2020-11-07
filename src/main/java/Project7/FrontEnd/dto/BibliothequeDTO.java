@@ -8,4 +8,14 @@ public class BibliothequeDTO {
     private String nomBibliotheque;
     private String lieu;
     private String adresse;
+
+    @Override
+    public String toString() {
+        return "BibliothequeDTO{" +
+                "idBibliotheque=" + idBibliotheque +
+                ", nomBibliotheque='" + nomBibliotheque + '\'' +
+                ", lieu='" + lieu + '\'' +
+                ", adresse='" + adresse + '\'' +
+                '}';
+    }
 }

@@ -23,7 +23,7 @@
         <div class="row">
             <section class="col-lg-12">
                 <div class="container">
-                    <div class="card">
+                    <div class="card col-xs-12 col-sm-12 col-md-12">
                         <div class="card-body">
                             <div th:switch="${livre}" class="container">
                                 <div class="table-responsive text-nowrap ncol-md-12">
@@ -35,7 +35,7 @@
                                                     <th>Titre</th>
                                                     <th>Auteur</th>
                                                     <th>Date publication</th>
-                                                    <th>Resumé</th>
+                                                    <th>Bibliothèque</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -43,10 +43,25 @@
                                                     <td th:text="${livre.titre}"></td>
                                                     <td th:text="${livre.auteur}"></td>
                                                     <td th:text="${livre.publication}"></td>
-                                                    <td th:text="${livre.resume}"></td>
+                                                    <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <Br>
+                                        <Br>
+                                        <table class="table table-striped" >
+                                            <thead>
+                                            <tr>
+                                                <th>Résumé et Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td th:text="${livre.resume}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <Br>
                                         <Br>
                                         <table class="table table-striped" >
                                             <thead>

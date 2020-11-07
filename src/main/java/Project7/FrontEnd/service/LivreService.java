@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,11 +26,10 @@ import java.util.*;
 @Service
 public class LivreService {
 
+    @Autowired
+    public BibliothequeService bibliothequeService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(LivreService.class);
-
-
-    public RestTemplate restTemplate;
-
 
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivres() throws IOException, ParseException {
@@ -128,7 +128,7 @@ public class LivreService {
         livreForm.setPrixLocation(livreDTO.getPrixLocation());
         livreForm.setEtatLivre(livreDTO.getEtatLivre());
         livreForm.setDisponibilite(livreDTO.getDisponibilite());
-        livreForm.setReservation(livreDTO.getReservation());
+        logger.info(" retour valeur de bibliotheque de livreDTO"+livreDTO.getBibliotheque());
         livreForm.setBibliotheque(livreDTO.getBibliotheque());
         return livreForm;
     }
@@ -143,7 +143,7 @@ public class LivreService {
     }
 
     /*Methode pour transformer un livreForm en livreDTO*/
-    public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException {
+    public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException, IOException {
         LivreDTO livreDTO = new LivreDTO ();
         livreDTO.setIdLivre(livreForm.getIdLivre());
         livreDTO.setTitre(livreForm.getTitre());
@@ -164,20 +164,20 @@ public class LivreService {
         livreDTO.setPrixLocation(livreForm.getPrixLocation());
         livreDTO.setEtatLivre(livreForm.getEtatLivre());
         livreDTO.setDisponibilite(livreForm.getDisponibilite());
-        livreDTO.setReservation(livreForm.getReservation());
+        logger.info(" retour valeur de bibliotheque de livreForm "+livreForm.getBibliotheque());
         livreDTO.setBibliotheque(livreForm.getBibliotheque());
+        //livreDTO.setBibliotheque(bibliothequeService.getBibliothequeById(livreForm.getBibliotheque()));
         return livreDTO;
     }
 
     /*Methode pour transformer une liste de livreForm en liste de livreDTO*/
-    public List<LivreDTO> transformerListeLivreFormEnListeLivreDTO(List<LivreForm> livres) throws ParseException {
+    public List<LivreDTO> transformerListeLivreFormEnListeLivreDTO(List<LivreForm> livres) throws ParseException, IOException {
         List<LivreDTO> listeLivresDTO =new ArrayList<>();
         for (LivreForm livre:livres) {
             listeLivresDTO.add(transformerLivreFormEnLivreDTO(livre));
         }
         return listeLivresDTO;
     }
-
 
 
     /*Methode pour envoyer un livre à l'API pour enregistrement*/

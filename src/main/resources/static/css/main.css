@@ -1,8 +1,10 @@
+
 body {
     padding-top: 2rem;
     display:flex;
     align-items: center;
     justify-content:center;
+    font-family:Pier Sans, didactgothic, serif;
 }
 
 main {
@@ -65,7 +67,7 @@ img {
     border-color: white !important;
     text-align: left !important;
     width:1000px!important;
-    padding-left:20px ;
+    padding-left:20px!important;
 }
 
 #carte{
@@ -88,14 +90,16 @@ Footer{
 
 @media only screen and (max-width:320px) {
     body {
-        font-size: 0.7em !important;
+        font-size: 0.9em !important;
     }
     h1,h2 {
         font-size: 1.1em !important;
     }
     .card{
         table-layout: auto!important;
-        width: 30px!important;
+        width:100%!important;
+        padding-left: 10%!important;
+        margin-left: 10%!Important;
     }
 
     .btn{
@@ -105,14 +109,15 @@ Footer{
 
 @media only screen and (max-width:480px) {
     body {
-        font-size: 0.9em !important;
+        font-size: 1.1em !important;
     }
     h1,h2 {
         font-size: 1.1em !important;
     }
     .card{
         table-layout: auto!important;
-        width: 50px!important;
+        width: 100%!important;
+
     }
     .btn{
         font-size: 0.9em !important;
@@ -121,14 +126,14 @@ Footer{
 
 @media only screen and (max-width:768px) {
     body {
-        font-size: 0.9em !important;
+        font-size: 1.2em !important;
     }
     h1,h2 {
         font-size: 1.5em !important;
     }
     .card{
         table-layout: auto!important;
-        width: 100px!important;
+        width: 100%!important;
     }
     .btn{
         font-size: 0.9em !important;

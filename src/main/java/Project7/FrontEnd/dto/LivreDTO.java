@@ -32,36 +32,4 @@ public class LivreDTO {
         dateAchat=simpleDateFormat02.parse(date2);
         setDisponibilite(true);
     }
-/*
-    public String getPublication() {
-        SimpleDateFormat dateFormat
-                = new SimpleDateFormat("MM/yyyy");
-        if (publication!=null){
-        String dateString = dateFormat.format(publication);
-        return dateString;
-        }else{
-            return null;
-        }
-    }
-
-    public String getDateAchat() {
-        SimpleDateFormat dateFormat
-                = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        if (dateAchat!=null){
-        String dateString = dateFormat.format(dateAchat);
-        return dateString;
-        }else{
-            return null;
-        }
-    }
-*/
-/*
-    public String getDisponibilite() {
-        if (disponibilite){
-            return "oui";
-        } else{
-            return "non";
-        }
-    }
-*/
 }

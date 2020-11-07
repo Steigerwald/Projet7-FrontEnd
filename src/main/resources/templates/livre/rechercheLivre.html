@@ -18,45 +18,43 @@
         <h3>
             Vous recherchez un ou des livres, remplissez ci-dessous les critères de recherche :
         </h3>
-        <div class="card">
-            <div class="card-body">
-                <div class="col-md-12">
-                    <form th:action="@{/livre/search/mycriteres}" th:object="${search}" method="post">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="auteur" class="col-form-label">Nom Auteur</label>
-                                <input type="text" th:field="*{auteur}" class="form-control" id="auteur" placeholder="Nom auteur " />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="titre" class="col-form-label">Titre du livre</label>
-                                <input type="text" th:field="*{titre}" class="form-control" id="titre" placeholder="Titre du livre " />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="nomCategorie" class="col-form-label">Catégorie du livre</label>
-                                <select type="text" th:field="*{nomCategorie}" class="form-control" id="nomCategorie">
-                                    <option value="" disabled selected hidden th:text="'Nom catégorie'">Nom catégorie</option>
-                                    <option th:value=null></option>
-                                    <option th:value="'Policier'" th:text="'Policier'"></option>
-                                    <option th:value="'Roman'" th:text="'Roman'"></option>
-                                    <option th:value="'Nouvelles'" th:text="'Nouvelles'"></option>
-                                    <option th:value="'Comtes'" th:text="'Comtes'"></option>
-                                    <option th:value="'Science Fiction'" th:text="'Science Fiction'"></option>
-                                    <option th:value="'Scolaire'" th:text="'Scolaire'"></option>
-                                    <option th:value="'Medecine'" th:text="'Medecine'"></option>
-                                    <option th:value="'Informatique'" th:text="'Informatique'"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="submit" class="btn btn-primary" value="Rechercher"><span class="fa fa-search"></span>
-                            </div>
-                        </div>
-                    </form>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <form th:action="@{/livre/search/mycriteres}" th:object="${search}" method="post">
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                        <label for="auteur" class="col-form-label">Nom Auteur</label>
+                        <input type="text" th:field="*{auteur}" class="form-control" id="auteur" placeholder="Nom auteur " />
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                        <label for="titre" class="col-form-label">Titre du livre</label>
+                        <input type="text" th:field="*{titre}" class="form-control" id="titre" placeholder="Titre du livre " />
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                        <label for="nomCategorie" class="col-form-label">Catégorie du livre</label>
+                        <select type="text" th:field="*{nomCategorie}" class="form-control" id="nomCategorie">
+                            <option value="" disabled selected hidden th:text="'Nom catégorie'">Nom catégorie</option>
+                            <option th:value=null></option>
+                            <option th:value="'Policier'" th:text="'Policier'"></option>
+                            <option th:value="'Roman'" th:text="'Roman'"></option>
+                            <option th:value="'Nouvelles'" th:text="'Nouvelles'"></option>
+                            <option th:value="'Comtes'" th:text="'Comtes'"></option>
+                            <option th:value="'Science Fiction'" th:text="'Science Fiction'"></option>
+                            <option th:value="'Scolaire'" th:text="'Scolaire'"></option>
+                            <option th:value="'Medecine'" th:text="'Medecine'"></option>
+                            <option th:value="'Informatique'" th:text="'Informatique'"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <!--<input type="submit" class="btn btn-primary" value="Rechercher"><span class="fa fa-search"></span>-->
+                        <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span> Rechercher
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <br>

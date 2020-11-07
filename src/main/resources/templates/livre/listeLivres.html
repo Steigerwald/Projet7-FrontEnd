@@ -35,6 +35,7 @@
                                                 <th>Titre</th>
                                                 <th>Auteur</th>
                                                 <th>Disponibilté</th>
+                                                <th>Bibliothèque</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -42,6 +43,7 @@
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.disponibilite}"></td>
+                                                <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
