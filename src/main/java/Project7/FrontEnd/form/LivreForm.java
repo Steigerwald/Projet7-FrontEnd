@@ -19,7 +19,6 @@ public class LivreForm {
     private String dateAchat;
     private int prixLocation;
     private String etatLivre;
-    private Boolean disponibilite;
-    private BibliothequeDTO bibliotheque;
+    private String bibliotheque;
     }
 

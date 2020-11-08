@@ -1,5 +1,6 @@
 package Project7.FrontEnd.service;
 
+import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.SearchDTO;
@@ -112,35 +113,30 @@ public class LivreService {
         }
     }
 
-    /*Methode pour transformer un livreDTO en livreForm*/
+    /*Methode pour transformer un livreDTO en livreForm
     public LivreForm transformerLivreDTOEnLivreForm(LivreDTO livreDTO){
         LivreForm livreForm = new LivreForm ();
         livreForm.setIdLivre(livreDTO.getIdLivre());
         livreForm.setTitre(livreDTO.getTitre());
         livreForm.setAuteur(livreDTO.getAuteur());
-        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
-        livreForm.setPublication(simpleDateFormat01.format(livreDTO.getPublication()));
         livreForm.setResume(livreDTO.getResume());
         livreForm.setNombrePages(livreDTO.getNombrePages());
         livreForm.setNomCategorie(livreDTO.getNomCategorie());
-        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
-        livreForm.setDateAchat(simpleDateFormat02.format(livreDTO.getDateAchat()));
         livreForm.setPrixLocation(livreDTO.getPrixLocation());
         livreForm.setEtatLivre(livreDTO.getEtatLivre());
-        livreForm.setDisponibilite(livreDTO.getDisponibilite());
         logger.info(" retour valeur de bibliotheque de livreDTO"+livreDTO.getBibliotheque());
-        livreForm.setBibliotheque(livreDTO.getBibliotheque());
+        livreForm.setBibliotheque( String.valueOf(livreDTO.getBibliotheque().getIdBibliotheque()));
         return livreForm;
-    }
+    }*/
 
-    /*Methode pour transformer une liste de livreDTO en liste de livreForm*/
+    /*Methode pour transformer une liste de livreDTO en liste de livreForm
     public List<LivreForm> transformerListeLivreDTOEnListeLivreForm(List<LivreDTO> livres){
         List<LivreForm> listeLivresForm =new ArrayList<>();
         for (LivreDTO livre:livres) {
             listeLivresForm.add(transformerLivreDTOEnLivreForm(livre));
         }
         return listeLivresForm;
-    }
+    }*/
 
     /*Methode pour transformer un livreForm en livreDTO*/
     public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException, IOException {
@@ -163,10 +159,10 @@ public class LivreService {
         livreDTO.setDateAchat(date2);
         livreDTO.setPrixLocation(livreForm.getPrixLocation());
         livreDTO.setEtatLivre(livreForm.getEtatLivre());
-        livreDTO.setDisponibilite(livreForm.getDisponibilite());
+        livreDTO.setDisponibilite(true);
         logger.info(" retour valeur de bibliotheque de livreForm "+livreForm.getBibliotheque());
-        livreDTO.setBibliotheque(livreForm.getBibliotheque());
-        //livreDTO.setBibliotheque(bibliothequeService.getBibliothequeById(livreForm.getBibliotheque()));
+        BibliothequeDTO bibliothequetouve = bibliothequeService.getBibliothequeById(Integer.parseInt(livreForm.getBibliotheque()));
+        livreDTO.setBibliotheque(bibliothequetouve);
         return livreDTO;
     }
 

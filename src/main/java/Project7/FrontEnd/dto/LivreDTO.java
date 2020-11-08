@@ -23,6 +23,16 @@ public class LivreDTO {
     private ReservationDTO reservation;
     private BibliothequeDTO bibliotheque;
 
+    public String getPublication() {
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
+        return simpleDateFormat01.format(publication);
+    }
+
+    public String getDateAchat() {
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+        return simpleDateFormat02.format(dateAchat);
+    }
+/*
     public LivreDTO() throws ParseException {
         SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy-dd HH:mm:ss");
         String date1 = "2005-04-28 02:45:30";
@@ -31,5 +41,5 @@ public class LivreDTO {
         String date2 = "2005-04-28 02:45:30";
         dateAchat=simpleDateFormat02.parse(date2);
         setDisponibilite(true);
-    }
+    }*/
 }

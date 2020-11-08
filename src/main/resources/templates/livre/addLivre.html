@@ -25,7 +25,7 @@
                 <form th:action="@{/livre/createLivreOrUpdateLivre}" th:object="${livre}" method="post">
                     <div class="row">
                         <div class="form-group col-xs-12 col-sm-6 col-md-3">
-                            <label for="titre" class="col-form-label">Titre du Livre</label>
+                            <label for="titre" class="col-form-label">Titre</label>
                             <input type="text" th:field="*{titre}" class="form-control"
                                    id="titre" placeholder="Titre du livre"/>
                         </div>
@@ -62,10 +62,10 @@
                                    id="pages" placeholder="nombre pages" />
                         </div>
                         <div class="form-group col-xs-12 col-sm-3 col-md-3">
-                            <label for="nomCategorie" class="col-form-label">Catégorie du livre</label>
+                            <label for="nomCategorie" class="col-form-label">Catégorie</label>
                             <select type="text" th:field="*{nomCategorie}" class="form-control" id="nomCategorie">
-                                <option value="" disabled selected hidden th:text="'Nom catégorie'">Nom catégorie</option>
-                                <option th:value=null></option>
+                                <option value="" disabled selected th:text="'Nom catégorie'">Nom catégorie</option>
+                                <!--<option th:value=null></option>-->
                                 <option th:value="'Policier'" th:text="'Policier'"></option>
                                 <option th:value="'Roman'" th:text="'Roman'"></option>
                                 <option th:value="'Nouvelles'" th:text="'Nouvelles'"></option>
@@ -87,15 +87,15 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-sm-2 col-md-2">
-                            <label for="prixLocation" class="col-form-label">Prix location en €</label>
+                            <label for="prixLocation" class="col-form-label">Prix location (€)</label>
                             <input type="text" th:field="*{prixLocation}" class="form-control"
                                    id="prixLocation" placeholder="prix location en €" />
                         </div>
                         <div class="form-group col-xs-12 col-sm-2 col-md-2">
                             <label for="etat" class="col-form-label">Etat du livre</label>
                             <select type="text" th:field="*{etatLivre}" class="form-control" id="etat">
-                                <option value="" disabled selected hidden th:text="'Nom catégorie'">etat</option>
-                                <option th:value=null></option>
+                                <option value="" disabled selected th:text="'Etat du livre'">etat</option>
+                                <!--<option th:value=null></option>-->
                                 <option th:value="'neuf'" th:text="'neuf'"></option>
                                 <option th:value="'normal'" th:text="'normal'"></option>
                                 <option th:value="'vieux'" th:text="'vieux'"></option>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-group col-xs-12 col-sm-4 col-md-4">
                             <label for="bibliotheque1" class="col-form-label">Bibliotheque</label>
-                            <select th:field="*{bibliotheque}" class="form-control" id="bibliotheque1">
+                            <select type="text"th:field="*{bibliotheque}" class="form-control" id="bibliotheque1">
                                 <option th:each="bibli : ${bibliotheques}" th:value="${bibli.getIdBibliotheque()}" th:text="${bibli.nomBibliotheque}">
                                 </option>
                                 <!--<option value="" disabled selected hidden th:text="'Nom bibliotheque'">Bibliotheque</option>

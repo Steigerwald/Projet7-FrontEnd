@@ -38,7 +38,7 @@ public class LivreController {
     public String getAllLivres(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivres();
         logger.info(" retour valeur des livres du controller "+livres.get(0));
-        model.addAttribute("livres",livreService.transformerListeLivreDTOEnListeLivreForm(livres));
+        model.addAttribute("livres",livres);
         return "livre/listeLivres";
     }
 
@@ -47,7 +47,7 @@ public class LivreController {
     public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivresDisponibles();
         logger.info(" retour valeur de la liste livres du controller "+livres.get(0));
-        model.addAttribute("livresDisponibles",livreService.transformerListeLivreDTOEnListeLivreForm(livres));
+        model.addAttribute("livresDisponibles",livres);
         return "livre/listeLivresDisponibles";
     }
 
@@ -63,9 +63,8 @@ public class LivreController {
     @RequestMapping(value="/search/mycriteres",method = RequestMethod.POST)
     public String getSearchLivre(SearchDTO search, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> listeLivresRecherches =livreService.sendSearchLivre(search);
-        logger.info(" retour valeur date publication du premier livre "+listeLivresRecherches.get(0).getPublication());
         logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
-        model.addAttribute("livresRecherches", livreService.transformerListeLivreDTOEnListeLivreForm(listeLivresRecherches));
+        model.addAttribute("livresRecherches", listeLivresRecherches);
         return "livre/listeLivresRecherches";
     }
 
@@ -74,7 +73,7 @@ public class LivreController {
     public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
         //User userConnecte = userService.getUserByMail(principal.getName());
         LivreDTO livreDetail = livreService.getLivreById(id);
-        model.addAttribute("livre", livreService.transformerLivreDTOEnLivreForm(livreDetail));
+        model.addAttribute("livre",livreDetail);
         //model.addAttribute("user", userConnecte);
         return "livre/livreDetails"; //view
     }
@@ -82,9 +81,9 @@ public class LivreController {
     /* controller pour ajouter un livre dans la bibliotheque*/
     @RequestMapping(value="/add",method = RequestMethod.GET)
     public String addLivre(Model model, Principal principal) throws IOException, ParseException {
-        LivreDTO newLivre = new LivreDTO();
+        LivreForm newLivre = new LivreForm();
         logger.info(" retour valeur de newLivre "+newLivre.toString());
-        model.addAttribute("livre",livreService.transformerLivreDTOEnLivreForm(newLivre));
+        model.addAttribute("livre",newLivre);
         logger.info(" retour valeur de bibliotheque de newLivre "+newLivre.getBibliotheque());
         model.addAttribute("titreFormLivre","ajouter un livre dans la bibliothèque");
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
