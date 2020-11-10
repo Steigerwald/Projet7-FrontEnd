@@ -16,6 +16,7 @@ public class ReservationDTO {
     private Boolean isactif;
     private UserDTO user;
 
+    /*
     public String getDateReservation() {
         SimpleDateFormat dateFormat
                 = new SimpleDateFormat("yyyy-MM-dd");
@@ -28,6 +29,6 @@ public class ReservationDTO {
                 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String dateString = dateFormat.format(dateDeRetrait);
         return dateString;
-    }
+    }*/
 
 }
