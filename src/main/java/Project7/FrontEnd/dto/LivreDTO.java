@@ -42,4 +42,17 @@ public class LivreDTO {
         dateAchat=simpleDateFormat02.parse(date2);
         setDisponibilite(true);
     }*/
+
+    public String toStringDatePublication() {
+
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
+        return simpleDateFormat01.format(publication);
+    }
+
+    public String toStringDateAchat(){
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+        return simpleDateFormat02.format(dateAchat);
+    }
+
+
 }

@@ -42,8 +42,8 @@
                                                 <tr>
                                                     <td th:text="${livre.titre}"></td>
                                                     <td th:text="${livre.auteur}"></td>
-                                                    <td th:text="${livre.publication}"></td>
-                                                    <!--<td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>-->
+                                                    <td th:text="${livre.toStringDatePublication()}"></td>
+                                                    <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -77,7 +77,7 @@
                                                 <tr>
                                                     <td th:text="${livre.nombrePages}"></td>
                                                     <td th:text="${livre.nomCategorie}"></td>
-                                                    <td th:text="${livre.dateAchat}"></td>
+                                                    <td th:text="${livre.toStringDateAchat()}"></td>
                                                     <td th:text="${livre.prixLocation}"></td>
                                                     <td th:text="${livre.etatLivre}"></td>
                                                 </tr>

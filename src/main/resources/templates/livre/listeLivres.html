@@ -43,7 +43,7 @@
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.disponibilite}"></td>
-                                                <!--<td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>-->
+                                                <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -42,7 +42,7 @@
                                             <tr th:each="livre : ${livresRecherches}">
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
-                                                <td th:text="${livre.publication}"></td>
+                                                <td th:text="${livre.toStringDatePublication()}"></td>
                                                 <td th:text="${livre.disponibilite}"></td>
                                             </tr>
                                             </tbody>
