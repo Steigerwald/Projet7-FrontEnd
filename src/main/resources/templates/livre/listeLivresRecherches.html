@@ -36,6 +36,7 @@
                                                 <th>Auteur</th>
                                                 <th>Date publication</th>
                                                 <th>Disponible</th>
+                                                <th>Bibliothèque</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -43,7 +44,8 @@
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.toStringDatePublication()}"></td>
-                                                <td th:text="${livre.disponibilite}"></td>
+                                                <td th:text="${livre.toStringDisponibilite()}"></td>
+                                                <td th:text="${livre.getBibliotheque().getNomBibliotheque()}"></td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -54,5 +54,13 @@ public class LivreDTO {
         return simpleDateFormat02.format(dateAchat);
     }
 
+    public String toStringDisponibilite(){
+        if (disponibilite){
+            return "oui";
+        }else{
+            return "non";
+        }
+    }
+
 
 }
