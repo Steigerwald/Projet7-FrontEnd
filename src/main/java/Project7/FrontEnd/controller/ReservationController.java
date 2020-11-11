@@ -1,7 +1,15 @@
 package Project7.FrontEnd.controller;
 
+import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
+import Project7.FrontEnd.dto.UserDTO;
+import Project7.FrontEnd.form.LivreForm;
+import Project7.FrontEnd.form.ReservationForm;
+import Project7.FrontEnd.service.LivreService;
 import Project7.FrontEnd.service.ReservationService;
+import Project7.FrontEnd.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -20,6 +29,14 @@ public class ReservationController {
     @Autowired
     public ReservationService reservationService;
 
+    @Autowired
+    public UserService userService;
+
+    @Autowired
+    public LivreService livreService;
+
+    Logger logger = (Logger) LoggerFactory.getLogger(ReservationController.class);
+
     /* controller pour avoir toutes les reservations*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllReservations(Model model, Principal principal) throws IOException {
@@ -27,5 +44,21 @@ public class ReservationController {
         model.addAttribute("reservations",listeReservations);
         return "reservation/listeReservations";
     }
+
+
+    /* controller pour envoyer une réservation d'un livre pour l'API*/
+    @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
+    public String reservationLivre(ReservationForm reservation, Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
+
+        logger.info(" retour valeur de principalGetName "+principal.getName());
+        UserDTO userConnecte = userService.getUserByMail(principal.getName());
+        ReservationDTO reservationEnregistree =(reservationService.transformerReservationFormEnReservationDTO(reservation,userConnecte));
+        LivreDTO livreReserve = livreService.getLivreById(id);
+        livreReserve.setDisponibilite(false);
+        livreReserve.setReservation(reservationService.createReservation(reservationEnregistree));
+        livreService.modifierUnLivre(livreReserve);
+        return "reservation/DemandeReservation";
+    }
+
 
 }

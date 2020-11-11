@@ -9,9 +9,6 @@ import java.util.Date;
 public class ReservationForm {
     private int idReservation;
     private String etatReservation;
-    private Date dateReservation;
-    private Date dateDeRetrait;
+    private String dateReservation;
     private int delaiDeLocation;
-    private Boolean isactif;
-    private UserDTO user;
 }

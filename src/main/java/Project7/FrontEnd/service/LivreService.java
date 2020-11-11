@@ -195,4 +195,27 @@ public class LivreService {
         return mapper.readValue(response.body(), new TypeReference<LivreDTO>(){});
 
     }
+
+    /*Methode pour modifier un livre à l'API rest*/
+    public LivreDTO modifierUnLivre(LivreDTO livre) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(livre);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body "+response.body());
+        System.out.println(response.body());
+
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<LivreDTO>(){});
+
+    }
+
+
+
 }
