@@ -55,10 +55,12 @@ public class ReservationController {
         ReservationDTO reservationEnregistree =(reservationService.transformerReservationFormEnReservationDTO(reservation,userConnecte));
         LivreDTO livreReserve = livreService.getLivreById(id);
         livreReserve.setDisponibilite(false);
-        livreReserve.setReservation(reservationService.createReservation(reservationEnregistree));
-        livreService.modifierUnLivre(livreReserve);
+        ReservationDTO reservation2 =reservationService.createReservation(reservationEnregistree);
+        livreReserve.setReservation(reservation2);
+        LivreDTO livre=livreService.modifierUnLivre(livreReserve);
+        model.addAttribute("livre",livre);
+        model.addAttribute("reservation",reservation2);
         return "reservation/DemandeReservation";
     }
-
 
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <title>Votre demande de réservation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/barre.css}" />
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.4.1/css/all.css}" />
+</head>
+<body>
+
+    <h2>
+        <span>Vous avez demandé de réserver le livre : </span><br>
+        <a th:text="${livre.titre}"></a>
+        <span></span><br>
+        <span>Votre réservation N°: </span> <a th:text="${reservation.idReservation}"></a> <br>
+        <span> Pour le prix de location de  </span><a th:text="${livre.prixLocation}"></a> <br>
+        <span> Maintenant venez chercher votre livre dans votre bibliothèque préférée </span>
+        <span></span><br>
+        <span> Bonne lecture !! </span>
+    </h2>
+
+
+
+</body>
+</html>
