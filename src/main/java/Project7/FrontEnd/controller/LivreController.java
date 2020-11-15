@@ -108,6 +108,28 @@ public class LivreController {
         return "redirect:/livre/all"; //view
     }
 
+    /* controller pour modifier un livre dans la bibliotheque*/
+    @RequestMapping(value="/modify/{id}",method = RequestMethod.GET)
+    public String modifyLivre(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
+        LivreDTO livreDetail = livreService.getLivreById(id);
+        LivreForm livreFormModifie = livreService.transformerLivreDTOEnLivreForm(livreDetail);
+        logger.info(" retour valeur de livreFormModifie "+livreFormModifie.toString());
+        model.addAttribute("livre",livreFormModifie);
+        logger.info(" retour valeur de bibliotheque de livreFormModifie "+livreFormModifie.getBibliotheque());
+        model.addAttribute("titreFormLivre","modifier un livre dans la bibliothèque");
+        List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
+        model.addAttribute("bibliotheques",bibliotheques);
+        return "livre/modifyLivre";//view
+    }
+
+    /* controller pour modifier un livre de l'API*/
+    @RequestMapping(path="/modifier/{id}",method = RequestMethod.POST)
+    public String modifierLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
+        LivreDTO livreDetail = livreService.getLivreById(id);
+        LivreDTO livreModifie= livreService.modifierUnLivre(livreDetail);
+        model.addAttribute("livre",livreModifie);
+        return "redirect:livre/livreDetails"; //view
+    }
 
 
 
