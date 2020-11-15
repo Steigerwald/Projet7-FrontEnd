@@ -49,7 +49,6 @@ public class ReservationController {
     /* controller pour envoyer une réservation d'un livre pour l'API*/
     @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
     public String reservationLivre(ReservationForm reservation, Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
-
         logger.info(" retour valeur de principalGetName ");
         UserDTO userConnecte = userService.getUserByMail("admin@gmail.com");
         ReservationDTO reservationEnregistree =(reservationService.transformerReservationFormEnReservationDTO(reservation,userConnecte));

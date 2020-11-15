@@ -22,7 +22,7 @@
         </h3>
         <div class="form">
             <div class="col-md-12">
-                <form th:action="@{/livre/modify/{nom} (nom=${livre.idLivre})}" th:object="${livre}" method="post">
+                <form th:action="@{/livre/modifier}" th:object="${livre}" method="post">
                     <div class="row">
                         <div class="form-group col-xs-12 col-sm-6 col-md-3">
                             <label for="titre" class="col-form-label">Titre</label>
@@ -54,8 +54,6 @@
                             <textarea type="text" rows="3" id="description" placeholder="Description" class="form-control"
                                       th:field="*{resume}" autocomplete="off"></textarea>
                         </div>
-
-
                         <div class="form-group col-xs-12 col-sm-2 col-md-2">
                             <label for="pages" class="col-form-label">Nombre pages</label>
                             <input type="text" th:field="*{nombrePages}" class="form-control"

@@ -109,7 +109,7 @@ public class LivreController {
     }
 
     /* controller pour modifier un livre dans la bibliotheque*/
-    @RequestMapping(value="/modify/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/modify/{id}",method = RequestMethod.POST)
     public String modifyLivre(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
         LivreDTO livreDetail = livreService.getLivreById(id);
         LivreForm livreFormModifie = livreService.transformerLivreDTOEnLivreForm(livreDetail);
@@ -123,12 +123,12 @@ public class LivreController {
     }
 
     /* controller pour modifier un livre de l'API*/
-    @RequestMapping(path="/modifier/{id}",method = RequestMethod.POST)
-    public String modifierLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
-        LivreDTO livreDetail = livreService.getLivreById(id);
-        LivreDTO livreModifie= livreService.modifierUnLivre(livreDetail);
+    @RequestMapping(path="/modifier",method = RequestMethod.POST)
+    public String modifierLivre(LivreForm livre,Model model,Principal principal) throws IOException, ParseException, InterruptedException {
+        LivreDTO livreDTO=livreService.transformerLivreFormEnLivreDTO(livre);
+        LivreDTO livreModifie= livreService.modifierUnLivre(livreDTO);
         model.addAttribute("livre",livreModifie);
-        return "redirect:livre/livreDetails"; //view
+        return "redirect:/livre/all"; //view
     }
 
 

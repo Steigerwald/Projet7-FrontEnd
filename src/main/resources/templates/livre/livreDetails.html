@@ -60,7 +60,11 @@
                                             <tbody>
                                             <tr>
                                                 <td th:text="${livre.resume}"></td>
-                                                <td>à Modifier</td>
+                                                <td>
+                                                    <form th:action="@{/livre/modify/{id}(id=${livre.idLivre})}" method="post">
+                                                        <button class="btn btn-primary my-2 my-sm-0" type="submit">Modifier</button>
+                                                    </form>
+                                                </td>
                                                 <td>
                                                     <div th:switch="${livre.disponibilite}">
                                                         <form th:action="@{/livre/effacer/{id}(id=${livre.idLivre})}" method="post">
