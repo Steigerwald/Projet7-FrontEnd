@@ -68,7 +68,7 @@ public class ReservationService {
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:9090/reservation//addReservation"))
+                .uri(URI.create("http://localhost:9090/reservation/addReservation"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();

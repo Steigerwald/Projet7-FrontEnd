@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -38,8 +41,16 @@ public class UserService {
 
     /*Methode pour obtenir un user par mail de l'API rest*/
     public UserDTO getUserByMail(String mail) throws IOException, InterruptedException {
+
+/*
+        var values = new HashMap<String, String>() {{
+            put("username", "admin@gmail");
+        }};*/
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
+        String requestParam = objectMapper
+                .writeValueAsString(mail);
+
         String requestBody = objectMapper
                 .writeValueAsString(mail);
         HttpRequest request = HttpRequest.newBuilder()

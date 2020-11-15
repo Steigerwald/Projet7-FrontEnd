@@ -53,11 +53,22 @@
                                             <thead>
                                             <tr>
                                                 <th>Résumé et Description</th>
+                                                <th>Modifier</th>
+                                                <th>Effacer</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td th:text="${livre.resume}"></td>
+                                                <td>à Modifier</td>
+                                                <td>
+                                                    <div th:switch="${livre.disponibilite}">
+                                                        <form th:action="@{/livre/effacer/{id}(id=${livre.idLivre})}" method="post">
+                                                            <button class="btn btn-danger my-2 my-sm-0" type="submit" th:case="true" >Annuler</button>
+                                                            <p th:case="false" >Non disponible</p>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>

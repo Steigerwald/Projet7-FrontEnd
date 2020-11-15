@@ -92,11 +92,23 @@ public class LivreController {
     }
 
     /* controller pour envoyer un ajout d'un livre pour l'API*/
-    @RequestMapping(value="/createLivreOrUpdateLivre",method = RequestMethod.POST)
+    @RequestMapping(value="/createLivre",method = RequestMethod.POST)
     public String createLivreOrUpdateLivre(LivreForm livre,Model model) throws IOException, InterruptedException, ParseException {
         logger.info(" retour valeur de bibliotheque de livre du controller create "+livre.getBibliotheque());
         LivreDTO livreEnregistre =livreService.enregistrerUnLivre(livreService.transformerLivreFormEnLivreDTO(livre));
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
         return "redirect:/livre/all";
     }
+
+    /* controller pour effacer un livre de l'API*/
+    @RequestMapping(path="/effacer/{id}",method = RequestMethod.POST)
+    public String effacerLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
+        LivreDTO livreDetail = livreService.getLivreById(id);
+        livreService.effacerUnLivre(livreDetail);
+        return "redirect:/livre/all"; //view
+    }
+
+
+
+
 }

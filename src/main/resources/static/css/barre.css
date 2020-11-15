@@ -34,6 +34,11 @@ body{
     color: red !important;
 }
 
+.navbar-nav > li {
+    left: auto !important;
+    right: 0 !important;
+}
+
 /* Couleur utilisée pour le lien actif (celui qui est affiché sur la page) */
 /*
 .navbar-default, .navbar-nav > .active > a,

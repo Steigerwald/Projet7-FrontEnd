@@ -50,8 +50,8 @@ public class ReservationController {
     @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
     public String reservationLivre(ReservationForm reservation, Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
 
-        logger.info(" retour valeur de principalGetName "+principal.getName());
-        UserDTO userConnecte = userService.getUserByMail(principal.getName());
+        logger.info(" retour valeur de principalGetName ");
+        UserDTO userConnecte = userService.getUserByMail("admin@gmail.com");
         ReservationDTO reservationEnregistree =(reservationService.transformerReservationFormEnReservationDTO(reservation,userConnecte));
         LivreDTO livreReserve = livreService.getLivreById(id);
         livreReserve.setDisponibilite(false);
