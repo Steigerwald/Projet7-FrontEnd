@@ -66,6 +66,4 @@ public class UserService {
         return mapper.readValue(response.body(), new TypeReference<UserDTO>(){});
     }
 
-
-
 }

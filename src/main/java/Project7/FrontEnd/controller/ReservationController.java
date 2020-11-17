@@ -2,6 +2,7 @@ package Project7.FrontEnd.controller;
 
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
+import Project7.FrontEnd.dto.RoleDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.ReservationForm;
@@ -48,13 +49,13 @@ public class ReservationController {
 
     /* controller pour envoyer une réservation d'un livre pour l'API*/
     @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
-    public String reservationLivre(ReservationForm reservation, Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
-        logger.info(" retour valeur de principalGetName ");
-        UserDTO userConnecte = userService.getUserByMail("admin@gmail.com");
-        ReservationDTO reservationEnregistree =(reservationService.transformerReservationFormEnReservationDTO(reservation,userConnecte));
+    public String reservationLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
+        UserDTO userConnecte = userService.getUserById(1);
+        ReservationDTO reservation = new ReservationDTO();
+        reservation.setUser(userConnecte);
         LivreDTO livreReserve = livreService.getLivreById(id);
         livreReserve.setDisponibilite(false);
-        ReservationDTO reservation2 =reservationService.createReservation(reservationEnregistree);
+        ReservationDTO reservation2 =reservationService.createReservation(reservation);
         livreReserve.setReservation(reservation2);
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
         model.addAttribute("livre",livre);
