@@ -34,24 +34,14 @@
                                             <tr>
                                                 <th>N°de reservation</th>
                                                 <th>Etat</th>
-                                                <th>Date de reservation</th>
-                                                <th>Date de retrait</th>
-                                                <th>Délai(J)</th>
-                                                <th>Nom du Loueur</th>
-                                                <th>Prénom du loueur</th>
-                                                <th>Mail du loueur</th>
+                                                <th>Détails</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="reservation : ${reservations}">
                                                 <td th:text="${reservation.idReservation}"></td>
                                                 <td th:text="${reservation.etatReservation}"></td>
-                                                <td th:text="${reservation.dateReservation}"></td>
-                                                <td th:text="${reservation.dateDeRetrait}"></td>
-                                                <td th:text="${reservation.delaiDeLocation}"></td>
-                                                <td th:text="${reservation.user.nomUser}"></td>
-                                                <td th:text="${reservation.user.prenomUser}"></td>
-                                                <td th:text="${reservation.user.mailUser}"></td>
+                                                <td> <a th:href="@{/reservation/detail/{nom} (nom=${reservation.idReservation})}" >plus info</a></td>
                                             </tr>
                                             </tbody>
                                         </table>

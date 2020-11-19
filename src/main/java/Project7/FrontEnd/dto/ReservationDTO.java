@@ -17,19 +17,17 @@ public class ReservationDTO {
     private Boolean isactif;
     private UserDTO user;
 
-    /*
-    public String getDateReservation() {
-        SimpleDateFormat dateFormat
-                = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = dateFormat.format(dateReservation);
-        return dateString;
+    public String toStringDateReservation() {
+        SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
+        return simpleDateFormat01.format(dateReservation);
     }
 
-    public String getDateDeRetrait() {
-        SimpleDateFormat dateFormat
-                = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String dateString = dateFormat.format(dateDeRetrait);
-        return dateString;
-    }*/
-
+    public String toStringDateDeRetrait() {
+        if (dateDeRetrait != null) {
+            SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+            return simpleDateFormat02.format(dateDeRetrait);
+        }else {
+            return "pas encore retiré";
+        }
+    }
 }

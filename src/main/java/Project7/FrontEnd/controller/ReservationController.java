@@ -2,10 +2,7 @@ package Project7.FrontEnd.controller;
 
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
-import Project7.FrontEnd.dto.RoleDTO;
 import Project7.FrontEnd.dto.UserDTO;
-import Project7.FrontEnd.form.LivreForm;
-import Project7.FrontEnd.form.ReservationForm;
 import Project7.FrontEnd.service.LivreService;
 import Project7.FrontEnd.service.ReservationService;
 import Project7.FrontEnd.service.UserService;
@@ -60,7 +57,19 @@ public class ReservationController {
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
         model.addAttribute("livre",livre);
         model.addAttribute("reservation",reservation2);
-        return "reservation/DemandeReservation";
+        return "reservation/demandeReservation";
     }
+
+    /* controller pour avoir le détail de la réservation */
+    @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
+    public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
+        ReservationDTO reservationDetail = reservationService.getReservationById(id);
+        model.addAttribute("reservation",reservationDetail);
+        return "reservation/reservationDetail"; //view
+    }
+
+
+
+
 
 }

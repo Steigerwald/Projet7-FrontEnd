@@ -80,6 +80,19 @@ public class ReservationService {
         return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
     }
 
+    /*Methode pour obtenir une réservation disponible de la base de données de l'API rest*/
+    public ReservationDTO getReservationById(int id) throws IOException, ParseException {
+        ObjectMapper mapper =new ObjectMapper();
+        ReservationDTO reservationById = mapper.readValue(new URL("http://localhost:9090/reservation/"+id),new TypeReference<ReservationDTO>(){});
+        if(reservationById!=null) {
+            logger.info(" l'id de la reservation trouvée est :  "+reservationById.getIdReservation());
+            return reservationById;
+        } else {
+            logger.info(" retour de nul car pas d'élément et de reservation trouvée ");
+            return null;
+        }
+    }
+
 
 
 }
