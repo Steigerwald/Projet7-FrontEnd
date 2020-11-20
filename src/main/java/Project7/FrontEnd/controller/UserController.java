@@ -21,6 +21,13 @@ public class UserController {
         return "home/home";
     }
 
+    /* controller de la page de présentation */
+    @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
+    public String EspacePersonnel(){
+        logger.info(" on est passe par la avant l'appel de la page ZspacePersonnel");
+        return "user/EspacePerso";
+    }
+
 
     /* controller pour avoir un role par id de l'API*/
 
