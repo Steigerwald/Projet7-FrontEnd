@@ -33,6 +33,7 @@
                                             <tr>
                                                 <th>N°de reservation</th>
                                                 <th>Etat</th>
+                                                <th>Nom Loueur et Prénom</th>
                                                 <th>Retrait de la commande</th>
                                                 <th>Date de retrait</th>
                                                 <th>Détails</th>
@@ -42,6 +43,7 @@
                                             <tr th:each="reservation : ${reservations}">
                                                 <td th:text="${reservation.idReservation}"></td>
                                                 <td th:text="${reservation.etatReservation}"></td>
+                                                <td th:text="${reservation.user.nomUser} + ' ' + ${reservation.user.prenomUser}"></td>
                                                 <td>
                                                     <div th:switch="${reservation.dateDeRetrait}">
                                                         <form th:action="@{/reservation/retirer/{id}(id=${reservation.idReservation})}" method="post">
