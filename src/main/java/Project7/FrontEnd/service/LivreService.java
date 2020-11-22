@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -40,6 +41,20 @@ public class LivreService {
             logger.info(" retour liste tousLivres car la taille de laliste >0 "+tousLivres);
             logger.info(" valeur livre "+tousLivres.get(0));
             return tousLivres;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousLivres ");
+            return new ArrayList<LivreDTO>();
+        }
+    }
+
+    /*Methode pour obtenir tous les livres de la réservation de la base de données API*/
+    public List<LivreDTO> getAllLivresByIdreservation(int idReservation) throws IOException {
+        ObjectMapper mapper =new ObjectMapper();
+        List<LivreDTO> tousLivresReservation = mapper.readValue(new URL("http://localhost:9090/livre/reservation/"+idReservation),new TypeReference<List<LivreDTO>>(){});
+        if(tousLivresReservation.size() > 0) {
+            logger.info(" retour liste tousLivres car la taille de laliste >0 "+tousLivresReservation);
+            logger.info(" valeur livre "+tousLivresReservation.get(0));
+            return tousLivresReservation;
         } else {
             logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousLivres ");
             return new ArrayList<LivreDTO>();

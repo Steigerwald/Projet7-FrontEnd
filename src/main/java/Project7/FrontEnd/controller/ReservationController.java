@@ -64,12 +64,17 @@ public class ReservationController {
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
     public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
+        List<LivreDTO> livresReserves =livreService.getAllLivresByIdreservation(reservationDetail.getIdReservation());
         model.addAttribute("reservation",reservationDetail);
+        model.addAttribute("livres",livresReserves);
         return "reservation/reservationDetail"; //view
     }
 
-
-
-
-
+    @RequestMapping(value="/retirer/{id}",method = RequestMethod.POST)
+    public String reservationRetirer(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
+        ReservationDTO reservationARetirer =reservationService.getReservationById(id);
+        ReservationDTO reservationRetiree = reservationService.retirerReservation(reservationARetirer);
+        //model.addAttribute("reservation",reservationRetiree);
+        return "user/EspaceAdmin";
+    }
 }

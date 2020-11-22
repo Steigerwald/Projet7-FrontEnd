@@ -6,6 +6,7 @@ import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.ReservationForm;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -93,6 +94,39 @@ public class ReservationService {
         }
     }
 
+    /*Methode pour obtenir toutes les reservations à valider de la base de données de l'API rest*/
+    public List<ReservationDTO> getAllReservationsAValider() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<ReservationDTO> toutesReservationsAValider = mapper.readValue(new URL("http://localhost:9090/reservation/AValider"), new TypeReference<List<ReservationDTO>>() {
+        });
+        if (toutesReservationsAValider.size() > 0) {
+            logger.info(" retour liste toutesReservations car la taille de laliste >0 " + toutesReservationsAValider);
+            return toutesReservationsAValider;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste toutesReservations ");
+            return new ArrayList<ReservationDTO>();
+        }
+    }
 
+        /*Methode pour retirer une reservation de la base de données de l'API rest*/
+        public ReservationDTO retirerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
+            Date today = new Date();
+            reservation.setDateDeRetrait(today);
+            reservation.setEtatReservation("en cours de pret");
+            HttpClient client = HttpClient.newHttpClient();
+            var objectMapper = new ObjectMapper();
+            String requestBody = objectMapper
+                    .writeValueAsString(reservation);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:9090/reservation/"))
+                    .header("Content-Type", "application/json")
+                    .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            logger.info(" reponse du body "+response.body());
+            System.out.println(response.body());
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
+        }
 
 }

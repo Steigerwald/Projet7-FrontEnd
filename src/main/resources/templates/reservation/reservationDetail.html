@@ -65,6 +65,21 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
+                                            <br>
+                                            <table class="table table-striped" >
+                                                <thead>
+                                                <tr>
+                                                    <th>Titre</th>
+                                                    <th>Auteur</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="livre : ${livres}">
+                                                    <td th:text="${livre.getTitre()}"></td>
+                                                    <td th:text="${livre.getAuteur()}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
