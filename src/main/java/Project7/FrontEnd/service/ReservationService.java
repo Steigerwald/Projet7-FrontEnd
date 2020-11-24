@@ -108,6 +108,20 @@ public class ReservationService {
         }
     }
 
+    /*Methode pour obtenir toutes les reservations en cours de la base de données de l'API rest*/
+    public List<ReservationDTO> getAllReservationsEnCours() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<ReservationDTO> toutesReservationsEnCours = mapper.readValue(new URL("http://localhost:9090/reservation/EnCours"), new TypeReference<List<ReservationDTO>>() {
+        });
+        if (toutesReservationsEnCours.size() > 0) {
+            logger.info(" retour liste toutesReservationsEnCours car la taille de laliste >0 " + toutesReservationsEnCours);
+            return toutesReservationsEnCours;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste toutesReservationsEnCours ");
+            return new ArrayList<ReservationDTO>();
+        }
+    }
+
         /*Methode pour retirer une reservation de la base de données de l'API rest*/
         public ReservationDTO retirerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
             Date today = new Date();
@@ -128,5 +142,28 @@ public class ReservationService {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
         }
+
+    /*Methode pour enregistrer un retour d'une reservation de la base de données de l'API rest*/
+    public ReservationDTO retournerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
+        Date today = new Date();
+        reservation.setDateDeRetour(today);
+        reservation.setEtatReservation("retournée");
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(reservation);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/"))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body "+response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
+    }
+
+
 
 }

@@ -12,10 +12,12 @@ public class ReservationDTO {
     private String etatReservation;
     private Date dateReservation;
     private Date dateDeRetrait;
+    private Date dateDeRetour;
     private int delaiDeLocation;
     private Boolean prolongation;
     private Boolean isactif;
     private UserDTO user;
+    private LivreDTO livre;
 
     public String toStringDateReservation() {
         SimpleDateFormat simpleDateFormat01 = new SimpleDateFormat("MM-yyyy");
@@ -30,4 +32,15 @@ public class ReservationDTO {
             return "pas encore retiré";
         }
     }
+
+    public String toStringDateDeRetour() {
+        if (dateDeRetour != null) {
+            SimpleDateFormat simpleDateFormat03 = new SimpleDateFormat("dd-MM-yyyy");
+            return simpleDateFormat03.format(dateDeRetour);
+        }else {
+            return "pas encore retourné";
+        }
+    }
+
+
 }

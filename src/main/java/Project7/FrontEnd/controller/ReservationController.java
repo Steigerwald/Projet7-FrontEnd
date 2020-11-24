@@ -52,8 +52,8 @@ public class ReservationController {
         reservation.setUser(userConnecte);
         LivreDTO livreReserve = livreService.getLivreById(id);
         livreReserve.setDisponibilite(false);
+        reservation.setLivre(livreReserve);
         ReservationDTO reservation2 =reservationService.createReservation(reservation);
-        livreReserve.setReservation(reservation2);
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
         model.addAttribute("livre",livre);
         model.addAttribute("reservation",reservation2);
@@ -64,9 +64,8 @@ public class ReservationController {
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
     public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
-        List<LivreDTO> livresReserves =livreService.getAllLivresByIdreservation(reservationDetail.getIdReservation());
         model.addAttribute("reservation",reservationDetail);
-        model.addAttribute("livres",livresReserves);
+        model.addAttribute("livre",reservationDetail.getLivre());
         return "reservation/reservationDetail"; //view
     }
 
@@ -77,4 +76,15 @@ public class ReservationController {
         //model.addAttribute("reservation",reservationRetiree);
         return "user/EspaceAdmin";
     }
+
+    @RequestMapping(value="/retourDeLocation/{id}",method = RequestMethod.POST)
+    public String reservationRetourner(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
+        ReservationDTO reservationARetourner =reservationService.getReservationById(id);
+        ReservationDTO reservationRetiree = reservationService.retournerReservation(reservationARetourner);
+        //model.addAttribute("reservation",reservationRetiree);
+        return "user/EspaceAdmin";
+    }
+
+
+
 }

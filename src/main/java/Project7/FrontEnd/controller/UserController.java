@@ -42,8 +42,10 @@ public class UserController {
     public String EspaceAdministration(Model model) throws IOException {
         logger.info(" on est passe par la avant l'appel de la page EspaceAdministration");
         List<ReservationDTO> listeReservationsAValider = reservationService.getAllReservationsAValider();
+        List<ReservationDTO> listeReservationsEnCours = reservationService.getAllReservationsEnCours();
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
         model.addAttribute("reservations",listeReservationsAValider);
+        model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         return "user/EspaceAdmin";
     }
 
