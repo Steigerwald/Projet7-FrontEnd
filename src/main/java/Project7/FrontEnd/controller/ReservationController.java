@@ -43,7 +43,6 @@ public class ReservationController {
         return "reservation/listeReservations";
     }
 
-
     /* controller pour envoyer une réservation d'un livre pour l'API*/
     @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
     public String reservationLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
@@ -84,7 +83,5 @@ public class ReservationController {
         //model.addAttribute("reservation",reservationRetiree);
         return "user/EspaceAdmin";
     }
-
-
 
 }

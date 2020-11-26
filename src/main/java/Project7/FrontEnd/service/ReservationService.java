@@ -1,7 +1,5 @@
 package Project7.FrontEnd.service;
 
-import Project7.FrontEnd.dto.BibliothequeDTO;
-import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LivreForm;
@@ -49,14 +47,6 @@ public class ReservationService {
     /*Methode pour transformer une reservationForm en reservationDTO*/
     public ReservationDTO transformerReservationFormEnReservationDTO(ReservationForm reservationForm,UserDTO userDTO) throws ParseException, IOException {
         ReservationDTO reservationDTO = new ReservationDTO ();
-/*
-        reservationDTO.setIdReservation(reservationForm.getIdReservation());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1= format.parse ( reservationForm.getDateReservation());
-        reservationDTO.setDateReservation(date1);
-        reservationDTO.setDelaiDeLocation(reservationForm.getDelaiDeLocation());
-
- */
         reservationDTO.setIsactif(true);
         reservationDTO.setUser(userDTO);
         return reservationDTO;

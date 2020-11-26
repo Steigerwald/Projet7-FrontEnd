@@ -15,7 +15,7 @@
 <body>
 <div th:insert="~{baniere :: fragment }"></div>
 <main>
-    <h1>Liste des exemplaires de </h1><h1 th:text="${livresExemplaires.get(0).titre}"></h1>
+    <h1 th:text="'Liste de '+ ${nombre}+' '+'exemplaires de '+ ${livresExemplaires.get(0).titre}"></h1>
     <div class="container col-lg-12">
         <header class="row">
         </header>
@@ -34,15 +34,19 @@
                                                 <th>N°</th>
                                                 <th>Titre</th>
                                                 <th>Auteur</th>
+                                                <th>Bibliothèque</th>
                                                 <th>Autres Informations</th>
+                                                <th>Disponibilité</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="livre : ${livresExemplaires}">
                                                 <td th:text="${livre.idLivre}"></td>
-                                                <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
+                                                <td th:text="${livre.titre}" > </td>
                                                 <td th:text="${livre.auteur}"></td>
+                                                <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                                 <td> <a th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" >détails</a> </td>
+                                                <td th:text="${livre.toStringDisponibilite()}"></td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -37,8 +37,10 @@ public class LivreController {
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllLivres(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivres();
+        List<Integer> nombres=livreService.obtenirNombreExempalaires(livres);
         logger.info(" retour valeur des livres du controller "+livres.get(0));
         model.addAttribute("livres",livres);
+        model.addAttribute("nombre",nombres);
         return "livre/listeLivres";
     }
 
@@ -46,6 +48,7 @@ public class LivreController {
     @RequestMapping(value="/exemplaires/{id}",method = RequestMethod.GET)
     public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
         List<LivreDTO> livresExemplaires = livreService.getAllExemplairesById(id);
+        model.addAttribute("nombre",livresExemplaires.size());
         model.addAttribute("livresExemplaires",livresExemplaires);
         return "livre/listeExemplaires";
     }
@@ -138,7 +141,5 @@ public class LivreController {
         model.addAttribute("livre",livreModifie);
         return "redirect:/livre/all"; //view
     }
-
-
 
 }
