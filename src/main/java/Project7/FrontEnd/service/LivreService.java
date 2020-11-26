@@ -47,7 +47,23 @@ public class LivreService {
         }
     }
 
+    /*Methode pour obtenir tous les exemplaires d'un livre par Id de la base de données API*/
+    public List<LivreDTO> getAllExemplairesById(int idReservation) throws IOException {
+        ObjectMapper mapper =new ObjectMapper();
+        List<LivreDTO> tousExemplaires = mapper.readValue(new URL("http://localhost:9090/livre/allExemplaires/"+idReservation),new TypeReference<List<LivreDTO>>(){});
+        if(tousExemplaires.size() > 0) {
+            logger.info(" retour liste tousExemplaires car la taille de laliste >0 "+tousExemplaires);
+            logger.info(" valeur livre "+tousExemplaires.get(0));
+            return tousExemplaires;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousExemplaires ");
+            return new ArrayList<LivreDTO>();
+        }
+    }
+
+
     /*Methode pour obtenir tous les livres de la réservation de la base de données API*/
+    /*
     public List<LivreDTO> getAllLivresByIdreservation(int idReservation) throws IOException {
         ObjectMapper mapper =new ObjectMapper();
         List<LivreDTO> tousLivresReservation = mapper.readValue(new URL("http://localhost:9090/livre/reservation/"+idReservation),new TypeReference<List<LivreDTO>>(){});
@@ -60,6 +76,7 @@ public class LivreService {
             return new ArrayList<LivreDTO>();
         }
     }
+*/
 
     /*Methode pour obtenir tous les livres disponibles de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException {
@@ -100,6 +117,7 @@ public class LivreService {
         List<LivreDTO> listM = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>(){});
         return listM;
     }
+
     /*Methode pour récupérer tous les livres recherchés de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresRecherches() throws IOException, ParseException {
         ObjectMapper mapper =new ObjectMapper();

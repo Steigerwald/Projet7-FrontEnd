@@ -148,6 +148,7 @@ public class ReservationService {
         Date today = new Date();
         reservation.setDateDeRetour(today);
         reservation.setEtatReservation("retournée");
+        reservation.getLivre().setDisponibilite(true);
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
@@ -158,6 +159,14 @@ public class ReservationService {
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String requestBody02=objectMapper
+                .writeValueAsString(reservation.getLivre());
+        HttpRequest request02 = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/"))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody02))
+                .build();
+        HttpResponse<String> response02 = client.send(request02, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body "+response.body());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();

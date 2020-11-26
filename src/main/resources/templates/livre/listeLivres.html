@@ -34,16 +34,14 @@
                                             <tr>
                                                 <th>Titre</th>
                                                 <th>Auteur</th>
-                                                <th>Disponibilté</th>
-                                                <th>Bibliothèque</th>
+                                                <th>Exemplaires</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="livre : ${livres}">
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
-                                                <td th:text="${livre.toStringDisponibilite()}"></td>
-                                                <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
+                                                <td> <a th:href="@{/livre/exemplaires/{nom} (nom=${livre.idLivre})}" >liste exemplaires</a> </td>
                                             </tr>
                                             </tbody>
                                         </table>

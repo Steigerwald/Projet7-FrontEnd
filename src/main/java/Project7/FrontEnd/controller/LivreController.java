@@ -43,6 +43,14 @@ public class LivreController {
     }
 
     /* controller pour avoir tous les livres*/
+    @RequestMapping(value="/exemplaires/{id}",method = RequestMethod.GET)
+    public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
+        List<LivreDTO> livresExemplaires = livreService.getAllExemplairesById(id);
+        model.addAttribute("livresExemplaires",livresExemplaires);
+        return "livre/listeExemplaires";
+    }
+
+    /* controller pour avoir tous les livres disponibles*/
     @RequestMapping(value="/all/disponibles",method = RequestMethod.GET)
     public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException {
         List<LivreDTO> livres = livreService.getAllLivresDisponibles();
