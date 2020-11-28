@@ -16,6 +16,7 @@
 <div th:insert="~{baniere :: fragment }"></div>
 <main>
     <h1>Liste de mes réservations</h1>
+    <h2>Vous ne pouvez prolonger qu'une seule fois votre location</h2>
     <div class="container col-lg-12">
         <header class="row">
         </header>
@@ -31,10 +32,12 @@
                                         <table class="table table-striped" >
                                             <thead>
                                             <tr>
-                                                <th>N°de reservation</th>
+                                                <th>N°</th>
                                                 <th>Etat</th>
                                                 <th>Livre</th>
-                                                <th>Date de retrait limite</th>
+                                                <th>Date de retrait</th>
+                                                <th>Date de retour limite</th>
+                                                <th>Prolongation</th>
                                                 <th>Prolongation</th>
                                                 <th>Détails</th>
                                             </tr>
@@ -44,17 +47,17 @@
                                                 <td th:text="${reservation.idReservation}"></td>
                                                 <td th:text="${reservation.etatReservation}"></td>
                                                 <td th:text="${reservation.livre.getTitre()}"></td>
+                                                <td th:text="${reservation.toStringDateDeRetrait()}"></td>
                                                 <td th:text="${dates.get(state.index)}"></td>
                                                 <td th:text="${reservation.prolongation}"></td>
                                                 <td>
                                                     <div th:switch="${reservation.prolongation}">
-                                                        <form th:action="@{/reservation/retirer/{id}(id=${reservation.idReservation})}" method="post">
-                                                            <button class="btn btn-danger my-2 my-sm-0" type="submit" th:case="null" >A retirer</button>
-                                                            <p th:case="*" >retiré</p>
+                                                        <form th:action="@{/reservation/prolonger/{id}(id=${reservation.idReservation})}" method="post">
+                                                            <button class="btn btn-danger my-2 my-sm-0" type="submit" th:case="false" >A prolonger</button>
+                                                            <p th:case="*"> prolongé</p>
                                                         </form>
                                                     </div>
                                                 </td>
-                                                <td th:text="${reservation.toStringDateDeRetrait()}"></td>
                                                 <td> <a th:href="@{/reservation/detail/{nom} (nom=${reservation.idReservation})}" >plus info</a></td>
                                             </tr>
                                             </tbody>

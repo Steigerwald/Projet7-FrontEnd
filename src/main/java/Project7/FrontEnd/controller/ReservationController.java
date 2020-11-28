@@ -84,4 +84,13 @@ public class ReservationController {
         return "user/EspaceAdmin";
     }
 
+    @RequestMapping(value="/prolonger/{id}",method = RequestMethod.POST)
+    public String reservationProlonger(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
+        ReservationDTO reservationAProlonger =reservationService.getReservationById(id);
+        ReservationDTO reservationProlonger = reservationService.prolongerReservation(reservationAProlonger);
+        //model.addAttribute("reservation",reservationRetiree);
+        return "user/EspaceAdmin";
+    }
+
+
 }

@@ -32,6 +32,7 @@
                                         <table class="table table-striped" >
                                             <thead>
                                             <tr>
+                                                <th>N°</th>
                                                 <th>Titre</th>
                                                 <th>Auteur</th>
                                                 <th>Disponible</th>
@@ -39,7 +40,8 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="livre : ${livresRecherches}">
+                                            <tr th:each="livre,state : ${livresRecherches}">
+                                                <td> <a th:text="${state.count}"></a> </td>
                                                 <td> <a th:text="${livre.titre}" th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" ></a> </td>
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.toStringDisponibilite()}"></td>

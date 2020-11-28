@@ -83,21 +83,22 @@
                                         <table class="table table-striped" >
                                             <thead>
                                             <tr>
-                                                <th>N°de reservation</th>
+                                                <th>N°</th>
                                                 <th>Etat</th>
                                                 <th>Locataire</th>
                                                 <th>Date de retrait</th>
+                                                <th>Date limite de retour</th>
                                                 <th>Retour de la commande</th>
                                                 <th>Détails</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="reserv : ${reservationsEnCours}">
+                                            <tr th:each="reserv,state : ${reservationsEnCours}">
                                                 <td th:text="${reserv.idReservation}"></td>
                                                 <td th:text="${reserv.etatReservation}"></td>
                                                 <td th:text="${reserv.user.nomUser} + ' ' + ${reserv.user.prenomUser}"></td>
                                                 <td th:text="${reserv.toStringDateDeRetrait()}"></td>
-
+                                                <td th:text="${dates.get(state.index)}"></td>
                                                 <td>
                                                     <div th:switch="${reserv.dateDeRetour}">
                                                         <form th:action="@{/reservation/retourDeLocation/{id}(id=${reserv.idReservation})}" method="post">

@@ -193,27 +193,50 @@ public class ReservationService {
     }
 
     /*Methode pour calculer la date limite de retour du livre en fonction de la date de retrait*/
-    public List<Date> caulerDateLimitesDeretraitDUneListeDeReservation(List<ReservationDTO> listeReservations){
-        List<Date> newListDates = new ArrayList<>();
+    public List<String> caulerDateLimitesDeretraitDUneListeDeReservation(List<ReservationDTO> listeReservations){
+        List<String> newListDates = new ArrayList<>();
         SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
         for (ReservationDTO reservation:listeReservations){
-           if(!reservation.getProlongation()) {
-               Calendar c = Calendar.getInstance();
-               c.setTime(reservation.getDateDeRetrait());
-               c.add(Calendar.DATE, reservation.getDelaiDeLocation());
-               Date currentDatePlusOne = c.getTime();
-               System.out.println(simpleDateFormat02.format(currentDatePlusOne));
-               newListDates.add(c.getTime());
-           } else{
-               Calendar c = Calendar.getInstance();
-               c.setTime(reservation.getDateDeRetrait());
-               c.add(Calendar.DATE, (reservation.getDelaiDeLocation()*2));
-               Date currentDatePlusTwo = c.getTime();
-               System.out.println(simpleDateFormat02.format(currentDatePlusTwo));
-               newListDates.add(c.getTime());
+           if (reservation.getDateDeRetrait()!=null) {
+               if (!reservation.getProlongation()) {
+                   Calendar c = Calendar.getInstance();
+                   c.setTime(reservation.getDateDeRetrait());
+                   c.add(Calendar.DATE, reservation.getDelaiDeLocation());
+                   Date currentDatePlusOne = c.getTime();
+                   System.out.println(simpleDateFormat02.format(currentDatePlusOne));
+                   newListDates.add(simpleDateFormat02.format(currentDatePlusOne));
+               } else {
+                   Calendar c = Calendar.getInstance();
+                   c.setTime(reservation.getDateDeRetrait());
+                   c.add(Calendar.DATE, (reservation.getDelaiDeLocation() * 2));
+                   Date currentDatePlusTwo = c.getTime();
+                   System.out.println(simpleDateFormat02.format(currentDatePlusTwo));
+                   newListDates.add(simpleDateFormat02.format(currentDatePlusTwo));
+               }
+           } else {
+               newListDates.add("pas encore retiré");
            }
         }
         return newListDates;
+    }
+
+    /*Methode pour prolonger une reservation de la base de données de l'API rest*/
+    public ReservationDTO prolongerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
+        reservation.setProlongation(true);
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(reservation);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/"))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body "+response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
     }
 
 }

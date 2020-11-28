@@ -37,7 +37,7 @@ public class UserController {
         logger.info(" on est passe par la avant l'appel de la page EspacePersonnel");
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
         listeReservations=reservationService.verifierListeReservations(listeReservations);
-        List<Date> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
+        List<String> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
         model.addAttribute("reservations",listeReservations);
         model.addAttribute("dates",listeDates);
         return "user/EspacePerso";
@@ -45,13 +45,16 @@ public class UserController {
 
     /* controller de la page de espace admin */
     @RequestMapping(path="user/EspaceAdministration",method = RequestMethod.GET)
-    public String EspaceAdministration(Model model) throws IOException {
+    public String EspaceAdministration(Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page EspaceAdministration");
         List<ReservationDTO> listeReservationsAValider = reservationService.getAllReservationsAValider();
         List<ReservationDTO> listeReservationsEnCours = reservationService.getAllReservationsEnCours();
+        listeReservationsEnCours=reservationService.verifierListeReservations(listeReservationsEnCours);
+        List<String> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
+        model.addAttribute("dates",listeDates);
         return "user/EspaceAdmin";
     }
 
