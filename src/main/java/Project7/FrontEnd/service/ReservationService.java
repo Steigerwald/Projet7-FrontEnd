@@ -20,6 +20,7 @@ import java.net.http.HttpResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -164,5 +165,55 @@ public class ReservationService {
     }
 
 
+    /*Methode pour vérifier la date limite de prêt d'une reservation de la base de données de l'API rest*/
+    public ReservationDTO verifierReservation(ReservationDTO reservation) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(reservation);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/verifierReservation"))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<ReservationDTO>() {});
+    }
+
+    /*Methode pour vérifier une liste de réservation*/
+    public List<ReservationDTO> verifierListeReservations(List<ReservationDTO> listeReservations) throws IOException, InterruptedException {
+        List<ReservationDTO> newList = new ArrayList<>();
+        for (ReservationDTO reservation:listeReservations){
+            newList.add(verifierReservation(reservation));
+        }
+        return newList;
+    }
+
+    /*Methode pour calculer la date limite de retour du livre en fonction de la date de retrait*/
+    public List<Date> caulerDateLimitesDeretraitDUneListeDeReservation(List<ReservationDTO> listeReservations){
+        List<Date> newListDates = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
+        for (ReservationDTO reservation:listeReservations){
+           if(!reservation.getProlongation()) {
+               Calendar c = Calendar.getInstance();
+               c.setTime(reservation.getDateDeRetrait());
+               c.add(Calendar.DATE, reservation.getDelaiDeLocation());
+               Date currentDatePlusOne = c.getTime();
+               System.out.println(simpleDateFormat02.format(currentDatePlusOne));
+               newListDates.add(c.getTime());
+           } else{
+               Calendar c = Calendar.getInstance();
+               c.setTime(reservation.getDateDeRetrait());
+               c.add(Calendar.DATE, (reservation.getDelaiDeLocation()*2));
+               Date currentDatePlusTwo = c.getTime();
+               System.out.println(simpleDateFormat02.format(currentDatePlusTwo));
+               newListDates.add(c.getTime());
+           }
+        }
+        return newListDates;
+    }
 
 }

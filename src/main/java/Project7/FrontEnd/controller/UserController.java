@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,8 +33,13 @@ public class UserController {
 
     /* controller de la page de espace perso */
     @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
-    public String EspacePersonnel(){
+    public String EspacePersonnel(Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page EspacePersonnel");
+        List<ReservationDTO> listeReservations = reservationService.getAllReservations();
+        listeReservations=reservationService.verifierListeReservations(listeReservations);
+        List<Date> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
+        model.addAttribute("reservations",listeReservations);
+        model.addAttribute("dates",listeDates);
         return "user/EspacePerso";
     }
 
@@ -48,8 +54,6 @@ public class UserController {
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         return "user/EspaceAdmin";
     }
-
-
 
     /* controller pour avoir un role par id de l'API*/
 

@@ -31,20 +31,20 @@
                                     <div th:case="*">
                                         <table class="table table-striped" >
                                             <thead>
-                                            <tr>
-                                                <th> N°</th>
-                                                <th>Titre</th>
-                                                <th>Auteur</th>
-                                                <th>Exemplaires</th>
-                                            </tr>
+                                                <tr>
+                                                    <th> N°</th>
+                                                    <th>Titre</th>
+                                                    <th>Auteur</th>
+                                                    <th>Exemplaires</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="livre,state : ${livres}">
-                                                <td> <a th:text="${state.count}"></a> </td>
-                                                <td> <a th:text="${livre.titre}" ></a> </td>
-                                                <td th:text="${livre.auteur}"></td>
-                                                <td> <a th:href="@{/livre/exemplaires/{nom} (nom=${livre.idLivre})}" >liste exemplaires</a> </td>
-                                            </tr>
+                                                <tr th:each="livre,state : ${livres}">
+                                                    <td> <a th:text="${state.count}"></a> </td>
+                                                    <td> <a th:text="${livre.titre}" ></a> </td>
+                                                    <td th:text="${livre.auteur}"></td>
+                                                    <td> <a th:href="@{/livre/exemplaires/{nom} (nom=${livre.idLivre})}" >liste exemplaires</a> </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
