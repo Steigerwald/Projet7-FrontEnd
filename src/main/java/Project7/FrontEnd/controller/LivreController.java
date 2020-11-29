@@ -40,7 +40,7 @@ public class LivreController {
         List<Integer> nombres=livreService.obtenirNombreExempalaires(livres);
         logger.info(" retour valeur des livres du controller "+livres.get(0));
         model.addAttribute("livres",livres);
-        model.addAttribute("nombre",nombres);
+        model.addAttribute("nombres",nombres);
         return "livre/listeLivres";
     }
 

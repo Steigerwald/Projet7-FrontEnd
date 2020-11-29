@@ -73,7 +73,7 @@ public class ReservationController {
         ReservationDTO reservationARetirer =reservationService.getReservationById(id);
         ReservationDTO reservationRetiree = reservationService.retirerReservation(reservationARetirer);
         //model.addAttribute("reservation",reservationRetiree);
-        return "user/EspaceAdmin";
+        return "redirect:/user/EspaceAdministration";
     }
 
     @RequestMapping(value="/retourDeLocation/{id}",method = RequestMethod.POST)
@@ -81,7 +81,7 @@ public class ReservationController {
         ReservationDTO reservationARetourner =reservationService.getReservationById(id);
         ReservationDTO reservationRetiree = reservationService.retournerReservation(reservationARetourner);
         //model.addAttribute("reservation",reservationRetiree);
-        return "user/EspaceAdmin";
+        return "redirect:/user/EspaceAdministration";
     }
 
     @RequestMapping(value="/prolonger/{id}",method = RequestMethod.POST)
@@ -89,7 +89,7 @@ public class ReservationController {
         ReservationDTO reservationAProlonger =reservationService.getReservationById(id);
         ReservationDTO reservationProlonger = reservationService.prolongerReservation(reservationAProlonger);
         //model.addAttribute("reservation",reservationRetiree);
-        return "user/EspaceAdmin";
+        return "redirect:/user/EspacePersonnel";
     }
 
 

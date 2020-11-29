@@ -193,7 +193,7 @@ public class ReservationService {
     }
 
     /*Methode pour calculer la date limite de retour du livre en fonction de la date de retrait*/
-    public List<String> caulerDateLimitesDeretraitDUneListeDeReservation(List<ReservationDTO> listeReservations){
+    public List<String> calculerDateLimitesDeretraitDUneListeDeReservation(List<ReservationDTO> listeReservations){
         List<String> newListDates = new ArrayList<>();
         SimpleDateFormat simpleDateFormat02 = new SimpleDateFormat("dd-MM-yyyy");
         for (ReservationDTO reservation:listeReservations){

@@ -37,7 +37,7 @@ public class UserController {
         logger.info(" on est passe par la avant l'appel de la page EspacePersonnel");
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
         listeReservations=reservationService.verifierListeReservations(listeReservations);
-        List<String> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
+        List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
         model.addAttribute("reservations",listeReservations);
         model.addAttribute("dates",listeDates);
         return "user/EspacePerso";
@@ -50,7 +50,7 @@ public class UserController {
         List<ReservationDTO> listeReservationsAValider = reservationService.getAllReservationsAValider();
         List<ReservationDTO> listeReservationsEnCours = reservationService.getAllReservationsEnCours();
         listeReservationsEnCours=reservationService.verifierListeReservations(listeReservationsEnCours);
-        List<String> listeDates =reservationService.caulerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
+        List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
