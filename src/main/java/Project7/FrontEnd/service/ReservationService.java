@@ -139,6 +139,7 @@ public class ReservationService {
         Date today = new Date();
         reservation.setDateDeRetour(today);
         reservation.setEtatReservation("retournée");
+        reservation.setIsactif(false);
         reservation.getLivre().setDisponibilite(true);
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
