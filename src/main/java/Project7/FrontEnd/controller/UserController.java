@@ -31,6 +31,13 @@ public class UserController {
         return "home/home";
     }
 
+    /* controller de la page de login */
+    @RequestMapping(path="user/login",method = RequestMethod.GET)
+    public String formLogin(){
+        logger.info(" on est dans la page du login");
+        return "user/UserLogin";
+    }
+
     /* controller de la page de espace perso */
     @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
     public String EspacePersonnel(Model model) throws IOException, InterruptedException {
