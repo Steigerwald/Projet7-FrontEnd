@@ -3,6 +3,7 @@ package Project7.FrontEnd.service;
 import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.UserDTO;
+import Project7.FrontEnd.form.LoginForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,9 +49,6 @@ public class UserService {
         }};*/
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
-        String requestParam = objectMapper
-                .writeValueAsString(mail);
-
         String requestBody = objectMapper
                 .writeValueAsString(mail);
         HttpRequest request = HttpRequest.newBuilder()
@@ -61,9 +59,34 @@ public class UserService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body "+response.body());
         System.out.println(response.body());
-
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<UserDTO>(){});
+    }
+
+
+
+
+
+    /*Methode pour envoyer le login et récupérer le token d'autorisation*/
+    public String getTokenByMailAndMotDePasse(LoginForm utilisateur) throws IOException, InterruptedException {
+
+        var values = new HashMap<String, String>() {{
+            put("user", "admin@gmail.com");
+            put ("password", "coco");
+        }};
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestUtilisateur = objectMapper
+                .writeValueAsString(values);
+        logger.info(" valeur du string envoyé "+values);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/login"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response.body();
     }
 
 }
