@@ -64,28 +64,21 @@ public class UserService {
     }
 
 
-
-
-
     /*Methode pour envoyer le login et récupérer le token d'autorisation*/
     public String getTokenByMailAndMotDePasse(LoginForm utilisateur) throws IOException, InterruptedException {
-
-        var values = new HashMap<String, String>() {{
-            put("user", "admin@gmail.com");
-            put ("password", "coco");
-        }};
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
         String requestUtilisateur = objectMapper
-                .writeValueAsString(values);
-        logger.info(" valeur du string envoyé "+values);
+                .writeValueAsString(utilisateur);
+        logger.info(" valeur du string envoyé "+utilisateur);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/login"))
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
+                .PUT(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        logger.info(" retour du body: "+response.body());
         return response.body();
     }
 
