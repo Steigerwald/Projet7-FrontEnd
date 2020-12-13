@@ -71,9 +71,9 @@ public class UserController {
         String token =userService.getTokenByMailAndMotDePasse(utilisateur);
         switch (token) {
             case "not found" :
-                return "redirect:/user/login";
+                return "redirect:/user/login?error";
             case "mot de passe invalide":
-                return "redirect:/user/login";
+                return "redirect:/user/login?error";
             default:
                 authService.memoriserBearer(utilisateur.getUserName(),token);
                 logger.info(" la valeur du token est: "+token);

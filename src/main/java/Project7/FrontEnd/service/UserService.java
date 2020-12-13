@@ -74,7 +74,7 @@ public class UserService {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/login"))
                 .header("Content-Type", "application/json")
-                .PUT(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
+                .POST(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
