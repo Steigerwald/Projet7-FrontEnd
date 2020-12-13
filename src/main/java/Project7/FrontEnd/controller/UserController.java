@@ -6,6 +6,7 @@ import Project7.FrontEnd.dto.SearchDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LoginForm;
 import Project7.FrontEnd.form.UserForm;
+import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.ReservationService;
 import Project7.FrontEnd.service.UserService;
 import org.apache.tomcat.jni.User;
@@ -33,6 +34,9 @@ public class UserController {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public AuthService authService;
 
 
     Logger logger = (Logger) LoggerFactory.getLogger(UserController.class);
@@ -65,8 +69,16 @@ public class UserController {
     public String getUserConnexion(LoginForm utilisateur, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         logger.info(" on est dans la requete post  du login ");
         String token =userService.getTokenByMailAndMotDePasse(utilisateur);
-        logger.info(" la valeur du token est: "+token);
-        return "home/home";
+        switch (token) {
+            case "not found" :
+                return "redirect:/user/login";
+            case "mot de passe invalide":
+                return "redirect:/user/login";
+            default:
+                authService.memoriserBearer(utilisateur.getUserName(),token);
+                logger.info(" la valeur du token est: "+token);
+                return "home/home";
+        }
     }
 
     /* controller de la page de espace perso */
