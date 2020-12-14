@@ -1,15 +1,11 @@
 package Project7.FrontEnd.controller;
 
-import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
-import Project7.FrontEnd.dto.SearchDTO;
-import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LoginForm;
 import Project7.FrontEnd.form.UserForm;
 import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.ReservationService;
 import Project7.FrontEnd.service.UserService;
-import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 
@@ -54,14 +49,14 @@ public class UserController {
         LoginForm newUser =new LoginForm();
         model.addAttribute("utilisateur",newUser);
         logger.info(" on est dans la page du login");
-        return "user/UserLogin";
+        return "user/userLogin";
     }
 
     /* controller de la page de logout */
     @RequestMapping(path="user/logout",method = RequestMethod.GET)
     public String formLogout(){
         logger.info(" on est dans la page du logout");
-        return "user/UserLogin";
+        return "user/userLogin";
     }
 
     /* controller pour recevoir un mail et mot de passe pour obtenir l'autorisation*/
@@ -81,6 +76,17 @@ public class UserController {
         }
     }
 
+    /* controller de la page de création de compte */
+    @RequestMapping(path="user/registration/create",method = RequestMethod.GET)
+    public String formRegistrationUser(Model model){
+        UserForm newUser =new UserForm();
+        model.addAttribute("user",newUser);
+        logger.info(" on est dans la page de création du compte User");
+        return "user/addUser";
+    }
+
+
+
     /* controller de la page de espace perso */
     @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
     public String EspacePersonnel(Model model) throws IOException, InterruptedException {
@@ -90,7 +96,7 @@ public class UserController {
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
         model.addAttribute("reservations",listeReservations);
         model.addAttribute("dates",listeDates);
-        return "user/EspacePerso";
+        return "user/espacePerso";
     }
 
     /* controller de la page de espace admin */
@@ -105,7 +111,7 @@ public class UserController {
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         model.addAttribute("dates",listeDates);
-        return "user/EspaceAdmin";
+        return "user/espaceAdmin";
     }
 
     /* controller pour avoir un role par id de l'API*/
