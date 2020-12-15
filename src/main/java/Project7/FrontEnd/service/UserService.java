@@ -3,7 +3,9 @@ package Project7.FrontEnd.service;
 import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.UserDTO;
+import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.LoginForm;
+import Project7.FrontEnd.form.UserForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +20,10 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,6 +85,39 @@ public class UserService {
         System.out.println(response.body());
         logger.info(" retour du body: "+response.body());
         return response.body();
+    }
+
+    /*Methode pour envoyer le user et creer le compte dans la base de données*/
+    public UserDTO createUserDansBaseDeDonnees(UserDTO utilisateur) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        var objectMapper = new ObjectMapper();
+        String requestUtilisateur = objectMapper
+                .writeValueAsString(utilisateur);
+        logger.info(" valeur du string envoyé "+utilisateur);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/user/addUser"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestUtilisateur))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        logger.info(" retour du body: "+response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), new TypeReference<UserDTO>() {
+        });
+
+
+    }
+
+    /*Methode pour transformer un UserFormen en UserDTO*/
+    public UserDTO transformerUserFormEnUserDTO(UserForm userForm) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setIdUser(userForm.getIdUser());
+        userDTO.setNomUser(userForm.getNomUser());
+        userDTO.setPrenomUser(userForm.getPrenomUser());
+        userDTO.setMailUser(userForm.getMailUser());
+        userDTO.setMotDePasse(userForm.getMotDePasse());
+        return userDTO;
     }
 
 }

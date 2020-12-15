@@ -1,6 +1,7 @@
 package Project7.FrontEnd.controller;
 
 import Project7.FrontEnd.dto.ReservationDTO;
+import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LoginForm;
 import Project7.FrontEnd.form.UserForm;
 import Project7.FrontEnd.service.AuthService;
@@ -61,7 +62,7 @@ public class UserController {
 
     /* controller pour recevoir un mail et mot de passe pour obtenir l'autorisation*/
     @RequestMapping(value="login",method = RequestMethod.POST)
-    public String getUserConnexion(LoginForm utilisateur, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
+    public String getUserConnexion(LoginForm utilisateur) throws IOException, InterruptedException {
         logger.info(" on est dans la requete post  du login ");
         String token =userService.getTokenByMailAndMotDePasse(utilisateur);
         switch (token) {
@@ -83,8 +84,17 @@ public class UserController {
         model.addAttribute("user",newUser);
         logger.info(" on est dans la page de création du compte User");
         return "user/addUser";
+
     }
 
+    /* controller pour creer un user dans la base de données */
+    @RequestMapping(path="user/addUser",method = RequestMethod.POST)
+    public String createUser(UserForm user,Model model) throws IOException, InterruptedException {
+        logger.info(" on est dans la requete post  de addUser ");
+        UserDTO userDTO =userService.transformerUserFormEnUserDTO(user);
+        userService.createUserDansBaseDeDonnees(userDTO);
+        return "redirect:/user/login";
+    }
 
 
     /* controller de la page de espace perso */

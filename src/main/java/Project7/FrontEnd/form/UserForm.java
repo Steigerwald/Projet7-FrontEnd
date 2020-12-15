@@ -10,7 +10,4 @@ public class UserForm {
     private String prenomUser;
     private String mailUser;
     private String motDePasse;
-    private String actifUser;
-    private String role;
-
 }

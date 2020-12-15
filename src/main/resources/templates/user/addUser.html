@@ -16,7 +16,7 @@
 <div th:insert="~{baniere :: fragment }"></div>
 <main>
     <div class="container">
-        <form th:action="@{/registration/create}"  th:object="${user}" method="post" modelAttribute="user" class="form-signin">
+        <form th:action="@{/user/addUser}"  th:object="${user}" method="post" modelAttribute="user" class="form-signin">
             <h2 class="form-signin-heading col-12">Créer votre compte</h2>
             <div class="form-group">
                 <div class="input-group">
@@ -68,7 +68,7 @@
                 </div>
                 <errors path="motDePasseUser"></errors>
             </div>-->
-            <input type="hidden" id="role" th:field="*{role}" th:value=2>
+            <!--<input type="hidden" id="role" th:field="*{role}" th:value=2>-->
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Enregistrer</button>
         </form>
