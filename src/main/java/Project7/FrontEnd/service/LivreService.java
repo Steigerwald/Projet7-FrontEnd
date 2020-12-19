@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,11 +32,17 @@ public class LivreService {
     @Autowired
     public BibliothequeService bibliothequeService;
 
+    @Autowired
+    public AuthService authService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(LivreService.class);
 
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivres() throws IOException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
+        String token = authService.memoireToken;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Authorization","Bearer"+" "+token);
         List<LivreDTO> tousLivres = mapper.readValue(new URL("http://localhost:9090/livre/"), new TypeReference<List<LivreDTO>>() {
         });
         if (tousLivres.size() > 0) {
@@ -51,6 +58,8 @@ public class LivreService {
     /*Methode pour obtenir tous les exemplaires d'un livre par Id de la base de données API*/
     public List<LivreDTO> getAllExemplairesById(int idLivre) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        HttpHeaders responseHeaders = new HttpHeaders();
+
         List<LivreDTO> tousExemplaires = mapper.readValue(new URL("http://localhost:9090/livre/allExemplaires/" + idLivre), new TypeReference<List<LivreDTO>>() {
         });
         if (tousExemplaires.size() > 0) {
@@ -88,12 +97,13 @@ public class LivreService {
             put("nomCategorie", "Policier");
         }};
 */
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(newSearch);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer "+token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

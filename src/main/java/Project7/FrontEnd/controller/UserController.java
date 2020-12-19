@@ -71,8 +71,8 @@ public class UserController {
             case "mot de passe invalide":
                 return "redirect:/user/login?error";
             default:
-                authService.memoriserBearer(utilisateur.getUserName(),token);
-                logger.info(" la valeur du token est: "+token);
+                authService.memoireToken=token;
+                logger.info(" la valeur du token est: "+authService.memoireToken);
                 return "home/home";
         }
     }
