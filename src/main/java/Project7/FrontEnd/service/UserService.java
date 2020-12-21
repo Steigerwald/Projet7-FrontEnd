@@ -1,28 +1,20 @@
 package Project7.FrontEnd.service;
 
-import Project7.FrontEnd.dto.BibliothequeDTO;
-import Project7.FrontEnd.dto.LivreDTO;
-import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
-import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.LoginForm;
 import Project7.FrontEnd.form.UserForm;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -38,6 +30,7 @@ public class UserService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/user/"+id))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -58,10 +58,8 @@ public class UserController {
     /* controller de la page de logout */
     @RequestMapping(path="user/logout",method = RequestMethod.GET)
     public String formLogout(Principal principal,Model model) throws IOException, InterruptedException {
-        UserDTO newUserDTO=new UserDTO();
-        newUserDTO.setMailUser(principal.getName());
-        UserDTO userConnecte = userService.getUserByMail(newUserDTO);
-        model.addAttribute("user", userConnecte);
+        LoginForm newUser =new LoginForm();
+        model.addAttribute("utilisateur",newUser);
         logger.info(" on est dans la page du logout");
         authService.authentification=false;
         authService.memoireToken="null";

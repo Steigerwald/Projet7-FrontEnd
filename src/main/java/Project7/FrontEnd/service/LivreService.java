@@ -2,7 +2,6 @@ package Project7.FrontEnd.service;
 
 import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
-import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.SearchDTO;
 import Project7.FrontEnd.form.LivreForm;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,14 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -43,6 +38,7 @@ public class LivreService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -67,6 +63,7 @@ public class LivreService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/allExemplaires/" + idLivre))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -92,6 +89,7 @@ public class LivreService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/disponibles"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -144,6 +142,7 @@ public class LivreService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -169,6 +168,7 @@ public class LivreService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/" + id))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -298,12 +298,14 @@ public class LivreService {
     /*Methode pour effacer un livre de l'API rest*/
     public void effacerUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         //var objectMapper = new ObjectMapper();
         //String requestBody = objectMapper
         //        .writeValueAsString(livre);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/" + livre.getIdLivre()))
                 //        .header("Content-Type", "application/json")
+                .header("Authorization","Bearer"+" "+token)
                 .DELETE()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

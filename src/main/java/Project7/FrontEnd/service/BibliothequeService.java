@@ -1,9 +1,6 @@
 package Project7.FrontEnd.service;
 
 import Project7.FrontEnd.dto.BibliothequeDTO;
-import Project7.FrontEnd.dto.LivreDTO;
-import Project7.FrontEnd.form.BibliothequeForm;
-import Project7.FrontEnd.form.LivreForm;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -13,11 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +30,7 @@ public class BibliothequeService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/bibliotheque/"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -58,6 +54,7 @@ public class BibliothequeService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/bibliotheque/"+id))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

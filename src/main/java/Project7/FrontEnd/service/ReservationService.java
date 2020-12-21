@@ -1,11 +1,8 @@
 package Project7.FrontEnd.service;
 
-import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
-import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.ReservationForm;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -14,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -42,6 +38,7 @@ public class ReservationService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -92,6 +89,7 @@ public class ReservationService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"+id))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -115,6 +113,7 @@ public class ReservationService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/AValider"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -138,6 +137,7 @@ public class ReservationService {
         String token = authService.memoireToken;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/EnCours"))
+                .header("Authorization","Bearer"+" "+token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
