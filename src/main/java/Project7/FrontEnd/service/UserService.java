@@ -2,6 +2,7 @@ package Project7.FrontEnd.service;
 
 import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.dto.LivreDTO;
+import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.form.LoginForm;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,30 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Service
 public class UserService {
 
+    @Autowired
+    public AuthService authService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(UserService.class);
 
     /*Methode pour obtenir un user par Id de l'API rest*/
-    public UserDTO getUserById(int id) throws IOException {
-        ObjectMapper mapper =new ObjectMapper();
-        UserDTO userTrouve = mapper.readValue(new URL("http://localhost:9090/user/"+id),new TypeReference<UserDTO>(){});
+    public UserDTO getUserById(int id) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/user/"+id))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        UserDTO userTrouve = mapper.readValue(response.body(), new TypeReference<UserDTO>() {
+        });
         if(userTrouve!= null) {
             logger.info(" retour du user car il existe "+userTrouve);
             return userTrouve;
@@ -40,8 +56,7 @@ public class UserService {
     }
 
     /*Methode pour obtenir un user par mail de l'API rest*/
-    public UserDTO getUserByMail(String mail) throws IOException, InterruptedException {
-
+    public UserDTO getUserByMail(UserDTO userDTO) throws IOException, InterruptedException {
 /*
         var values = new HashMap<String, String>() {{
             put("username", "admin@gmail");
@@ -49,7 +64,7 @@ public class UserService {
         HttpClient client = HttpClient.newHttpClient();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
-                .writeValueAsString(mail);
+                .writeValueAsString(userDTO);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/user/me"))
                 .header("Content-Type", "application/json")

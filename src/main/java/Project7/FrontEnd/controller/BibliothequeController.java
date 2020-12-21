@@ -22,15 +22,10 @@ public class BibliothequeController {
 
     /* controller pour avoir toutes les bibliotheques*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
-    public String getAllBibliotheques(Model model,Principal principal) throws IOException {
+    public String getAllBibliotheques(Model model,Principal principal) throws IOException, InterruptedException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         model.addAttribute("bibliotheques",bibliotheques);
         return "bibliotheque/listeBibliotheques";
     }
-
-
-
-
-
 
 }

@@ -37,7 +37,7 @@ public class ReservationController {
 
     /* controller pour avoir toutes les reservations*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
-    public String getAllReservations(Model model, Principal principal) throws IOException {
+    public String getAllReservations(Model model, Principal principal) throws IOException, InterruptedException {
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
         model.addAttribute("reservations",listeReservations);
         return "reservation/listeReservations";
@@ -61,7 +61,7 @@ public class ReservationController {
 
     /* controller pour avoir le détail de la réservation */
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
-    public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
+    public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
         model.addAttribute("reservation",reservationDetail);
         model.addAttribute("livre",reservationDetail.getLivre());

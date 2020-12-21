@@ -35,7 +35,7 @@ public class LivreController {
 
     /* controller pour avoir tous les livres*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
-    public String getAllLivres(Model model, Principal principal) throws IOException, ParseException {
+    public String getAllLivres(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livres = livreService.getAllLivres();
         List<Integer> nombres=livreService.obtenirNombreExempalaires(livres);
         logger.info(" retour valeur des livres du controller "+livres.get(0));
@@ -46,7 +46,7 @@ public class LivreController {
 
     /* controller pour avoir tous les livres*/
     @RequestMapping(value="/exemplaires/{id}",method = RequestMethod.GET)
-    public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
+    public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livresExemplaires = livreService.getAllExemplairesById(id);
         model.addAttribute("nombre",livresExemplaires.size());
         model.addAttribute("livresExemplaires",livresExemplaires);
@@ -55,7 +55,7 @@ public class LivreController {
 
     /* controller pour avoir tous les livres disponibles*/
     @RequestMapping(value="/all/disponibles",method = RequestMethod.GET)
-    public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException {
+    public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livres = livreService.getAllLivresDisponibles();
         logger.info(" retour valeur de la liste livres du controller "+livres.get(0));
         model.addAttribute("livresDisponibles",livres);
@@ -81,7 +81,7 @@ public class LivreController {
 
     /* controller pour avoir le détail du livre */
     @RequestMapping(path="/details/{id}",method = RequestMethod.GET)
-    public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException {
+    public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         //User userConnecte = userService.getUserByMail(principal.getName());
         LivreDTO livreDetail = livreService.getLivreById(id);
         model.addAttribute("livre",livreDetail);
@@ -91,7 +91,7 @@ public class LivreController {
 
     /* controller pour ajouter un livre dans la bibliotheque*/
     @RequestMapping(value="/add",method = RequestMethod.GET)
-    public String addLivre(Model model, Principal principal) throws IOException, ParseException {
+    public String addLivre(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         LivreForm newLivre = new LivreForm();
         logger.info(" retour valeur de newLivre "+newLivre.toString());
         model.addAttribute("livre",newLivre);
@@ -121,7 +121,7 @@ public class LivreController {
 
     /* controller pour modifier un livre dans la bibliotheque*/
     @RequestMapping(value="/modify/{id}",method = RequestMethod.POST)
-    public String modifyLivre(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException {
+    public String modifyLivre(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         LivreDTO livreDetail = livreService.getLivreById(id);
         LivreForm livreFormModifie = livreService.transformerLivreDTOEnLivreForm(livreDetail);
         logger.info(" retour valeur de livreFormModifie "+livreFormModifie.toString());

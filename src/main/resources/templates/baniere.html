@@ -25,26 +25,22 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Explorer
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown"> <!-- th:switch="${user.role.nomRole}">-->
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" ><!--<th:switch="${user.role.nomRole}">-->
                             <a class="dropdown-item" th:href="@{/livre/all}">Liste des livres</a>
                             <a class="dropdown-item" th:href="@{/livre/all/disponibles}">Liste des livres disponibles</a>
                             <a class="dropdown-item" th:href="@{/bibliotheque/all}">Liste des bibliothèques</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" th:href="@{/reservation/all}">Liste des réservations</a>
-                            <a class="dropdown-item" th:href="@{/livre/add}">Ajouter un livre</a>
-                            <!--<div th:case="'ROLE_ADMIN'">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/secteurs}">Liste des secteurs</a>
-                                <a class="dropdown-item" th:href="@{/voies}">Liste des voies</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/reservations}">Liste des réservations</a>
-                                <a class="dropdown-item" th:href="@{/reservations/gestion}">Gestion des réservations</a>
-                            </div>-->
+                            <!--<div th:case="'ROLE_ADMIN''">-->
+                             <div class="dropdown-divider"></div>
+                             <a class="dropdown-item" th:href="@{/reservation/all}">Liste des réservations</a>
+                             <a class="dropdown-item" th:href="@{/livre/add}">Ajouter un livre</a>
+                             <!--<div th:case="'ROLE_ADMIN'">
+                                 <div class="dropdown-divider"></div>-->
+                             <!--</div>-->
                         </div>
                     </li>
                     <li class="nav-item"><a class="nav-link " th:href="@{/user/EspacePersonnel}"><i class="fas fa-user"></i> Perso</a></li>
                 </ul>
-                <ul class="navbar-nav mr-auto" > <!--th:switch="${user.role.nomRole}">-->
+                <ul class="navbar-nav mr-auto"><!--<th:switch="${user.role.nomRole}">-->
                     <!--<li class="nav-item dropdown" th:case="'ROLE_ADMIN'">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Admin
@@ -58,7 +54,12 @@
                         </div>
                     </li>-->
                     <li class="nav-item "><a class="nav-link " th:href="@{/user/login}" th:target="_blank"><i class="fas fa-sign-in-alt"></i> Connectez-vous</a></li>
+                    <!--<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/user/login}">Login <span class="fas fa-sign-in-alt"></span></a></li>-->
+                    <!--<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/user/login}">Login <span class="fas fa-sign-in-alt"></span></a></li>-->
+                    <!--<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/user/logout}">Logout <i class="fas fa-sign-out-alt"></i></a></li>-->
+                    <!--<div th:case="'ROLE_ADMIN'">-->
                     <li class="nav-item "><a class="nav-link " th:href="@{/user/EspaceAdministration}"><i class="fas fa-user-tie"></i> Admin</a></li>
+                    <!--</div>-->
                     <li class="nav-item "><a class="nav-link " th:href="@{/livre/search}"><span class="fa fa-search"></span> Recherche d'un livre</a></li>
                     <!--<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login <span class="fas fa-sign-in-alt"></span></a></li>
                     <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout <i class="fas fa-sign-out-alt"></i></a></li>

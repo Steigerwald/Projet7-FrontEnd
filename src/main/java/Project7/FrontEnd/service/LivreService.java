@@ -38,12 +38,18 @@ public class LivreService {
     Logger logger = (Logger) LoggerFactory.getLogger(LivreService.class);
 
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
-    public List<LivreDTO> getAllLivres() throws IOException, ParseException {
-        ObjectMapper mapper = new ObjectMapper();
+    public List<LivreDTO> getAllLivres() throws IOException, ParseException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
         String token = authService.memoireToken;
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Authorization","Bearer"+" "+token);
-        List<LivreDTO> tousLivres = mapper.readValue(new URL("http://localhost:9090/livre/"), new TypeReference<List<LivreDTO>>() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        List<LivreDTO> tousLivres = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
         });
         if (tousLivres.size() > 0) {
             logger.info(" retour liste tousLivres car la taille de laliste >0 " + tousLivres);
@@ -56,11 +62,18 @@ public class LivreService {
     }
 
     /*Methode pour obtenir tous les exemplaires d'un livre par Id de la base de données API*/
-    public List<LivreDTO> getAllExemplairesById(int idLivre) throws IOException {
+    public List<LivreDTO> getAllExemplairesById(int idLivre) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/allExemplaires/" + idLivre))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        HttpHeaders responseHeaders = new HttpHeaders();
-
-        List<LivreDTO> tousExemplaires = mapper.readValue(new URL("http://localhost:9090/livre/allExemplaires/" + idLivre), new TypeReference<List<LivreDTO>>() {
+        List<LivreDTO> tousExemplaires = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
         });
         if (tousExemplaires.size() > 0) {
             logger.info(" retour liste tousExemplaires car la taille de laliste >0 " + tousExemplaires);
@@ -74,9 +87,18 @@ public class LivreService {
 
 
     /*Methode pour obtenir tous les livres disponibles de la base de données de l'API rest*/
-    public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException {
+    public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/disponibles"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        List<LivreDTO> tousLivresDisponibles = mapper.readValue(new URL("http://localhost:9090/livre/disponibles"), new TypeReference<List<LivreDTO>>() {
+        List<LivreDTO> tousLivresDisponibles = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
         });
         if (tousLivresDisponibles.size() > 0) {
             logger.info(" retour liste tousLivresDisponibles car la taille de laliste >0 " + tousLivresDisponibles);
@@ -103,7 +125,7 @@ public class LivreService {
                 .writeValueAsString(newSearch);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
-                .headers("Content-Type", "application/json","Authorization","Bearer "+token)
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -117,9 +139,18 @@ public class LivreService {
     }
 
     /*Methode pour récupérer tous les livres recherchés de la base de données de l'API rest*/
-    public List<LivreDTO> getAllLivresRecherches() throws IOException, ParseException {
+    public List<LivreDTO> getAllLivresRecherches() throws IOException, ParseException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/search"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        List<LivreDTO> tousLivresRecherches = mapper.readValue(new URL("http://localhost:9090/livre/search"), new TypeReference<List<LivreDTO>>() {
+        List<LivreDTO> tousLivresRecherches = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
         });
         if (tousLivresRecherches.size() > 0) {
             logger.info(" retour liste tousLivres car la taille de laliste >0 " + tousLivresRecherches);
@@ -133,9 +164,18 @@ public class LivreService {
     }
 
     /*Methode pour obtenir un livre disponible de la base de données de l'API rest*/
-    public LivreDTO getLivreById(int id) throws IOException, ParseException {
+    public LivreDTO getLivreById(int id) throws IOException, ParseException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/" + id))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        LivreDTO livreById = mapper.readValue(new URL("http://localhost:9090/livre/" + id), new TypeReference<LivreDTO>() {
+        LivreDTO livreById = mapper.readValue(response.body(), new TypeReference<LivreDTO>() {
         });
         if (livreById != null) {
             logger.info(" l'id du livre trouvé est :  " + livreById.getIdLivre());
@@ -176,7 +216,7 @@ public class LivreService {
     }*/
 
     /*Methode pour transformer un livreForm en livreDTO*/
-    public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException, IOException {
+    public LivreDTO transformerLivreFormEnLivreDTO(LivreForm livreForm) throws ParseException, IOException, InterruptedException {
         LivreDTO livreDTO = new LivreDTO();
         livreDTO.setIdLivre(livreForm.getIdLivre());
         livreDTO.setTitre(livreForm.getTitre());
@@ -204,7 +244,7 @@ public class LivreService {
     }
 
     /*Methode pour transformer une liste de livreForm en liste de livreDTO*/
-    public List<LivreDTO> transformerListeLivreFormEnListeLivreDTO(List<LivreForm> livres) throws ParseException, IOException {
+    public List<LivreDTO> transformerListeLivreFormEnListeLivreDTO(List<LivreForm> livres) throws ParseException, IOException, InterruptedException {
         List<LivreDTO> listeLivresDTO = new ArrayList<>();
         for (LivreForm livre : livres) {
             listeLivresDTO.add(transformerLivreFormEnLivreDTO(livre));
@@ -275,7 +315,7 @@ public class LivreService {
     }
 
     /*Methode pour avoir la liste de nombre d'exemplaires en rapport à une liste de livre*/
-    public List<Integer> obtenirNombreExempalaires(List<LivreDTO> livres) throws IOException {
+    public List<Integer> obtenirNombreExempalaires(List<LivreDTO> livres) throws IOException, InterruptedException {
         List<Integer> nombres = new ArrayList<Integer>();
         for (LivreDTO livre : livres) {
             List<LivreDTO> tousLesExemplaires = getAllExemplairesById(livre.getIdLivre());

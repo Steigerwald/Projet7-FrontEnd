@@ -39,7 +39,7 @@ public class UserController {
 
     /* controller de la page de présentation */
     @RequestMapping(path="home",method = RequestMethod.GET)
-    public String formPresentation(){
+    public String formPresentation(Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page home/home de url /home");
         return "home/home";
     }
@@ -49,31 +49,50 @@ public class UserController {
     public String formLogin(Model model){
         LoginForm newUser =new LoginForm();
         model.addAttribute("utilisateur",newUser);
+        UserDTO user = new UserDTO();
+        model.addAttribute("user",user);
         logger.info(" on est dans la page du login");
         return "user/userLogin";
     }
 
     /* controller de la page de logout */
     @RequestMapping(path="user/logout",method = RequestMethod.GET)
-    public String formLogout(){
+    public String formLogout(Principal principal,Model model) throws IOException, InterruptedException {
+        UserDTO newUserDTO=new UserDTO();
+        newUserDTO.setMailUser(principal.getName());
+        UserDTO userConnecte = userService.getUserByMail(newUserDTO);
+        model.addAttribute("user", userConnecte);
         logger.info(" on est dans la page du logout");
+        authService.authentification=false;
+        authService.memoireToken="null";
         return "user/userLogin";
     }
 
     /* controller pour recevoir un mail et mot de passe pour obtenir l'autorisation*/
     @RequestMapping(value="login",method = RequestMethod.POST)
-    public String getUserConnexion(LoginForm utilisateur) throws IOException, InterruptedException {
+    public String getUserConnexion(LoginForm utilisateur,Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est dans la requete post  du login ");
+        logger.info(" le mail de l'uilisateur est: "+utilisateur.getUserName());
         String token =userService.getTokenByMailAndMotDePasse(utilisateur);
         switch (token) {
             case "not found" :
+                authService.authentification=false;
                 return "redirect:/user/login?error";
             case "mot de passe invalide":
+                authService.authentification=false;
+                return "redirect:/user/login?error";
+            case "null":
+                authService.authentification=false;
                 return "redirect:/user/login?error";
             default:
                 authService.memoireToken=token;
+                authService.authentification=true;
                 logger.info(" la valeur du token est: "+authService.memoireToken);
-                return "home/home";
+                UserDTO newUserDTO=new UserDTO();
+                newUserDTO.setMailUser(utilisateur.getUserName());
+                UserDTO userConnecte=userService.getUserByMail(newUserDTO);
+                model.addAttribute("user",userConnecte);
+                return "redirect:/home";
         }
     }
 

@@ -1,5 +1,6 @@
 package Project7.FrontEnd.service;
 
+import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
 import Project7.FrontEnd.form.LivreForm;
@@ -30,12 +31,25 @@ public class ReservationService {
     @Autowired
     public UserService userService;
 
+    @Autowired
+    public AuthService authService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(ReservationService.class);
 
     /*Methode pour obtenir toutes les reservations de la base de données de l'API rest*/
-    public List<ReservationDTO> getAllReservations() throws IOException {
-        ObjectMapper mapper =new ObjectMapper();
-        List<ReservationDTO> toutesReservations = mapper.readValue(new URL("http://localhost:9090/reservation/"),new TypeReference<List<ReservationDTO>>(){});
+    public List<ReservationDTO> getAllReservations() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        List<ReservationDTO> toutesReservations = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
+        });
         if(toutesReservations.size() > 0) {
             logger.info(" retour liste toutesReservations car la taille de laliste >0 "+toutesReservations);
             return toutesReservations;
@@ -73,9 +87,19 @@ public class ReservationService {
     }
 
     /*Methode pour obtenir une réservation disponible de la base de données de l'API rest*/
-    public ReservationDTO getReservationById(int id) throws IOException, ParseException {
-        ObjectMapper mapper =new ObjectMapper();
-        ReservationDTO reservationById = mapper.readValue(new URL("http://localhost:9090/reservation/"+id),new TypeReference<ReservationDTO>(){});
+    public ReservationDTO getReservationById(int id) throws IOException, ParseException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/"+id))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        ReservationDTO reservationById = mapper.readValue(response.body(), new TypeReference<ReservationDTO>() {
+        });
         if(reservationById!=null) {
             logger.info(" l'id de la reservation trouvée est :  "+reservationById.getIdReservation());
             return reservationById;
@@ -86,9 +110,18 @@ public class ReservationService {
     }
 
     /*Methode pour obtenir toutes les reservations à valider de la base de données de l'API rest*/
-    public List<ReservationDTO> getAllReservationsAValider() throws IOException {
+    public List<ReservationDTO> getAllReservationsAValider() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/AValider"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        List<ReservationDTO> toutesReservationsAValider = mapper.readValue(new URL("http://localhost:9090/reservation/AValider"), new TypeReference<List<ReservationDTO>>() {
+        List<ReservationDTO> toutesReservationsAValider = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
         });
         if (toutesReservationsAValider.size() > 0) {
             logger.info(" retour liste toutesReservations car la taille de laliste >0 " + toutesReservationsAValider);
@@ -100,9 +133,18 @@ public class ReservationService {
     }
 
     /*Methode pour obtenir toutes les reservations en cours de la base de données de l'API rest*/
-    public List<ReservationDTO> getAllReservationsEnCours() throws IOException {
+    public List<ReservationDTO> getAllReservationsEnCours() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/EnCours"))
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
-        List<ReservationDTO> toutesReservationsEnCours = mapper.readValue(new URL("http://localhost:9090/reservation/EnCours"), new TypeReference<List<ReservationDTO>>() {
+        List<ReservationDTO> toutesReservationsEnCours = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
         });
         if (toutesReservationsEnCours.size() > 0) {
             logger.info(" retour liste toutesReservationsEnCours car la taille de laliste >0 " + toutesReservationsEnCours);

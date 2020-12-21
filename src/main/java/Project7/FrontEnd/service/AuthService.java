@@ -14,15 +14,6 @@ public class AuthService {
     Logger logger = (Logger) LoggerFactory.getLogger(AuthService.class);
 
     public String memoireToken;
-
-
-    /*Methode pour mémoriser le Bearer de la session*/
-    public Map<String,String> memoriserBearer (String userName,String token){
-        Map<String,String> memoire=new HashMap<>();
-        memoire.put(userName,token);
-      return memoire;
-    };
-
-    /*Methode pour vérifier l'authentification Bearer pour chaque controller*/
+    public Boolean authentification;
 
 }
