@@ -42,7 +42,11 @@ public class UserController {
     public String formPresentation(Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page home/home de url /home");
         logger.info(" le user est: "+authService.userConnecte);
-        model.addAttribute("user",authService.userConnecte);
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
         model.addAttribute("isAuthentified",authService.authentification);
         return "home/home";
     }
