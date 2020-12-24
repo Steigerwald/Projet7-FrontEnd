@@ -41,6 +41,9 @@ public class UserController {
     @RequestMapping(path="home",method = RequestMethod.GET)
     public String formPresentation(Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page home/home de url /home");
+        logger.info(" le user est: "+authService.userConnecte);
+        model.addAttribute("user",authService.userConnecte);
+        model.addAttribute("isAuthentified",authService.authentification);
         return "home/home";
     }
 
@@ -63,6 +66,7 @@ public class UserController {
         logger.info(" on est dans la page du logout");
         authService.authentification=false;
         authService.memoireToken="null";
+        authService.userConnecte=null;
         return "user/userLogin";
     }
 
@@ -75,21 +79,25 @@ public class UserController {
         switch (token) {
             case "not found" :
                 authService.authentification=false;
+                authService.userConnecte=null;
                 return "redirect:/user/login?error";
             case "mot de passe invalide":
                 authService.authentification=false;
+                authService.userConnecte=null;
                 return "redirect:/user/login?error";
             case "null":
                 authService.authentification=false;
+                authService.userConnecte=null;
                 return "redirect:/user/login?error";
             default:
                 authService.memoireToken=token;
                 authService.authentification=true;
-                logger.info(" la valeur du token est: "+authService.memoireToken);
                 UserDTO newUserDTO=new UserDTO();
                 newUserDTO.setMailUser(utilisateur.getUserName());
-                UserDTO userConnecte=userService.getUserByMail(newUserDTO);
-                model.addAttribute("user",userConnecte);
+                authService.userConnecte=userService.getUserByMail(newUserDTO);
+                logger.info(" la valeur du token est: "+authService.memoireToken);
+                logger.info(" la valeur du userConnecte est: "+authService.userConnecte);
+                logger.info(" la valeur du nom de role du  userConnecte est: "+authService.userConnecte.getRole().getNomRole());
                 return "redirect:/home";
         }
     }
