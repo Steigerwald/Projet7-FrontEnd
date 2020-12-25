@@ -3,6 +3,7 @@ package Project7.FrontEnd.controller;
 import Project7.FrontEnd.dto.LivreDTO;
 import Project7.FrontEnd.dto.ReservationDTO;
 import Project7.FrontEnd.dto.UserDTO;
+import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.LivreService;
 import Project7.FrontEnd.service.ReservationService;
 import Project7.FrontEnd.service.UserService;
@@ -33,12 +34,21 @@ public class ReservationController {
     @Autowired
     public LivreService livreService;
 
+    @Autowired
+    public AuthService authService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(ReservationController.class);
 
     /* controller pour avoir toutes les reservations*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllReservations(Model model, Principal principal) throws IOException, InterruptedException {
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
+        model.addAttribute("isAuthentified",authService.authentification);
         model.addAttribute("reservations",listeReservations);
         return "reservation/listeReservations";
     }
@@ -54,6 +64,12 @@ public class ReservationController {
         reservation.setLivre(livreReserve);
         ReservationDTO reservation2 =reservationService.createReservation(reservation);
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
+        model.addAttribute("isAuthentified",authService.authentification);
         model.addAttribute("livre",livre);
         model.addAttribute("reservation",reservation2);
         return "reservation/demandeReservation";
@@ -63,6 +79,12 @@ public class ReservationController {
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
     public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
+        model.addAttribute("isAuthentified",authService.authentification);
         model.addAttribute("reservation",reservationDetail);
         model.addAttribute("livre",reservationDetail.getLivre());
         return "reservation/reservationDetail"; //view

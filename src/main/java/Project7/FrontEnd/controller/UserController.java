@@ -133,6 +133,12 @@ public class UserController {
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
         listeReservations=reservationService.verifierListeReservations(listeReservations);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
+        model.addAttribute("isAuthentified",authService.authentification);
         model.addAttribute("reservations",listeReservations);
         model.addAttribute("dates",listeDates);
         return "user/espacePerso";
@@ -147,6 +153,12 @@ public class UserController {
         listeReservationsEnCours=reservationService.verifierListeReservations(listeReservationsEnCours);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
+        if(authService.userConnecte!=null){
+            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        }else{
+            model.addAttribute("role","null");
+        }
+        model.addAttribute("isAuthentified",authService.authentification);
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         model.addAttribute("dates",listeDates);
