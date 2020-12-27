@@ -130,7 +130,7 @@ public class UserController {
     @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
     public String EspacePersonnel(Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page EspacePersonnel");
-        List<ReservationDTO> listeReservations = reservationService.getAllReservations();
+        List<ReservationDTO> listeReservations = reservationService.getAllReservationsEnCoursByUser(authService.userConnecte);
         listeReservations=reservationService.verifierListeReservations(listeReservations);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
         if(authService.userConnecte!=null){

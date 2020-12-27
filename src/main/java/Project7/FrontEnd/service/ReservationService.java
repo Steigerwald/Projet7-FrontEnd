@@ -155,6 +155,34 @@ public class ReservationService {
         }
     }
 
+    /*Methode pour obtenir toutes les reservations d'un user en cours de la base de données de l'API rest*/
+    public List<ReservationDTO> getAllReservationsEnCoursByUser(UserDTO user) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(user);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/reservation/byUser"))
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        List<ReservationDTO> toutesReservationsByUser = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
+        });
+        if (toutesReservationsByUser.size() > 0) {
+            logger.info(" retour liste toutesReservationsByUser car la taille de laliste >0 " + toutesReservationsByUser);
+            return toutesReservationsByUser;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste toutesReservationsByUser ");
+            return new ArrayList<ReservationDTO>();
+        }
+    }
+
+
         /*Methode pour retirer une reservation de la base de données de l'API rest*/
         public ReservationDTO retirerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
             Date today = new Date();
