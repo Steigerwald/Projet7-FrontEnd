@@ -123,7 +123,7 @@ public class LivreService {
                 .writeValueAsString(newSearch);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -256,12 +256,13 @@ public class LivreService {
     /*Methode pour envoyer un livre à l'API pour enregistrement*/
     public LivreDTO enregistrerUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(livre);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/addLivre"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -277,12 +278,13 @@ public class LivreService {
     /*Methode pour modifier un livre à l'API rest*/
     public LivreDTO modifierUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(livre);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

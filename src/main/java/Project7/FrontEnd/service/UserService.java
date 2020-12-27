@@ -55,12 +55,13 @@ public class UserService {
             put("username", "admin@gmail");
         }};*/
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(userDTO);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/user/me"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -107,8 +108,6 @@ public class UserService {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<UserDTO>() {
         });
-
-
     }
 
     /*Methode pour transformer un UserFormen en UserDTO*/

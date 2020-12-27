@@ -67,12 +67,13 @@ public class ReservationService {
     /*Methode pour creer une réservation à l'API rest*/
     public ReservationDTO createReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/addReservation"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -189,12 +190,13 @@ public class ReservationService {
             reservation.setDateDeRetrait(today);
             reservation.setEtatReservation("en cours de pret");
             HttpClient client = HttpClient.newHttpClient();
+            String token = authService.memoireToken;
             var objectMapper = new ObjectMapper();
             String requestBody = objectMapper
                     .writeValueAsString(reservation);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("http://localhost:9090/reservation/"))
-                    .header("Content-Type", "application/json")
+                    .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                     .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -212,12 +214,13 @@ public class ReservationService {
         reservation.setIsactif(false);
         reservation.getLivre().setDisponibilite(true);
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -225,7 +228,7 @@ public class ReservationService {
                 .writeValueAsString(reservation.getLivre());
         HttpRequest request02 = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody02))
                 .build();
         HttpResponse<String> response02 = client.send(request02, HttpResponse.BodyHandlers.ofString());
@@ -239,12 +242,13 @@ public class ReservationService {
     /*Methode pour vérifier la date limite de prêt d'une reservation de la base de données de l'API rest*/
     public ReservationDTO verifierReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/verifierReservation"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -295,12 +299,13 @@ public class ReservationService {
     public ReservationDTO prolongerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         reservation.setProlongation(true);
         HttpClient client = HttpClient.newHttpClient();
+        String token = authService.memoireToken;
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"))
-                .header("Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization","Bearer"+" "+token)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
