@@ -49,30 +49,34 @@
                                         </table>
                                         <Br>
                                         <Br>
-                                        <table class="table table-striped" >
-                                            <thead>
+                                        <table class="table table-striped">
+                                            <thead th:switch="${role}">
                                             <tr>
                                                 <th>Résumé et Description</th>
-                                                <th>Modifier</th>
-                                                <th>Effacer</th>
+                                                <div th:case="ROLE_ADMIN">
+                                                    <th >Modifier</th>
+                                                    <th >Effacer</th>
+                                                </div>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody th:switch="${role}">
                                             <tr>
                                                 <td th:text="${livre.resume}"></td>
-                                                <td>
-                                                    <form th:action="@{/livre/modify/{id}(id=${livre.idLivre})}" method="post">
-                                                        <button class="btn btn-primary my-2 my-sm-0" type="submit">Modifier</button>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <div th:switch="${livre.disponibilite}">
-                                                        <form th:action="@{/livre/effacer/{id}(id=${livre.idLivre})}" method="post">
-                                                            <button class="btn btn-danger my-2 my-sm-0" type="submit" th:case="true" >Annuler</button>
-                                                            <p th:case="false" >Non disponible</p>
+                                               <div th:case="ROLE_ADMIN">
+                                                    <td>
+                                                        <form th:action="@{/livre/modify/{id}(id=${livre.idLivre})}" method="post">
+                                                            <button class="btn btn-primary my-2 my-sm-0" type="submit">Modifier</button>
                                                         </form>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                    <td>
+                                                        <div th:switch="${livre.disponibilite}">
+                                                            <form th:action="@{/livre/effacer/{id}(id=${livre.idLivre})}" method="post">
+                                                                <button class="btn btn-danger my-2 my-sm-0" type="submit" th:case="true" >Annuler</button>
+                                                                <p th:case="false" >Non disponible</p>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                               </div>
                                             </tr>
                                             </tbody>
                                         </table>
