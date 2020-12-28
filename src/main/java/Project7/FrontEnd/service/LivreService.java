@@ -35,7 +35,7 @@ public class LivreService {
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivres() throws IOException, ParseException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/"))
                 .header("Authorization","Bearer"+" "+token)
@@ -60,7 +60,7 @@ public class LivreService {
     /*Methode pour obtenir tous les exemplaires d'un livre par Id de la base de données API*/
     public List<LivreDTO> getAllExemplairesById(int idLivre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/allExemplaires/" + idLivre))
                 .header("Authorization","Bearer"+" "+token)
@@ -86,7 +86,7 @@ public class LivreService {
     /*Methode pour obtenir tous les livres disponibles de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/disponibles"))
                 .header("Authorization","Bearer"+" "+token)
@@ -117,7 +117,7 @@ public class LivreService {
             put("nomCategorie", "Policier");
         }};
 */
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(newSearch);
@@ -139,7 +139,7 @@ public class LivreService {
     /*Methode pour récupérer tous les livres recherchés de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresRecherches() throws IOException, ParseException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/search"))
                 .header("Authorization","Bearer"+" "+token)
@@ -165,7 +165,7 @@ public class LivreService {
     /*Methode pour obtenir un livre disponible de la base de données de l'API rest*/
     public LivreDTO getLivreById(int id) throws IOException, ParseException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/livre/" + id))
                 .header("Authorization","Bearer"+" "+token)
@@ -256,7 +256,7 @@ public class LivreService {
     /*Methode pour envoyer un livre à l'API pour enregistrement*/
     public LivreDTO enregistrerUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(livre);
@@ -278,7 +278,7 @@ public class LivreService {
     /*Methode pour modifier un livre à l'API rest*/
     public LivreDTO modifierUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(livre);
@@ -300,7 +300,7 @@ public class LivreService {
     /*Methode pour effacer un livre de l'API rest*/
     public void effacerUnLivre(LivreDTO livre) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         //var objectMapper = new ObjectMapper();
         //String requestBody = objectMapper
         //        .writeValueAsString(livre);

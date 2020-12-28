@@ -27,7 +27,7 @@ public class UserService {
     /*Methode pour obtenir un user par Id de l'API rest*/
     public UserDTO getUserById(int id) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/user/"+id))
                 .header("Authorization","Bearer"+" "+token)
@@ -55,7 +55,7 @@ public class UserService {
             put("username", "admin@gmail");
         }};*/
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(userDTO);

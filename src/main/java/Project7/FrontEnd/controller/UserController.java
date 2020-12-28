@@ -41,13 +41,13 @@ public class UserController {
     @RequestMapping(path="home",method = RequestMethod.GET)
     public String formPresentation(Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page home/home de url /home");
-        logger.info(" le user est: "+authService.userConnecte);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        logger.info(" le user est: "+authService.getUserConnecte());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         return "home/home";
     }
 
@@ -68,9 +68,9 @@ public class UserController {
         LoginForm newUser =new LoginForm();
         model.addAttribute("utilisateur",newUser);
         logger.info(" on est dans la page du logout");
-        authService.authentification=false;
-        authService.memoireToken="null";
-        authService.userConnecte=null;
+        authService.setAuthentification(false);
+        authService.setMemoireToken("null");
+        authService.setUserConnecte(null);
         return "user/userLogin";
     }
 
@@ -82,26 +82,26 @@ public class UserController {
         String token =userService.getTokenByMailAndMotDePasse(utilisateur);
         switch (token) {
             case "not found" :
-                authService.authentification=false;
-                authService.userConnecte=null;
+                authService.setAuthentification(false);
+                authService.setUserConnecte(null);
                 return "redirect:/user/login?error";
             case "mot de passe invalide":
-                authService.authentification=false;
-                authService.userConnecte=null;
+                authService.setAuthentification(false);
+                authService.setUserConnecte(null);
                 return "redirect:/user/login?error";
             case "null":
-                authService.authentification=false;
-                authService.userConnecte=null;
+                authService.setAuthentification(false);
+                authService.setUserConnecte(null);
                 return "redirect:/user/login?error";
             default:
-                authService.memoireToken=token;
-                authService.authentification=true;
+                authService.setMemoireToken(token);
+                authService.setAuthentification(true);
                 UserDTO newUserDTO=new UserDTO();
                 newUserDTO.setMailUser(utilisateur.getUserName());
-                authService.userConnecte=userService.getUserByMail(newUserDTO);
-                logger.info(" la valeur du token est: "+authService.memoireToken);
-                logger.info(" la valeur du userConnecte est: "+authService.userConnecte);
-                logger.info(" la valeur du nom de role du  userConnecte est: "+authService.userConnecte.getRole().getNomRole());
+                authService.setUserConnecte(userService.getUserByMail(newUserDTO));
+                logger.info(" la valeur du token est: "+authService.getMemoireToken());
+                logger.info(" la valeur du userConnecte est: "+authService.getUserConnecte());
+                logger.info(" la valeur du nom de role du  userConnecte est: "+authService.getUserConnecte().getRole().getNomRole());
                 return "redirect:/home";
         }
     }
@@ -130,15 +130,15 @@ public class UserController {
     @RequestMapping(path="user/EspacePersonnel",method = RequestMethod.GET)
     public String EspacePersonnel(Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page EspacePersonnel");
-        List<ReservationDTO> listeReservations = reservationService.getAllReservationsEnCoursByUser(authService.userConnecte);
+        List<ReservationDTO> listeReservations = reservationService.getAllReservationsEnCoursByUser(authService.getUserConnecte());
         listeReservations=reservationService.verifierListeReservations(listeReservations);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservations);
         model.addAttribute("dates",listeDates);
         return "user/espacePerso";
@@ -153,12 +153,12 @@ public class UserController {
         listeReservationsEnCours=reservationService.verifierListeReservations(listeReservationsEnCours);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         model.addAttribute("dates",listeDates);

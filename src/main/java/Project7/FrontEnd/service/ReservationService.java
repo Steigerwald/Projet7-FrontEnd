@@ -35,7 +35,7 @@ public class ReservationService {
     /*Methode pour obtenir toutes les reservations de la base de données de l'API rest*/
     public List<ReservationDTO> getAllReservations() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"))
                 .header("Authorization","Bearer"+" "+token)
@@ -67,7 +67,7 @@ public class ReservationService {
     /*Methode pour creer une réservation à l'API rest*/
     public ReservationDTO createReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
@@ -87,7 +87,7 @@ public class ReservationService {
     /*Methode pour obtenir une réservation disponible de la base de données de l'API rest*/
     public ReservationDTO getReservationById(int id) throws IOException, ParseException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/"+id))
                 .header("Authorization","Bearer"+" "+token)
@@ -111,7 +111,7 @@ public class ReservationService {
     /*Methode pour obtenir toutes les reservations à valider de la base de données de l'API rest*/
     public List<ReservationDTO> getAllReservationsAValider() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/AValider"))
                 .header("Authorization","Bearer"+" "+token)
@@ -135,7 +135,7 @@ public class ReservationService {
     /*Methode pour obtenir toutes les reservations en cours de la base de données de l'API rest*/
     public List<ReservationDTO> getAllReservationsEnCours() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/reservation/EnCours"))
                 .header("Authorization","Bearer"+" "+token)
@@ -159,7 +159,7 @@ public class ReservationService {
     /*Methode pour obtenir toutes les reservations d'un user en cours de la base de données de l'API rest*/
     public List<ReservationDTO> getAllReservationsEnCoursByUser(UserDTO user) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(user);
@@ -190,7 +190,7 @@ public class ReservationService {
             reservation.setDateDeRetrait(today);
             reservation.setEtatReservation("en cours de pret");
             HttpClient client = HttpClient.newHttpClient();
-            String token = authService.memoireToken;
+            String token = authService.getMemoireToken();
             var objectMapper = new ObjectMapper();
             String requestBody = objectMapper
                     .writeValueAsString(reservation);
@@ -214,7 +214,7 @@ public class ReservationService {
         reservation.setIsactif(false);
         reservation.getLivre().setDisponibilite(true);
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
@@ -242,7 +242,7 @@ public class ReservationService {
     /*Methode pour vérifier la date limite de prêt d'une reservation de la base de données de l'API rest*/
     public ReservationDTO verifierReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);
@@ -299,7 +299,7 @@ public class ReservationService {
     public ReservationDTO prolongerReservation(ReservationDTO reservation) throws IOException, InterruptedException {
         reservation.setProlongation(true);
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         var objectMapper = new ObjectMapper();
         String requestBody = objectMapper
                 .writeValueAsString(reservation);

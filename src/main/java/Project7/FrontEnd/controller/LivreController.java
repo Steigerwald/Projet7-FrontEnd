@@ -43,12 +43,12 @@ public class LivreController {
         List<LivreDTO> livres = livreService.getAllLivres();
         List<Integer> nombres=livreService.obtenirNombreExempalaires(livres);
         logger.info(" retour valeur des livres du controller "+livres.get(0));
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livres",livres);
         model.addAttribute("nombres",nombres);
         return "livre/listeLivres";
@@ -58,12 +58,12 @@ public class LivreController {
     @RequestMapping(value="/exemplaires/{id}",method = RequestMethod.GET)
     public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livresExemplaires = livreService.getAllExemplairesById(id);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("nombre",livresExemplaires.size());
         model.addAttribute("livresExemplaires",livresExemplaires);
         return "livre/listeExemplaires";
@@ -74,12 +74,12 @@ public class LivreController {
     public String getAllLivresDisponibles(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livres = livreService.getAllLivresDisponibles();
         logger.info(" retour valeur de la liste livres du controller "+livres.get(0));
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresDisponibles",livres);
         return "livre/listeLivresDisponibles";
     }
@@ -88,12 +88,12 @@ public class LivreController {
     @RequestMapping(value="/search",method = RequestMethod.GET)
     public String RechercherLivres(Model model, Principal principal) throws IOException, ParseException {
         SearchDTO rechercheCriteres=new SearchDTO();
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("search",rechercheCriteres);
         return "/livre/rechercheLivre";
     }
@@ -103,12 +103,12 @@ public class LivreController {
     public String getSearchLivre(SearchDTO search, Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> listeLivresRecherches =livreService.sendSearchLivre(search);
         logger.info(" retour valeur de search du controller "+search.getAuteur()+" "+search.getNomCategorie()+" "+search.getTitre());
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresRecherches", listeLivresRecherches);
         return "livre/listeLivresRecherches";
     }
@@ -118,12 +118,12 @@ public class LivreController {
     public String getDetailsLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         //User userConnecte = userService.getUserByMail(principal.getName());
         LivreDTO livreDetail = livreService.getLivreById(id);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreDetail);
         //model.addAttribute("user", userConnecte);
         return "livre/livreDetails"; //view
@@ -133,12 +133,12 @@ public class LivreController {
     @RequestMapping(value="/add",method = RequestMethod.GET)
     public String addLivre(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         LivreForm newLivre = new LivreForm();
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de newLivre "+newLivre.toString());
         model.addAttribute("livre",newLivre);
         logger.info(" retour valeur de bibliotheque de newLivre "+newLivre.getBibliotheque());
@@ -153,12 +153,12 @@ public class LivreController {
     public String createLivreOrUpdateLivre(LivreForm livre,Model model) throws IOException, InterruptedException, ParseException {
         logger.info(" retour valeur de bibliotheque de livre du controller create "+livre.getBibliotheque());
         LivreDTO livreEnregistre =livreService.enregistrerUnLivre(livreService.transformerLivreFormEnLivreDTO(livre));
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
         return "redirect:/livre/all";
     }
@@ -176,12 +176,12 @@ public class LivreController {
     public String modifyLivre(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         LivreDTO livreDetail = livreService.getLivreById(id);
         LivreForm livreFormModifie = livreService.transformerLivreDTOEnLivreForm(livreDetail);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de livreFormModifie "+livreFormModifie.toString());
         model.addAttribute("livre",livreFormModifie);
         logger.info(" retour valeur de bibliotheque de livreFormModifie "+livreFormModifie.getBibliotheque());
@@ -196,12 +196,12 @@ public class LivreController {
     public String modifierLivre(LivreForm livre,Model model,Principal principal) throws IOException, ParseException, InterruptedException {
         LivreDTO livreDTO=livreService.transformerLivreFormEnLivreDTO(livre);
         LivreDTO livreModifie= livreService.modifierUnLivre(livreDTO);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreModifie);
         return "redirect:/livre/all"; //view
     }

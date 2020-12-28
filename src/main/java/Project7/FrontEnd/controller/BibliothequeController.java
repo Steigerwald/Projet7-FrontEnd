@@ -27,12 +27,12 @@ public class BibliothequeController {
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllBibliotheques(Model model,Principal principal) throws IOException, InterruptedException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("bibliotheques",bibliotheques);
         return "bibliotheque/listeBibliotheques";
     }

@@ -43,12 +43,12 @@ public class ReservationController {
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllReservations(Model model, Principal principal) throws IOException, InterruptedException {
         List<ReservationDTO> listeReservations = reservationService.getAllReservations();
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservations);
         return "reservation/listeReservations";
     }
@@ -64,12 +64,12 @@ public class ReservationController {
         reservation.setLivre(livreReserve);
         ReservationDTO reservation2 =reservationService.createReservation(reservation);
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livre);
         model.addAttribute("reservation",reservation2);
         return "reservation/demandeReservation";
@@ -79,12 +79,12 @@ public class ReservationController {
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
     public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
-        if(authService.userConnecte!=null){
-            model.addAttribute("role",authService.userConnecte.getRole().getNomRole());
+        if(authService.getUserConnecte()!=null){
+            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
             model.addAttribute("role","null");
         }
-        model.addAttribute("isAuthentified",authService.authentification);
+        model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservation",reservationDetail);
         model.addAttribute("livre",reservationDetail.getLivre());
         return "reservation/reservationDetail"; //view

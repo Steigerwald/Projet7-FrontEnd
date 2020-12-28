@@ -27,7 +27,7 @@ public class BibliothequeService {
     /*Methode pour obtenir toutes les bibliotheques de la base de données de l'API rest*/
     public List<BibliothequeDTO> getAllBibliotheques() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/bibliotheque/"))
                 .header("Authorization","Bearer"+" "+token)
@@ -51,7 +51,7 @@ public class BibliothequeService {
     /*Methode pour obtenir une bibliotheque par Id de l'API rest*/
     public BibliothequeDTO getBibliothequeById(int id) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        String token = authService.memoireToken;
+        String token = authService.getMemoireToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9090/bibliotheque/"+id))
                 .header("Authorization","Bearer"+" "+token)
