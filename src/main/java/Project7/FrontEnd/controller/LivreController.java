@@ -70,7 +70,7 @@ public class LivreController {
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("nombre",livresExemplaires.size());
         model.addAttribute("livresExemplaires",livresExemplaires);
-        return "livre/listeExemplaires";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeExemplaires");
     }
 
     /* controller pour avoir tous les livres disponibles*/
@@ -85,7 +85,7 @@ public class LivreController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresDisponibles",livres);
-        return "livre/listeLivresDisponibles";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivresDisponibles");
     }
 
     /* controller pour afficher la page recherche de livres par catégorie*/
@@ -99,7 +99,7 @@ public class LivreController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("search",rechercheCriteres);
-        return "/livre/rechercheLivre";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"/livre/rechercheLivre");
     }
 
     /* controller pour recevoir une recherche d'un livre*/
@@ -114,7 +114,7 @@ public class LivreController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresRecherches", listeLivresRecherches);
-        return "livre/listeLivresRecherches";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivresRecherches");
     }
 
     /* controller pour avoir le détail du livre */
@@ -130,7 +130,7 @@ public class LivreController {
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreDetail);
         //model.addAttribute("user", userConnecte);
-        return "livre/livreDetails"; //view
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/livreDetails");
     }
 
     /* controller pour ajouter un livre dans la bibliotheque*/
@@ -149,7 +149,7 @@ public class LivreController {
         model.addAttribute("titreFormLivre","ajouter un livre dans la bibliothèque");
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         model.addAttribute("bibliotheques",bibliotheques);
-        return "livre/addLivre";//view
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/addLivre");
     }
 
     /* controller pour envoyer un ajout d'un livre pour l'API*/
@@ -164,7 +164,7 @@ public class LivreController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
-        return "redirect:/livre/all";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"redirect:/livre/all");
     }
 
     /* controller pour effacer un livre de l'API*/
@@ -192,7 +192,7 @@ public class LivreController {
         model.addAttribute("titreFormLivre","modifier un livre dans la bibliothèque");
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
         model.addAttribute("bibliotheques",bibliotheques);
-        return "livre/modifyLivre";//view
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/modifyLivre");
     }
 
     /* controller pour modifier un livre de l'API*/
@@ -207,7 +207,7 @@ public class LivreController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreModifie);
-        return "redirect:/livre/all"; //view
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"redirect:/livre/all");
     }
 
 }
