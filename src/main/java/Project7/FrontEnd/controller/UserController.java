@@ -6,6 +6,7 @@ import Project7.FrontEnd.form.LoginForm;
 import Project7.FrontEnd.form.UserForm;
 import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.ReservationService;
+import Project7.FrontEnd.service.ResponseService;
 import Project7.FrontEnd.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,9 @@ public class UserController {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
 
     Logger logger = (Logger) LoggerFactory.getLogger(UserController.class);
 
@@ -55,6 +59,7 @@ public class UserController {
     @RequestMapping(path="user/login",method = RequestMethod.GET)
     public String formLogin(Model model){
         LoginForm newUser =new LoginForm();
+        responseService.setResponseStatut(200);
         model.addAttribute("utilisateur",newUser);
         UserDTO user = new UserDTO();
         model.addAttribute("user",user);
@@ -135,6 +140,7 @@ public class UserController {
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
+            model.addAttribute("userConnecte",authService.getUserConnecte());
         }else{
             model.addAttribute("role","null");
         }

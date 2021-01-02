@@ -30,6 +30,9 @@ public class ReservationService {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(ReservationService.class);
 
     /*Methode pour obtenir toutes les reservations de la base de données de l'API rest*/
@@ -43,6 +46,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<ReservationDTO> toutesReservations = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
@@ -78,6 +82,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body "+response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
 
         ObjectMapper mapper = new ObjectMapper();
@@ -95,6 +100,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         ReservationDTO reservationById = mapper.readValue(response.body(), new TypeReference<ReservationDTO>() {
@@ -119,6 +125,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<ReservationDTO> toutesReservationsAValider = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
@@ -143,6 +150,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<ReservationDTO> toutesReservationsEnCours = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
@@ -170,6 +178,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<ReservationDTO> toutesReservationsByUser = mapper.readValue(response.body(), new TypeReference<List<ReservationDTO>>() {
@@ -201,6 +210,7 @@ public class ReservationService {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             logger.info(" reponse du body "+response.body());
+            responseService.setResponseStatut(response.statusCode());
             System.out.println(response.body());
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});
@@ -224,6 +234,7 @@ public class ReservationService {
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        responseService.setResponseStatut(response.statusCode());
         String requestBody02=objectMapper
                 .writeValueAsString(reservation.getLivre());
         HttpRequest request02 = HttpRequest.newBuilder()
@@ -232,6 +243,7 @@ public class ReservationService {
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody02))
                 .build();
         HttpResponse<String> response02 = client.send(request02, HttpResponse.BodyHandlers.ofString());
+        responseService.setResponseStatut(response.statusCode());
         logger.info(" reponse du body "+response.body());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
@@ -253,6 +265,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<ReservationDTO>() {});
@@ -310,6 +323,7 @@ public class ReservationService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body "+response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<ReservationDTO>(){});

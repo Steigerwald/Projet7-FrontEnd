@@ -30,6 +30,9 @@ public class LivreService {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(LivreService.class);
 
     /*Methode pour obtenir tous les livres de la base de données de l'API rest*/
@@ -43,6 +46,7 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<LivreDTO> tousLivres = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
@@ -68,6 +72,7 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<LivreDTO> tousExemplaires = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
@@ -94,6 +99,7 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<LivreDTO> tousLivresDisponibles = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
@@ -128,8 +134,8 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
-
         ObjectMapper mapper = new ObjectMapper();
         List<LivreDTO> listM = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
         });
@@ -147,6 +153,7 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         List<LivreDTO> tousLivresRecherches = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
@@ -173,6 +180,7 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         LivreDTO livreById = mapper.readValue(response.body(), new TypeReference<LivreDTO>() {
@@ -267,8 +275,8 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
-
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<LivreDTO>() {
         });
@@ -289,8 +297,8 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
-
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<LivreDTO>() {
         });
@@ -312,8 +320,8 @@ public class LivreService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
-
         //ObjectMapper mapper = new ObjectMapper();
         //return mapper.readValue(response.body(), new TypeReference<LivreDTO>(){});
     }

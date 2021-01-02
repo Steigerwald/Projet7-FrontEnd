@@ -3,6 +3,7 @@ package Project7.FrontEnd.controller;
 import Project7.FrontEnd.dto.BibliothequeDTO;
 import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.BibliothequeService;
+import Project7.FrontEnd.service.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,14 @@ public class BibliothequeController {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     /* controller pour avoir toutes les bibliotheques*/
     @RequestMapping(value="/all",method = RequestMethod.GET)
-    public String getAllBibliotheques(Model model,Principal principal) throws IOException, InterruptedException {
+    public String getAllBibliotheques(Model model) throws IOException, InterruptedException {
         List<BibliothequeDTO> bibliotheques = bibliothequeService.getAllBibliotheques();
+
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
@@ -34,7 +39,7 @@ public class BibliothequeController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("bibliotheques",bibliotheques);
-        return "bibliotheque/listeBibliotheques";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"bibliotheque/listeBibliotheques");
     }
 
 }

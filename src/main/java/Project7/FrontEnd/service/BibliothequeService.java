@@ -24,6 +24,9 @@ public class BibliothequeService {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     /*Methode pour obtenir toutes les bibliotheques de la base de données de l'API rest*/
     public List<BibliothequeDTO> getAllBibliotheques() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -35,17 +38,21 @@ public class BibliothequeService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
-        ObjectMapper mapper = new ObjectMapper();
-        List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(response.body(), new TypeReference<List<BibliothequeDTO>>() {
-        });
-        if(toutesBibliotheques.size() > 0) {
-            logger.info(" retour liste toutesBibliotheques car la taille de laliste >0 "+toutesBibliotheques);
-            return toutesBibliotheques;
-        } else {
-            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste toutesBibliotheques ");
-            return new ArrayList<BibliothequeDTO>();
+        if (response.statusCode()==200) {
+            ObjectMapper mapper = new ObjectMapper();
+            List<BibliothequeDTO> toutesBibliotheques = mapper.readValue(response.body(), new TypeReference<List<BibliothequeDTO>>() {
+            });
+            if (toutesBibliotheques.size() > 0) {
+                logger.info(" retour liste toutesBibliotheques car la taille de laliste >0 " + toutesBibliotheques);
+                return toutesBibliotheques;
+            } else {
+                logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste toutesBibliotheques ");
+                return new ArrayList<BibliothequeDTO>();
+            }
         }
+        return new ArrayList<BibliothequeDTO>();
     }
 
     /*Methode pour obtenir une bibliotheque par Id de l'API rest*/
@@ -59,10 +66,12 @@ public class BibliothequeService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         BibliothequeDTO bibliothequeTrouvee = mapper.readValue(response.body(), new TypeReference<BibliothequeDTO>() {
         });
+
         if(bibliothequeTrouvee!= null) {
             logger.info(" retour de la bibliotheque car elle existe "+bibliothequeTrouvee);
             return bibliothequeTrouvee;

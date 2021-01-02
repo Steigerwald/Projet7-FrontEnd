@@ -40,7 +40,7 @@
                 </ul>
                 <ul class="navbar-nav mr-auto" th:switch="${role}">
                     <li class="nav-item dropdown" th:case="ROLE_ADMIN">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-lock"></i>
                             Admin
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
@@ -53,9 +53,6 @@
                     </li>
                     <div th:if="${isAuthentified}">
                         <li class="nav-item "><a class="nav-link " th:href="@{/livre/search}"><span class="fa fa-search"></span> Recherche d'un livre</a></li>
-                    </div>
-                    <div th:case="ROLE_ADMIN">
-                        <li class="nav-item "><a class="nav-link " th:href="@{/user/EspaceAdministration}"><i class="fas fa-user"></i> Admin</a></li>
                     </div>
                     <div th:if="${isAuthentified}">
                         <li class="nav-item "><a class="nav-link " th:href="@{/user/logout}"><i class="fas fa-sign-out-alt"></i> Déconnectez-vous</a></li>

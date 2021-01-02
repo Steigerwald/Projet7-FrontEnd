@@ -15,8 +15,10 @@
 <body>
 <div th:insert="~{baniere :: fragment }"></div>
 <main>
+    <h1 th:text="${userConnecte.getNomUser()} +' '+ ${userConnecte.getPrenomUser()}"></h1>
+    <Br>
     <h1>Liste de mes réservations</h1>
-    <h2>Vous ne pouvez prolonger qu'une seule fois votre location</h2>
+    <h3>Attention! Vous ne pouvez prolonger qu'une seule fois votre location</h3>
     <div class="container col-lg-12">
         <header class="row">
         </header>

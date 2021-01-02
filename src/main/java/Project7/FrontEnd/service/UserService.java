@@ -22,6 +22,9 @@ public class UserService {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(UserService.class);
 
     /*Methode pour obtenir un user par Id de l'API rest*/
@@ -36,6 +39,7 @@ public class UserService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body " + response.body());
         System.out.println(response.body());
+        responseService.setResponseStatut(response.statusCode());
         ObjectMapper mapper = new ObjectMapper();
         UserDTO userTrouve = mapper.readValue(response.body(), new TypeReference<UserDTO>() {
         });
@@ -66,6 +70,7 @@ public class UserService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         logger.info(" reponse du body "+response.body());
+        responseService.setResponseStatut(response.statusCode());
         System.out.println(response.body());
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<UserDTO>(){});
@@ -87,6 +92,7 @@ public class UserService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
         logger.info(" retour du body: "+response.body());
+        responseService.setResponseStatut(response.statusCode());
         return response.body();
     }
 
@@ -105,6 +111,7 @@ public class UserService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
         logger.info(" retour du body: "+response.body());
+        responseService.setResponseStatut(response.statusCode());
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(response.body(), new TypeReference<UserDTO>() {
         });

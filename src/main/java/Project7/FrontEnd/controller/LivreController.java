@@ -7,6 +7,7 @@ import Project7.FrontEnd.form.LivreForm;
 import Project7.FrontEnd.service.AuthService;
 import Project7.FrontEnd.service.BibliothequeService;
 import Project7.FrontEnd.service.LivreService;
+import Project7.FrontEnd.service.ResponseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class LivreController {
     @Autowired
     public AuthService authService;
 
+    @Autowired
+    public ResponseService responseService;
+
     Logger logger = (Logger) LoggerFactory.getLogger(LivreController.class);
 
     /* controller pour avoir tous les livres*/
@@ -51,7 +55,7 @@ public class LivreController {
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livres",livres);
         model.addAttribute("nombres",nombres);
-        return "livre/listeLivres";
+        return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivres");
     }
 
     /* controller pour avoir tous les livres*/
