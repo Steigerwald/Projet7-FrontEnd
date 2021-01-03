@@ -15,10 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.io.IOException;
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -49,7 +47,7 @@ public class UserController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         return "home/home";
@@ -74,7 +72,7 @@ public class UserController {
         model.addAttribute("utilisateur",newUser);
         logger.info(" on est dans la page du logout");
         authService.setAuthentification(false);
-        authService.setMemoireToken("null");
+        authService.setMemoireToken(null);
         authService.setUserConnecte(null);
         return "user/userLogin";
     }
@@ -142,7 +140,7 @@ public class UserController {
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
             model.addAttribute("userConnecte",authService.getUserConnecte());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservations);
@@ -162,7 +160,7 @@ public class UserController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservationsAValider);

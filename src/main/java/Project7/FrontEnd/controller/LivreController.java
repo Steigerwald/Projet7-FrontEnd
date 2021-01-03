@@ -50,7 +50,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livres",livres);
@@ -65,7 +65,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("nombre",livresExemplaires.size());
@@ -81,7 +81,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresDisponibles",livres);
@@ -95,7 +95,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("search",rechercheCriteres);
@@ -110,7 +110,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresRecherches", listeLivresRecherches);
@@ -125,7 +125,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreDetail);
@@ -140,7 +140,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de newLivre "+newLivre.toString());
@@ -160,7 +160,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de search du controller "+livreEnregistre.getAuteur()+" "+livreEnregistre.getNomCategorie()+" "+livreEnregistre.getTitre());
@@ -183,7 +183,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         logger.info(" retour valeur de livreFormModifie "+livreFormModifie.toString());
@@ -203,7 +203,7 @@ public class LivreController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livreModifie);

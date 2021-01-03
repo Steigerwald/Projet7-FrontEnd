@@ -35,7 +35,7 @@ public class BibliothequeController {
         if(authService.getUserConnecte()!=null){
             model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
         }else{
-            model.addAttribute("role","null");
+            model.addAttribute("role",null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("bibliotheques",bibliotheques);
