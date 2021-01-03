@@ -56,7 +56,9 @@ public class ReservationController {
     /* controller pour envoyer une réservation d'un livre pour l'API*/
     @RequestMapping(value="/reserver/livre/{id}",method = RequestMethod.POST)
     public String reservationLivre(Model model,Principal principal, @PathVariable("id") int id) throws IOException, InterruptedException, ParseException {
-        UserDTO userConnecte = userService.getUserById(1);
+
+        //UserDTO userConnecte = userService.getUserById(1);
+        UserDTO userConnecte =authService.getUserConnecte();
         ReservationDTO reservation = new ReservationDTO();
         reservation.setUser(userConnecte);
         LivreDTO livreReserve = livreService.getLivreById(id);
