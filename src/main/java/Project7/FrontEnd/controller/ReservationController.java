@@ -66,11 +66,7 @@ public class ReservationController {
         reservation.setLivre(livreReserve);
         ReservationDTO reservation2 =reservationService.createReservation(reservation);
         LivreDTO livre=livreService.modifierUnLivre(livreReserve);
-        if(authService.getUserConnecte()!=null){
-            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
-        }else{
-            model.addAttribute("role",null);
-        }
+        userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livre",livre);
         model.addAttribute("reservation",reservation2);
@@ -81,11 +77,7 @@ public class ReservationController {
     @RequestMapping(path="/detail/{id}",method = RequestMethod.GET)
     public String getDetailsReservation(Model model,Principal principal, @PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
         ReservationDTO reservationDetail = reservationService.getReservationById(id);
-        if(authService.getUserConnecte()!=null){
-            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
-        }else{
-            model.addAttribute("role",null);
-        }
+        userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservation",reservationDetail);
         model.addAttribute("livre",reservationDetail.getLivre());

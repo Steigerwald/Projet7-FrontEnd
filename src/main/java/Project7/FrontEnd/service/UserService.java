@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.net.URI;
@@ -128,4 +129,12 @@ public class UserService {
         return userDTO;
     }
 
+    /*Methode pour vérifier autehentification pour le role*/
+    public void verifierUserConnecte(Model model) {
+        if (authService.getUserConnecte() != null) {
+            model.addAttribute("role", authService.getUserConnecte().getRole().getNomRole());
+        } else {
+            model.addAttribute("role", null);
+        }
+    }
 }

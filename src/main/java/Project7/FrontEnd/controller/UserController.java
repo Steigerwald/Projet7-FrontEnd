@@ -44,11 +44,7 @@ public class UserController {
     public String formPresentation(Principal principal,Model model) throws IOException, InterruptedException {
         logger.info(" on est passe par la avant l'appel de la page home/home de url /home");
         logger.info(" le user est: "+authService.getUserConnecte());
-        if(authService.getUserConnecte()!=null){
-            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
-        }else{
-            model.addAttribute("role",null);
-        }
+        userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         return "home/home";
     }
@@ -136,11 +132,11 @@ public class UserController {
         List<ReservationDTO> listeReservations = reservationService.getAllReservationsEnCoursByUser(authService.getUserConnecte());
         listeReservations=reservationService.verifierListeReservations(listeReservations);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservations);
-        if(authService.getUserConnecte()!=null){
-            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
-            model.addAttribute("userConnecte",authService.getUserConnecte());
-        }else{
-            model.addAttribute("role",null);
+        if (authService.getUserConnecte() != null) {
+            model.addAttribute("role", authService.getUserConnecte().getRole().getNomRole());
+            model.addAttribute("userConnecte", authService.getUserConnecte());
+        } else {
+            model.addAttribute("role", null);
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservations);
@@ -157,18 +153,12 @@ public class UserController {
         listeReservationsEnCours=reservationService.verifierListeReservations(listeReservationsEnCours);
         List<String> listeDates =reservationService.calculerDateLimitesDeretraitDUneListeDeReservation(listeReservationsEnCours);
         logger.info(" retour valeur des réservation à valider du controller "+listeReservationsAValider);
-        if(authService.getUserConnecte()!=null){
-            model.addAttribute("role",authService.getUserConnecte().getRole().getNomRole());
-        }else{
-            model.addAttribute("role",null);
-        }
+        userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservationsAValider);
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
         model.addAttribute("dates",listeDates);
         return "user/espaceAdmin";
     }
-
-    /* controller pour avoir un role par id de l'API*/
 
 }
