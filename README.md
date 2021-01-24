@@ -12,8 +12,5 @@ git clone https://github.com/Steigerwald/FrontEnd.git
 cd FrontEnd
 mvn spring-boot:run
 ```
-## 2. Comment lancer l'application après avoir lancé l'application BackEnd
-L'application sera disponible ste le port suivant :
-- port: 3030
-
+## 2. Comment lancer l'application depuis le net après avoir lancé l'application BackEnd
 depuis le net : localhost:3030/home
