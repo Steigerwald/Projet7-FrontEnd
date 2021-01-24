@@ -51,7 +51,7 @@
                                                 <td th:text="${reservation.livre.getTitre()}"></td>
                                                 <td th:text="${reservation.toStringDateDeRetrait()}"></td>
                                                 <td th:text="${dates.get(state.index)}"></td>
-                                                <td th:text="${reservation.prolongation}"></td>
+                                                <td th:text="${reservation.toStringProlongation()}"></td>
                                                 <td>
                                                     <div th:switch="${reservation.prolongation}">
                                                         <form th:action="@{/reservation/prolonger/{id}(id=${reservation.idReservation})}" method="post">

@@ -43,5 +43,13 @@ public class ReservationDTO {
         }
     }
 
+    public String toStringProlongation(){
+        if (prolongation){
+            return "oui";
+        }else{
+            return "non";
+        }
+    }
+
 
 }
