@@ -43,23 +43,26 @@ public class LivreController {
     @RequestMapping(value="/all",method = RequestMethod.GET)
     public String getAllLivres(Model model, Principal principal) throws IOException, ParseException, InterruptedException {
         List<LivreDTO> livres = livreService.getAllLivres();
-        List<Integer> nombres=livreService.obtenirNombreExempalaires(livres);
+        List<Integer> nombres1=livreService.obtenirNombreExempalaires(livres);
+        List<Integer> nombres2=livreService.obtenirNombreExempalairesDisponibles(livres);
         logger.info(" retour valeur des livres du controller "+livres.get(0));
         userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livres",livres);
-        model.addAttribute("nombres",nombres);
+        model.addAttribute("nombres1",nombres1);
+        model.addAttribute("nombres2",nombres2);
         return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivres");
     }
 
-    /* controller pour avoir tous les livres*/
+    /* controller pour avoir tous les exemplaires d'un livre*/
     @RequestMapping(value="/exemplaires/{id}",method = RequestMethod.GET)
     public String getAllExeemplaires(Model model, Principal principal,@PathVariable("id") int id) throws IOException, ParseException, InterruptedException {
-        List<LivreDTO> livresExemplaires = livreService.getAllExemplairesById(id);
+        List<LivreDTO> livresExemplaires = livreService.getAllExemplairesDisponiblesById(id);
         userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("nombre",livresExemplaires.size());
         model.addAttribute("livresExemplaires",livresExemplaires);
+        model.addAttribute("livresExemplairesSize",livresExemplaires.size());
         return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeExemplaires");
     }
 

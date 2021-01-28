@@ -15,7 +15,7 @@
 <body>
 <div th:insert="~{baniere :: fragment }"></div>
 <main>
-    <h1 th:text="'Liste de '+ ${nombre}+' '+'exemplaires de '+ ${livresExemplaires.get(0).titre}"></h1>
+    <h1 th:text="'Liste de '+ ${nombre}+' '+'exemplaire(s) de '+ ${livresExemplaires.get(0).titre}+' disponible(s) '"></h1>
     <div class="container col-lg-12">
         <header class="row">
         </header>
@@ -24,9 +24,9 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <div th:switch="${livresExemplaires}" class="container">
+                            <div th:switch="${livresExemplairesSize}" class="container">
                                 <div class="table-responsive text-nowrap ncol-md-12">
-                                    <h2 th:case="null">Pas d'enregistrement trouvé !!</h2>
+                                    <h2 th:case="0">Pas d'enregistrement trouvé !!</h2>
                                     <div th:case="*">
                                         <table class="table table-striped" >
                                             <thead>
@@ -36,7 +36,7 @@
                                                 <th>Auteur</th>
                                                 <th>Bibliothèque</th>
                                                 <th>Autres Informations</th>
-                                                <th>Disponibilité</th>
+                                                <th>Location</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -46,7 +46,14 @@
                                                 <td th:text="${livre.auteur}"></td>
                                                 <td th:text="${livre.bibliotheque.getNomBibliotheque()}"></td>
                                                 <td> <a th:href="@{/livre/details/{nom} (nom=${livre.idLivre})}" >détails</a> </td>
-                                                <td th:text="${livre.toStringDisponibilite()}"></td>
+                                                <td>
+                                                    <div th:switch="${livre.disponibilite}">
+                                                        <form th:action="@{/reservation/reserver/livre/{id}(id=${livre.idLivre})}" method="post">
+                                                            <button class="btn btn-success my-2 my-sm-0" type="submit" th:case="true" >Réserver</button>
+                                                            <p th:case="false" >Réservé</p>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
