@@ -25,9 +25,9 @@
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <div th:switch="${livresRecherches}" class="container">
+                            <div th:switch="${livresRecherchesSize}" class="container">
                                 <div class="table-responsive text-nowrap ncol-md-12">
-                                    <h2 th:case="null">Pas d'enregistrement trouvé !!</h2>
+                                    <h2 th:case="0">Pas d'enregistrement trouvé !!</h2>
                                     <div th:case="*">
                                         <table class="table table-striped" >
                                             <thead>

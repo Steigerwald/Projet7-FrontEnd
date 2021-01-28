@@ -92,6 +92,7 @@ public class LivreController {
         userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("livresRecherches", listeLivresRecherches);
+        model.addAttribute("livresRecherchesSize", listeLivresRecherches.size());
         return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivresRecherches");
     }
 

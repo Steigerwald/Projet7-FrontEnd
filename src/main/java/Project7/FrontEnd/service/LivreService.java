@@ -87,6 +87,33 @@ public class LivreService {
         }
     }
 
+    /*Methode pour obtenir tous les exemplaires disponibles d'un livre par Id de la base de données API*/
+    public List<LivreDTO> getAllExemplairesDisponiblesById(int idLivre) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String token = authService.getMemoireToken();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:9090/livre/allExemplairesDisponibles/" + idLivre))
+                .header("Authorization","Bearer"+" "+token)
+                .GET()
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        logger.info(" reponse du body " + response.body());
+        responseService.setResponseStatut(response.statusCode());
+        System.out.println(response.body());
+        ObjectMapper mapper = new ObjectMapper();
+        List<LivreDTO> tousExemplaires = mapper.readValue(response.body(), new TypeReference<List<LivreDTO>>() {
+        });
+        if (tousExemplaires.size() > 0) {
+            logger.info(" retour liste tousExemplaires car la taille de laliste >0 " + tousExemplaires);
+            logger.info(" valeur livre " + tousExemplaires.get(0));
+            return tousExemplaires;
+        } else {
+            logger.info(" retour d'une nouvelle liste car pas d'élément dans la liste tousExemplaires ");
+            return new ArrayList<LivreDTO>();
+        }
+    }
+
+
 
     /*Methode pour obtenir tous les livres disponibles de la base de données de l'API rest*/
     public List<LivreDTO> getAllLivresDisponibles() throws IOException, ParseException, InterruptedException {
@@ -335,5 +362,19 @@ public class LivreService {
         }
         return nombres;
     }
+
+    /*Methode pour avoir la liste de nombre d'exemplaires disponibles en rapport à une liste de livre*/
+    public List<Integer> obtenirNombreExempalairesDisponibles(List<LivreDTO> livres) throws IOException, InterruptedException {
+        List<Integer> nombres = new ArrayList<Integer>();
+        for (LivreDTO livre : livres) {
+            List<LivreDTO> tousLesExemplairesDisponibles = getAllExemplairesDisponiblesById(livre.getIdLivre());
+            nombres.add(tousLesExemplairesDisponibles.size());
+        }
+        return nombres;
+    }
+
+
+
+
 
 }
