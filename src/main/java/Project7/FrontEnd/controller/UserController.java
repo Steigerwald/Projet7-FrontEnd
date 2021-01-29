@@ -140,6 +140,7 @@ public class UserController {
         }
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservations);
+        model.addAttribute("reservationsSize",listeReservations.size());
         model.addAttribute("dates",listeDates);
         return "user/espacePerso";
     }
@@ -156,7 +157,9 @@ public class UserController {
         userService.verifierUserConnecte(model);
         model.addAttribute("isAuthentified",authService.getAuthentification());
         model.addAttribute("reservations",listeReservationsAValider);
+        model.addAttribute("reservationsSize",listeReservationsAValider.size());
         model.addAttribute("reservationsEnCours",listeReservationsEnCours);
+        model.addAttribute("reservationsEnCoursSize",listeReservationsEnCours.size());
         model.addAttribute("dates",listeDates);
         return "user/espaceAdmin";
     }

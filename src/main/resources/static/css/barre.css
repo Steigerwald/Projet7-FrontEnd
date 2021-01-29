@@ -78,7 +78,7 @@ body{
 }
 .navbar-toggle:hover,
 .navbar-toggle:focus {
-    background-color: white !important;
+    background-color: #ff690c !important;
 }
 .navbar-toggler-icon {
     background-color: transparent !important;
@@ -90,16 +90,16 @@ body{
     margin-left: 30px !important;
     left: 150px !important;
 }
-
+/*
 @media only screen and (max-width:480px) {
     .nav-link {
         text-align: justify !important;
         font-size:0.8em !important;
         margin-left: 10px !important;
-        left: 150px !important;
+        left: 50px !important;
     }
 }
-
+/*
 @media only screen and (max-width:768px) {
     .navbar-nav .open .dropdown-menu > li > a {
         color: blue;
@@ -140,3 +140,5 @@ body{
         font-size: 0.8em !important;
     }
 }
+
+ */

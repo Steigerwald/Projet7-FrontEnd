@@ -30,7 +30,7 @@ h3{
 }
 
 .inter {
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 table, th, td {
@@ -70,7 +70,7 @@ img {
     justify-content:start !important;
     border-color: white !important;
     text-align: left !important;
-    width:1000px!important;
+    /*width:1000px!important;*/
     padding-left:20px!important;
 }
 
@@ -81,7 +81,7 @@ img {
     display:flex;
     align-items: center;
     justify-content:center;
-    border: 2mm ridge rgba(170, 50, 220, .6);
+    /*border: 2mm ridge rgba(170, 50, 220, .6);*/
     border-radius: 10px;
     padding-top: 10px;
 }
@@ -92,6 +92,8 @@ Footer{
     margin-left:100px;
 }
 
+
+/*
 @media only screen and (max-width:320px) {
     body {
         font-size: 0.9em !important;
@@ -111,17 +113,38 @@ Footer{
     }
 }
 
+ */
+
 @media only screen and (max-width:480px) {
     body {
-        font-size: 1.1em !important;
+        font-size: 0.9em !important;
     }
     h1,h2 {
         font-size: 1.1em !important;
     }
+    #listeLivres{
+        max-width: 300px!important;
+    }
+
+    #cardBodyLivres{
+        /*border: 1px solid #fb44ff !important;*/
+        max-width: 350px !important;
+    }
+
+    #autreContainer{
+        max-width: 350px !important;
+    }
+
+    #banniereTaille{
+        max-width: 350px !important;
+    }
+
     .card{
         table-layout: auto!important;
-        width: 100%!important;
-
+        max-width: 80%!important;
+        font-size: 1.1em !important;
+        padding-left: 10%!important;
+        margin-left: 10%!Important;
     }
     .btn{
         font-size: 0.9em !important;
@@ -133,7 +156,7 @@ Footer{
         font-size: 1.2em !important;
     }
     h1,h2 {
-        font-size: 1.5em !important;
+        font-size: 1.3em !important;
     }
     .card{
         table-layout: auto!important;

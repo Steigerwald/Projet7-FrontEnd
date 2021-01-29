@@ -51,6 +51,7 @@ public class LivreController {
         model.addAttribute("livres",livres);
         model.addAttribute("nombres1",nombres1);
         model.addAttribute("nombres2",nombres2);
+        model.addAttribute("livresSize",livres.size());
         return responseService.gestionDeReponseHttp(responseService.getResponseStatut(),"livre/listeLivres");
     }
 

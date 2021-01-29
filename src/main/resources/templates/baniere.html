@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Index</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <link rel="stylesheet" th:href="@{/css/barre.css}" />
@@ -12,7 +13,7 @@
 </head>
 <body>
 <div th:fragment="fragment">
-    <div class="container col col-lg-12 fixed-top">
+    <div class="container fixed-top"id="banniereTaille">
         <nav class="navbar navbar-light navbar-expand-md">
             <a class="navbar-brand">Ma bibliothèque en ligne </a>
             <button class="navbar-toggler bg-light " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +29,10 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" th:href="@{/livre/all}">Liste des livres</a>
+
                                 <!--<a class="dropdown-item" th:href="@{/livre/all/disponibles}">Liste des livres disponibles</a>-->
-                                <div class="dropdown-divider"></div>
+
+            <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/bibliotheque/all}">Liste des bibliothèques</a>
                             </div>
                         </li>
@@ -60,9 +63,12 @@
                     <div th:unless="${isAuthentified}">
                         <li class="nav-item "><a class="nav-link " th:href="@{/user/login}" th:target="_blank"><i class="fas fa-sign-in-alt"></i> Connectez-vous</a></li>
                     </div>
+
                     <!--<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login <span class="fas fa-sign-in-alt"></span></a></li>
+
                     <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout <i class="fas fa-sign-out-alt"></i></a></li>
                     <li class="nav-item"><a class="nav-link" th:text="${message1 !=null and message2 !=null} ? ${message1}+' '+ ${message2}:' '"></a></li>-->
+
                 </ul>
                 <!--<form class="form-inline my-2 my-lg-0" th:action="@{/sites/search}" th:object="${search}" method="post">
                     <input class="form-control mr-sm-2" type="text" th:field="*{lieu}" placeholder="lieu" aria-label="Search">
